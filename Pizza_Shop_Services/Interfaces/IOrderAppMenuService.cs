@@ -14,6 +14,6 @@ public interface IOrderAppMenuService
     public Task<OrderCommentViewModel> GetOrderInstruction(int OrderId);
     public Task<int> GetOrderItemReadyQuantity(int OrderItemId);
     public Task<bool> AddOrderCommentToOrder(OrderCommentViewModel obj);
-    public Task SaveOrder(int orderid, string orderstatus, List<OrderItemViewModel> save_item, List<int> delete_item, List<MenuTaxDataViewModel> tax_list);
+    public Task<bool> SaveOrder(int orderid, string orderstatus, List<OrderItemViewModel> save_item, List<int> delete_item, List<MenuTaxDataViewModel> tax_list);
 
 }

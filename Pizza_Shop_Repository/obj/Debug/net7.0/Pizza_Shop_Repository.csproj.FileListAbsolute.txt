@@ -12,3 +12,17 @@ D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Repository\ob
 D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.pdb
 D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.genruntimeconfig.cache
 D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\ref\Pizza_Shop_Repository.dll
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\bin\Debug\net7.0\Pizza_Shop_Repository.deps.json
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\bin\Debug\net7.0\Pizza_Shop_Repository.runtimeconfig.json
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\bin\Debug\net7.0\Pizza_Shop_Repository.dll
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\bin\Debug\net7.0\Pizza_Shop_Repository.pdb
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.csproj.AssemblyReference.cache
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.AssemblyInfoInputs.cache
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.AssemblyInfo.cs
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.csproj.CoreCompileInputs.cache
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.dll
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\refint\Pizza_Shop_Repository.dll
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.pdb
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\Pizza_Shop_Repository.genruntimeconfig.cache
+D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Repository\obj\Debug\net7.0\ref\Pizza_Shop_Repository.dll

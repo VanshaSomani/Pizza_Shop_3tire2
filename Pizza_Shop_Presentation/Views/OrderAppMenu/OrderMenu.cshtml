@@ -716,6 +716,7 @@
         $(document).off("click", "#OrderSaveButton").on("click", "#OrderSaveButton", function () {
             let orderid = $(this).data("orderid");
             let orderstatus = $(this).data("orderstatus");
+            let customerid = $(this).data("customerid");
             let formData = new FormData();
             formData.append("order_id", JSON.stringify(orderid));
             formData.append("order_status", JSON.stringify(orderstatus));
@@ -728,8 +729,19 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function (data) { },
-                error: function (data) { }
+                success: function (data) { 
+                    if(data.status == true){
+                        notyf.success("Order placed successfully");
+                    }
+                    else{
+                        noty.error("Error placind order");
+                    }
+                    window.location.href = "http://localhost:5096/OrderAppMenu/OrderMenu?customerId=" + customerid + "&orderId=" + orderid;
+                },
+                error: function (data) {
+                    noty.error("Error placind order");
+                    window.location.href = "http://localhost:5096/OrderAppMenu/OrderMenu?customerId=" + customerid + "&orderId=" + orderid;
+                }
             });
         })
 

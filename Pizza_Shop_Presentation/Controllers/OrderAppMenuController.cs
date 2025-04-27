@@ -93,13 +93,13 @@ public class OrderAppMenuController : Controller
 
     #region SaveOrderDetails
         [HttpPost]
-        public async Task SaveOrderDetails(string order_id , string order_status , string selected_item , string deleted_item , string enabled_tax){
+        public async Task<IActionResult> SaveOrderDetails(string order_id , string order_status , string selected_item , string deleted_item , string enabled_tax){
             int orderid = JsonConvert.DeserializeObject<int>(order_id);
             string orderstatus = JsonConvert.DeserializeObject<string>(order_status);
             List<OrderItemViewModel> save_item = JsonConvert.DeserializeObject<List<OrderItemViewModel>>(selected_item);
             List<int> delete_item = JsonConvert.DeserializeObject<List<int>>(deleted_item);
             List<MenuTaxDataViewModel> tax_list = JsonConvert.DeserializeObject<List<MenuTaxDataViewModel>>(enabled_tax);
-            // await _orderAppMenuService.SaveOrder(orderid, orderstatus, save_item, delete_item, tax_list);
+            return Json(new {status = await _orderAppMenuService.SaveOrder(orderid, orderstatus, save_item, delete_item, tax_list)});
         }
     #endregion
 }

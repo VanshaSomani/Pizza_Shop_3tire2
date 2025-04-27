@@ -294,11 +294,10 @@ public class OrderAppMenuService : IOrderAppMenuService
     #endregion
 
     #region SaveOrder
-    public async Task SaveOrder(int orderid, string orderstatus, List<OrderItemViewModel> save_item, List<int> delete_item, List<MenuTaxDataViewModel> tax_list)
+    public async Task<bool> SaveOrder(int orderid, string orderstatus, List<OrderItemViewModel> save_item, List<int> delete_item, List<MenuTaxDataViewModel> tax_list)
     {
        try
        {
-
             Order order = await _orderMenuRepository.OrderStatusByOrderId(orderid);
             for(int i = 0 ; i < delete_item.Count ; i++){
                 OrderItem orderItem = await _orderMenuRepository.GetOrderItemByOrderItemId(delete_item[i]);
@@ -306,7 +305,7 @@ public class OrderAppMenuService : IOrderAppMenuService
                     orderItem.Isdeleted = true;
                     orderItem.Updatedby = Int32.Parse(_httpaccessor.HttpContext.Session.GetString("UserId"));
                     orderItem.Updatedat = DateTime.Now;
-                    // await _orderMenuRepository.UpdateOrderItem(orderItem);
+                    await _orderMenuRepository.UpdateOrderItem(orderItem);
                 }
             }
             double total = 0;
@@ -317,17 +316,21 @@ public class OrderAppMenuService : IOrderAppMenuService
                 double modifier_sum = 0;
                 if(save_item[i].OrderItemId != 0){
                     OrderItem orderItem = await _orderMenuRepository.GetOrderItemByOrderItemId(save_item[i].OrderItemId);
-                    orderItem.Quantity = save_item[i].ItemQuantity;
-                    orderItem.Status = "In Progress";
-                    orderItem.Updatedby = Int32.Parse(_httpaccessor.HttpContext.Session.GetString("UserId"));
-                    orderItem.Updatedat = DateTime.Now;
-                    // await _orderMenuRepository.UpdateOrderItem(orderItem);
+                    if(orderItem.Quantity != save_item[i].ItemQuantity)
+                    {
+                        orderItem.Quantity = save_item[i].ItemQuantity;
+                        orderItem.Status = "In Progress";
+                        orderItem.Updatedby = Int32.Parse(_httpaccessor.HttpContext.Session.GetString("UserId"));
+                        orderItem.Updatedat = DateTime.Now;
+                        await _orderMenuRepository.UpdateOrderItem(orderItem);
+                    }
                     if(orderItem.OrderItemModifiers.Count != 0){
                         modifier_sum += (double) orderItem.OrderItemModifiers.Sum(oim => oim.ModifierAmount);
                     }
                 }
                 else{
                     OrderItem orderItem = new(){
+                        Orderid = order.Orderid,
                         Itemid = save_item[i].ItemId,
                         Quantity = save_item[i].ItemQuantity,
                         Amount = save_item[i].ItemPrice,
@@ -338,7 +341,7 @@ public class OrderAppMenuService : IOrderAppMenuService
                         Createdby = Int32.Parse(_httpaccessor.HttpContext.Session.GetString("UserId")),
                         Createdat = DateTime.Now
                     };
-                    // orderItem = await _orderMenuRepository.AddOrderItem(orderItem);
+                    orderItem = await _orderMenuRepository.AddOrderItem(orderItem);
                     for(int j = 0 ; j < save_item[i].Modifiers.Count ; j++){
                         OrderItemModifier orderItemModifier = new(){
                             OrderItemId = orderItem.Orderitemid,
@@ -347,7 +350,7 @@ public class OrderAppMenuService : IOrderAppMenuService
                             ModifierAmount = save_item[i].Modifiers[j].ModifierPrice,
                             Quantity = save_item[i].Modifiers[j].ModifierQuantity   
                         };
-                        // await _orderMenuRepository.AddOrderItemModifier(orderItemModifier);
+                        await _orderMenuRepository.AddOrderItemModifier(orderItemModifier);
                         modifier_sum += (double)save_item[i].Modifiers[j].ModifierPrice;
                     }
                 }
@@ -364,6 +367,7 @@ public class OrderAppMenuService : IOrderAppMenuService
                         Taxtype = tax_list[i].TaxType,
                         TaxAmount = tax_list[i].TaxRate
                     };
+                    await _orderMenuRepository.AddOrderTax(invoceTax);
                 }
                 if(tax_list[i].TaxType == "percentage"){
                     totalTax += subtotal*(double)tax_list[i].TaxRate/100;
@@ -385,8 +389,8 @@ public class OrderAppMenuService : IOrderAppMenuService
                     Createdby = Int32.Parse(_httpaccessor.HttpContext.Session.GetString("UserId")),
                     Createdat = DateTime.Now
                 };
-                // orderPayment = await _orderMenuRepository.AddOrderPayment(orderPayment);
-                // order.OrderPaymentId = orderPayment.PaymentId;
+                orderPayment = await _orderMenuRepository.AddOrderPayment(orderPayment);
+                order.OrderPaymentId = orderPayment.PaymentId;
             }
             if(order.Status == "Pending"){
                 Invoice invoice = new(){
@@ -394,13 +398,14 @@ public class OrderAppMenuService : IOrderAppMenuService
                     Createdby = Int32.Parse(_httpaccessor.HttpContext.Session.GetString("UserId")),
                     Createdat = DateTime.Now
                 };
-                // invoice = await _orderMenuRepository.AddInvoice(invoice);
+                invoice = await _orderMenuRepository.AddInvoice(invoice);
             }
+            await _orderMenuRepository.UpdateOrder(order);
+            return true;
        }
-       catch (Exception)
+       catch (Exception e)
        {
-        
-        throw;
+        return false;
        } 
     }
     #endregion
