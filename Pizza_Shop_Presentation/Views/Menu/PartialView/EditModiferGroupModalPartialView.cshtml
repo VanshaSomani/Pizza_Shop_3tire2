@@ -1,0 +1,40 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Modifer Group</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form asp-action="EditModifierGroup" asp-controller="Menu" id="EditModifierGroup" method="post">
+    <div class="modal-body">
+            <input type="hidden" id="EditCategoryIdModal" asp-for="@Model.Modifiergroupid">
+        <div class="form-floating">
+            <input type="text" class="form-control" aria-describedby="textHelp" placeholder="Name"
+                asp-for="@Model.ModifierGroupName" id="EditCategoryNameModal" />
+            <label for="exampleFormControlTextarea1">Modifer Group Name</label></br>
+            <span class="text-danger" asp-validation-for="ModifierGroupName"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" rows="3" asp-for="@Model.ModifierGroupDesc"
+                id="EditCategoryDescModal"></textarea>
+            <span class="text-danger" asp-validation-for="ModifierGroupDesc"></span>
+            <label for="exampleFormControlTextarea1">Description</label>
+        </div>
+        <div class="mb-2">
+            <a class="text-primary" onclick="GetAddExistingModifers('edit')">+ Add Existing Modifer</a>
+        </div>
+        <span id="existingModiferLable">
+            <span id="ModifierGroupFromDB">
+                    @foreach(var modifier in Model.ModifiersList){
+                        <span class="badge badge-pill badge-light border p-1 ps-2 pe-5 fs-6 mb-2 me-2" id="@modifier.Modifierid">@modifier.Modifiername<a onclick="MGmodifierBadge(this)" class="ms-2 p-1"><i class="fa-solid fa-xmark"></i></a></span>
+                    }
+            </span>
+        </span>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="EditModifierGroupSubmit" class="btn btn-primary modal_submit_btn">Save</button>
+        <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+</form>
+

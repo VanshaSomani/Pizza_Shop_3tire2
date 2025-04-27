@@ -1,0 +1,37 @@
+@model IEnumerable<Pizza_Shop_Repository.Models.Role>
+@{
+    ViewData["Title"] = "RoleList";
+}
+<div class="p-2 pl-3 pr-3">
+    <!-- form -->
+    <div class="col-12 p-2 user-list-container rolepermission-card" style="width: 64vw;">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-2">
+                <div class="container-fluid">
+                    <div class="row table-respnsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var role in Model){
+                                    <tr>
+                                        <td>@role.Roles</td>
+                                        <td class="text-right"><a asp-action="RolePermission" asp-controller="RoleAndPermission" asp-route-roleId="@role.Roleid" asp-route-roleName="@role.Roles"><i class="fa-solid fa-pencil mr-3"></i></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@section Scripts{
+    <script src="~/js/RolePermission.js"></script>
+}

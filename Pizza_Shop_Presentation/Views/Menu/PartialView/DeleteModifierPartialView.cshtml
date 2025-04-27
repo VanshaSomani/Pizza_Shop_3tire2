@@ -1,0 +1,26 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Modifer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form method="post" id="DeleteModifier">
+        <div class="modal-body ps-0 pe-0">
+            <input type="hidden" id="DeleteModifierIdModal" asp-for="@Model.ModifierId">
+            <input type="hidden" id="DeleteModifierGroupIdModal" asp-for="@Model.Modifiergroupid">
+            <div class="d-flex justify-content-center align-item-center"><img
+                    src="../images/toppng.com-warning-icon-2400x2400.png" height="50px" alt=""></div><br>
+            <div class="d-flex justify-content-center align-item-center">
+                <p class="fs-5 mb-1">Are you sure you want to delete this Modifier?</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="d-flex justify-content-center align-items-center w-100">
+                <button type="submit" id="DeleteModifierSubmit" class="btn btn-primary modal_submit_btn me-2">Yes</button>
+                <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                    No
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

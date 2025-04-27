@@ -1,0 +1,79 @@
+@model Pizza_Shop_Repository.ViewModels.KOTViewModel
+@{
+    ViewData["Title"] = "OrdersAppKot";
+    Layout = "_OrderAppLayout";
+}
+<div class="pb-2 pl-4 pr-4 pt-3">
+    <!-- header -->
+    <div class="col-12 pb-0 p-2 user-list-container d-flex flex-row justify-content-between ">
+        <div class="h1 fw-bold text-primary">KOT</div>
+    </div>
+    <!-- Tab -->
+    <div class="col-12 p-2 user-list-container pt-0">
+        <div class="shadow p-0 mb-0 bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Tab Container -->
+                        <div class="col-12 tabs">
+                            <div class="d-flex justify-content-start align-items-center g-2 flex-wrap">
+                                <div class="p-2 d-flex justify-content-center align-items-center me-1 fs-5 text-primary active-menu-option tab-btn"
+                                    id="-1" onclick="GetKotForCategory(this)">
+                                    All
+                                </div>
+                                @foreach (var category in Model.KOTCategorieList)
+                                {
+                                    <div class="p-2 d-flex justify-content-center align-items-center me-1 fs-5 text-secondary tab-btn"
+                                        id="@category.CategoryID" onclick="GetKotForCategory(this)">
+                                        @category.CategoryName
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- KOT Container -->
+    <div class="col-12 p-2 user-list-container tab-content">
+        <div class="shadow p-0 mb-2 bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-2">
+                <div class="container-fluid">
+                    <div class="d-flex flex-row justify-content-between align-items-center flex-wrap">
+                        <div class="h1 fw-bold text-primary" id="SelectedCategoryName">All</div>
+                        <div class="d-flex flex-row justify-content-center align-items-center mb-2">
+                            <div>
+                                <button type="button" id="In Progress" class="btn btn-primary modal_submit_btn me-1 Kot_filter_btn" onclick="KotStatusFilter(this)">In
+                                    Progress</button>
+                            </div>
+                            <div>
+                                <button type="button" id="Ready"
+                                    class="btn btn-outline-primary modal_close_btn me-1 Kot_filter_btn" onclick="KotStatusFilter(this)">Ready</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline-primary modal_close_btn me-1 left-scroll"><i
+                                        class="fa-solid fa-chevron-left"></i></button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-outline-primary modal_close_btn right-scroll"><i
+                                        class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row justify-content-start align-items-center p-0 g-0" id="KOTCardsContainer" style="overflow-x: scroll;">
+                        @Html.Partial("PartialView/KOTCardsPartialView")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="KOTModalContainer">
+
+</div>
+
+@section Scripts {
+    <script src="~/js/OrderAppKot.js"></script>
+}

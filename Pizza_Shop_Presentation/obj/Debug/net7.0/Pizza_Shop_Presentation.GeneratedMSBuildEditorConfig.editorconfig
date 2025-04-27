@@ -1,0 +1,341 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Pizza_Shop_Presentation
+build_property.RootNamespace = Pizza_Shop_Presentation
+build_property.ProjectDir = D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Presentation\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Vansha_final_2\Pizza_Shop_3tire\Pizza_Shop_Presentation
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Customers/Customer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXEN1c3RvbWVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Customers/PartialView/CustomerHistoryModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXFBhcnRpYWxWaWV3XEN1c3RvbWVySGlzdG9yeU1vZGFsUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Customers/PartialView/CustomerListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXFBhcnRpYWxWaWV3XEN1c3RvbWVyTGlzdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Dashboard/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXERhc2hib2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/ErrorPage/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JQYWdlXEFjY2Vzc0RlbmllZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/ErrorPage/NotFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXJyb3JQYWdlXE5vdEZvdW5kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/MenuItems.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxNZW51SXRlbXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/AddExistingModifierModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xBZGRFeGlzdGluZ01vZGlmaWVyTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/AddItemModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xBZGRJdGVtTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/AddModifierGroupModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xBZGRNb2RpZmllckdyb3VwTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/AddModifierModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xBZGRNb2RpZmllck1vZGFsUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/CategoryListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xDYXRlZ29yeUxpc3RQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/DeleteModifierGroupPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xEZWxldGVNb2RpZmllckdyb3VwUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/DeleteModifierPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xEZWxldGVNb2RpZmllclBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/EditItemModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xFZGl0SXRlbU1vZGFsUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/EditModiferGroupModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xFZGl0TW9kaWZlckdyb3VwTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/EditModifierModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xFZGl0TW9kaWZpZXJNb2RhbFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/ItemListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xJdGVtTGlzdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/ModifierGroupListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xNb2RpZmllckdyb3VwTGlzdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/ModifiersListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xNb2RpZmllcnNMaXN0UGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Menu/PartialView/PaginationPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxQYXJ0aWFsVmlld1xQYWdpbmF0aW9uUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppKot/KOT.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBLb3RcS09ULmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppKot/PartialView/KOTCardsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBLb3RcUGFydGlhbFZpZXdcS09UQ2FyZHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppKot/PartialView/KOTModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBLb3RcUGFydGlhbFZpZXdcS09UTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/OrderMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XE9yZGVyTWVudS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/PartialView/AccordianItem.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XFBhcnRpYWxWaWV3XEFjY29yZGlhbkl0ZW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/PartialView/CustomerDetailModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XFBhcnRpYWxWaWV3XEN1c3RvbWVyRGV0YWlsTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/PartialView/ModifierGroupModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XFBhcnRpYWxWaWV3XE1vZGlmaWVyR3JvdXBNb2RhbFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/PartialView/OrderAppItemCardPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XFBhcnRpYWxWaWV3XE9yZGVyQXBwSXRlbUNhcmRQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/PartialView/OrderAppMenuBillSectionPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XFBhcnRpYWxWaWV3XE9yZGVyQXBwTWVudUJpbGxTZWN0aW9uUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/PartialView/OrderCommentModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XFBhcnRpYWxWaWV3XE9yZGVyQ29tbWVudE1vZGFsUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/PartialView/QRcodeModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XFBhcnRpYWxWaWV3XFFSY29kZU1vZGFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppMenu/PartialView/SideBarPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBNZW51XFBhcnRpYWxWaWV3XFNpZGVCYXJQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppTable/OrderTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBUYWJsZVxPcmRlclRhYmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppTable/PartialView/AddWaitingTokenModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBUYWJsZVxQYXJ0aWFsVmlld1xBZGRXYWl0aW5nVG9rZW5Nb2RhbFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppTable/PartialView/OffCanvasCustomerDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBUYWJsZVxQYXJ0aWFsVmlld1xPZmZDYW52YXNDdXN0b21lckRldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppTable/PartialView/OffcanvasWaitinglist.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBUYWJsZVxQYXJ0aWFsVmlld1xPZmZjYW52YXNXYWl0aW5nbGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppWaitingList/OrderWaitingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBXYWl0aW5nTGlzdFxPcmRlcldhaXRpbmdMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppWaitingList/PartialView/AddWaitingTokenModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBXYWl0aW5nTGlzdFxQYXJ0aWFsVmlld1xBZGRXYWl0aW5nVG9rZW5Nb2RhbFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppWaitingList/PartialView/AssignWaitingModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBXYWl0aW5nTGlzdFxQYXJ0aWFsVmlld1xBc3NpZ25XYWl0aW5nTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppWaitingList/PartialView/DeleteWaitingTokenModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBXYWl0aW5nTGlzdFxQYXJ0aWFsVmlld1xEZWxldGVXYWl0aW5nVG9rZW5Nb2RhbFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppWaitingList/PartialView/EditWaitingTokenModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBXYWl0aW5nTGlzdFxQYXJ0aWFsVmlld1xFZGl0V2FpdGluZ1Rva2VuTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/OrderAppWaitingList/PartialView/WaitingListTablePartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJBcHBXYWl0aW5nTGlzdFxQYXJ0aWFsVmlld1xXYWl0aW5nTGlzdFRhYmxlUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Orders/Order.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXE9yZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Orders/PartialView/DownloadInvoicePartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXFBhcnRpYWxWaWV3XERvd25sb2FkSW52b2ljZVBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Orders/PartialView/OrderListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXFBhcnRpYWxWaWV3XE9yZGVyTGlzdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Orders/ViewOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJzXFZpZXdPcmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/RoleAndPermission/RoleList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFuZFBlcm1pc3Npb25cUm9sZUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/RoleAndPermission/RolePermission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFuZFBlcm1pc3Npb25cUm9sZVBlcm1pc3Npb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Shared/_LoginLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Shared/_OrderAppLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9PcmRlckFwcExheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/PartialView/AddSectionModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFBhcnRpYWxWaWV3XEFkZFNlY3Rpb25Nb2RhbFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/PartialView/AddTableModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFBhcnRpYWxWaWV3XEFkZFRhYmxlTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/PartialView/DeleteSectionPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFBhcnRpYWxWaWV3XERlbGV0ZVNlY3Rpb25QYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/PartialView/DeleteTableModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFBhcnRpYWxWaWV3XERlbGV0ZVRhYmxlTW9kYWxQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/PartialView/EditSectionModalViewModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFBhcnRpYWxWaWV3XEVkaXRTZWN0aW9uTW9kYWxWaWV3TW9kYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/PartialView/EditTableModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFBhcnRpYWxWaWV3XEVkaXRUYWJsZU1vZGFsUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/PartialView/SectionListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFBhcnRpYWxWaWV3XFNlY3Rpb25MaXN0UGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/PartialView/TableListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFBhcnRpYWxWaWV3XFRhYmxlTGlzdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TableAndSection/TableSection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVBbmRTZWN0aW9uXFRhYmxlU2VjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TaxesAndFees/PartialView/AddTaxModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGF4ZXNBbmRGZWVzXFBhcnRpYWxWaWV3XEFkZFRheE1vZGFsUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TaxesAndFees/PartialView/DeleteTaxModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGF4ZXNBbmRGZWVzXFBhcnRpYWxWaWV3XERlbGV0ZVRheE1vZGFsUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TaxesAndFees/PartialView/EditTaxModalPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGF4ZXNBbmRGZWVzXFBhcnRpYWxWaWV3XEVkaXRUYXhNb2RhbFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TaxesAndFees/PartialView/TaxesListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGF4ZXNBbmRGZWVzXFBhcnRpYWxWaWV3XFRheGVzTGlzdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/TaxesAndFees/TaxFees.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGF4ZXNBbmRGZWVzXFRheEZlZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/UserLogin/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckxvZ2luXEZvcmdvdFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/UserLogin/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckxvZ2luXExvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/UserLogin/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckxvZ2luXFJlc2V0UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/User/AddUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxBZGRVc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/User/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/User/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0VXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/User/PartialView/UserListPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxQYXJ0aWFsVmlld1xVc2VyTGlzdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/User/UserList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/User/UserProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vansha_final_2/Pizza_Shop_3tire/Pizza_Shop_Presentation/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-fb9v2vy9qz

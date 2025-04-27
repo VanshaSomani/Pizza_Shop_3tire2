@@ -1,0 +1,175 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel;
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@* <script src="~/Scripts/jquery.unobtrusive*"></script>
+<script src="~/Scripts/jquery.validate*"></script> *@
+
+<form method="post" id="AddItemModalForm" enctype="multipart/form-data">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+            Add New Menu Item
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row d-flex justify-content-center">
+            <div class="col-7 m-1">
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <select type="text" class="form-select" id="CategoryDropDown" aria-label="Category"
+                                asp-items="ViewBag.Categories" asp-for="@Model.Categoryid">
+                                <option selected value="">Select Category</option>
+                            </select>
+                            <label for="floatingInput">Category</label>
+                            <span class="text-danger" asp-validation-for="@Model.Categoryid"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" asp-for="@Model.Itemname" class="form-control" id="floatingInput"
+                                placeholder="Name" required />
+                            <label for="floatingInput">Name</label>
+                            <span class="text-danger" asp-validation-for="@Model.Itemname"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <select type="text" class="form-select" id="floatingSelect" aria-label="Type"
+                                asp-for="@Model.ItemType" required>
+                                <option selected value="">select type</option>
+                                <option value="Veg">Veg</option>
+                                <option value="Non-Veg">Non-Veg</option>
+                                <option value="Vegan">Vegan</option>
+                            </select>
+                            <label for="floatingInput">Type</label>
+                            <span class="text-danger" asp-validation-for="@Model.ItemType"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingNumber" placeholder="Rate"
+                                asp-for="@Model.Rate" />
+                            <label for="floatingInput">Rate</label>
+                            <span class="text-danger" asp-validation-for="@Model.Rate"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingNumber" placeholder="Quantity"
+                                asp-for="@Model.Quantity" />
+                            <label for="floatingInput">Quantity</label>
+                            <span class="text-danger" asp-validation-for="@Model.Quantity"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <select type="text" class="form-select" id="floatingSelect" aria-label="Unit"
+                                asp-for="@Model.Unit" required>
+                                <option selected value="">select unit</option>
+                                <option value="g">Gram</option>
+                                <option value="kg">KiloGram</option>
+                                <option value="ml">MilliLiter</option>
+                                <option value="l">Liter</option>
+                            </select>
+                            <label for="floatingInput">Unit</label>
+                            <span class="text-danger" asp-validation-for="@Model.Unit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check form-switch ml-4 mt-3">
+                            <span class="d-flex justify-content-between align-items-center">
+                                <input class="form-check-input" type="checkbox" id="addItemAvilable"
+                                    asp-for="@Model.Availlable" style="transform: scale(1.2);height: 100%; width: 35%;"/>
+                                <label class="form-check-label ml-2" for="addItemAvilable">Available</label>
+                                <span class="text-danger" asp-validation-for="@Model.Availlable"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-check form-switch ml-4 mt-3">
+                            <span class="d-flex justify-content-between align-items-center">
+                                <input class="form-check-input" type="checkbox" id="addItemDefaultTax"
+                                    asp-for="@Model.Defaulttax" style="transform: scale(1.2);height: 100%; width: 35%;"/>
+                                <label class="form-check-label ml-2" for="addItemDefaultTax">Default tax</label>
+                                <span class="text-danger" asp-validation-for="@Model.Defaulttax"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingNumber" placeholder="Tax Percentage"
+                                asp-for="@Model.Taxpercentage" />
+                            <label for="floatingInput">Tax Percentage</label>
+                            <span class="text-danger" asp-validation-for="@Model.Taxpercentage"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingNumber" placeholder="Short Code"
+                                asp-for="@Model.Code" />
+                            <label for="floatingInput">Short Code</label>
+                            <span class="text-danger" asp-validation-for="@Model.Code"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                placeholder="Discription" asp-for="@Model.Itemdesc"></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.Itemdesc"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="add-item-upload-file" class="file-upload w-100">
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    <i class="fa-solid fa-cloud-arrow-up fs-3" id="add-item-file-upload"></i>
+                                    <span id="add-item-drag-drop">Drag and drop the file</span>
+                                    <img src="" alt="" srcset="" height="40px" id="add-item-img-preview" style="display: none;">
+                                    <span id="Add-Item-Img-Name"></span>
+                                </div>
+                            </label>
+                            <input type="file" class="d-none" id="add-item-upload-file" asp-for="@Model.Imgfile" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 m-1 add-item-modal-bg">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <select type="text" class="form-select" id="AddItemModierDropDown" aria-label="Role"
+                                aria-placeholder="Select modifier group" asp-items="ViewBag.ModifierGroup" onchange="">
+                                <option selected>Select modifier group</option>
+                            </select>
+                            @* <span class="text-danger" asp-validation-for="Modifiergroupid"></span> *@
+                        </div>
+                    </div>
+                </div>
+                <div id="SelectModifireGroupSection" style="height: 390px; overflow-x: hidden;">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="AddItemModalSubmit" class="btn btn-primary modal_submit_btn">Save</button>
+        <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

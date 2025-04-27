@@ -1,0 +1,67 @@
+@model Pizza_Shop_Repository.ViewModels.TaxesAndFeesViewModel
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Tax</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form id="EditTaxForm" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-floating mb-3">
+                    <input type="hidden" asp-for="@Model.TaxId">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Name"
+                        asp-for="@Model.TaxName">
+                    <label for="floatingInput">Name</label>
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.TaxName"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-floating">
+                    <select class="form-select" id="EditTaxTypeDropDown" aria-label="Floating label select example"
+                        asp-for="@Model.TaxType">
+                        <option value="">Tax Type</option>
+                        <option value="percentage">Percentage</option>
+                        <option value="fixed amount">Fixed Amount</option>
+                    </select>
+                    <label for="floatingSelect">Select Tax Type</label>
+                    <span class="text-danger" asp-validation-for="@Model.TaxType"></span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Tax Amount"
+                        asp-for="@Model.TaxAmount">
+                    <label for="floatingInput">Tax Amount</label>
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.TaxAmount"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="form-check form-switch ml-4 mt-3">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                        asp-for="@Model.IsEnabled" />
+                    <label class="form-check-label" for="flexSwitchCheckChecked">IsEnabled</label>
+                    <span class="text-danger" asp-validation-for="@Model.IsEnabled"></span>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-check form-switch ml-4 mt-3">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                        asp-for="@Model.DefaultTax" />
+                    <label class="form-check-label" for="flexSwitchCheckChecked">DefaultTax</label>
+                    <span class="text-danger" asp-validation-for="@Model.DefaultTax"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="EditTaxModalSubmit" class="btn btn-primary modal_submit_btn">Save</button>
+        <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+</form>

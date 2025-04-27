@@ -1,0 +1,89 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Existing Modifer Group</h5>
+    <button type="button" id="AddExModifierModalDismiss" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <div class="row mb-2">
+        <div class="col-8">
+            <input type="text" class="form-control" id="AddExistingModifierSearchBox" aria-describedby="textHelp"
+                placeholder="Search" />
+            <span class="input-countainer-icon" style="margin-right: 1em;"><i
+                    class="fa-solid fa-magnifying-glass"></i></span>
+        </div>
+    </div>
+    <div id="ModifierSection">
+        <input type="hidden" id="SelectExModifierId">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <i class="fa-regular fa-square-minus"></i>
+                    </th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Rate</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>  
+                @foreach (var modifier in Model.ModifiersList)
+                {
+                    <tr id="@modifier.Modifierid">
+                        <td class="p-1">
+                            <div class="form-check" id="@modifier.Modifiername">
+                                <input class="form-check-input border border-dark EXModiferCheckBox" type="checkbox" 
+                                    id="@modifier.Modifierid" onclick="getAllSelectExModifier(this)"/>
+                            </div>
+                        </td>
+                        <td class="p-1">
+                            <img src="../images/dining-menu.png" height="20px" alt="" />@modifier.Modifiername
+                        </td>
+                        <td class="p-1">@modifier.Unit</td>
+                        <td class="p-1">@modifier.Rate</td>
+                        <td class="p-1">@modifier.Quantity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="bg-white d-flex justify-content-end p-2">
+        <!-- pagination -->
+        <div class="d-flex flex-row justify-content-center align-item-center">
+            <div class="d-flex flex-col justify-content-center align-items-center pr-2">Item per page</div>
+            <div class="pr-2">
+                <select class="form-select" id="EXModifierPageSizeDropDown" aria-label="Default select example" onchange="EXModifierPageSizeDropDownchange()">
+                    <option value="3" selected="@(Model.ModifierPaggination.PageSize == 3 ? "selected" : null)">3</option>
+                    <option value="5" selected="@(Model.ModifierPaggination.PageSize == 5 ? "selected" : null)">5</option>
+                    <option value="10" selected="@(Model.ModifierPaggination.PageSize == 10 ? "selected" : null)">10</option>
+                    <option value="15" selected="@(Model.ModifierPaggination.PageSize == 15 ? "selected" : null)">15</option>
+                </select>
+            </div>
+            <div class="d-flex flex-col justify-content-center align-items-center pr-2">
+                Showing @(Model.ModifierPaggination.MinRow) - @(Model.ModifierPaggination.MaxRow) of @(Model.ModifierPaggination.TotalRecord)
+            </div>
+            <a class="btn border rounded mr-2" onclick="EXModifierpagginationArrowControll(@(Model.ModifierPaggination.CurrentPage - 1) ,
+            @Model.ModifierPaggination.PageSize , @Model.ModifierPaggination.TotalPage)" @(Model.ModifierPaggination.CurrentPage == 1 ? "disable" : "")><i class="fa-solid
+            fa-chevron-left"></i></a>
+            <a class="btn border rounded" onclick="EXModifierpagginationArrowControll(@(Model.ModifierPaggination.CurrentPage + 1) ,
+            @Model.ModifierPaggination.PageSize , @Model.ModifierPaggination.TotalPage )" @(Model.ModifierPaggination.CurrentPage < Model.ModifierPaggination.TotalPage ? "" : "disable") ><i
+            class="fa-solid fa-chevron-right"></i></a>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="modal-footer d-flex justify-content-start align-items-start">
+    <button type="submit" id="AddExModifierModalSubmit" class="btn btn-primary modal_submit_btn">Add</button>
+    <button type="button" id="AddExModifierModalCancle" class="btn btn-outline-primary modal_close_btn">
+        Cancel
+    </button>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {            
+            
+        })
+    </script>
+}

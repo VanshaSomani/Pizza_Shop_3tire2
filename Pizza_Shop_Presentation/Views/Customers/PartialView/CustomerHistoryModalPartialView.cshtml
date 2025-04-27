@@ -1,0 +1,93 @@
+@model Pizza_Shop_Repository.ViewModels.CustomerListViewModel
+
+    <div class="modal-header">
+        <h5 class="modal-title">Customer History</h5>
+        <button type="button" class="btn-close CustomerDateRangeFormCancle" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
+    <div class="modal-body bg-light align-items-center">
+        <div class="row mb-2">
+            <div class="col-6 col-md-6">
+                <div class="bg-white p-2 rounded shadow ">
+                    <div
+                        class="d-flex align-items-center justify-content-between pt-2 pb-2 border border-secondary p-1 rounded mb-1">
+                        <div>
+                            Name
+                        </div>
+                        <div class="fw-bold">
+                            @Model.CustomerHistory.Name
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex align-items-center justify-content-between pt-2 pb-2 border border-secondary p-1 rounded mb-1">
+                        <div>
+                            MobileNumber
+                        </div>
+                        <div class="fw-bold">
+                            @Model.CustomerHistory.PhoneNo
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex align-items-center justify-content-between pt-2 pb-2 border border-secondary p-1 rounded mb-1">
+                        <div>
+                            MaxOrder
+                        </div>
+                        <div class="fw-bold">
+                            @Model.CustomerHistory.MaxOrder
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="d-flex flex-column justify-content-between h-100">
+                    <div class="d-flex align-items-center justify-content-between bg-white p-2 rounded border shadow ">
+                        <div>Average Bill</div>
+                        <div class="fw-bold">@Model.CustomerHistory.AverageBill</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between bg-white p-2 rounded border shadow ">
+                        <div>Coming Since</div>
+                        <div class="fw-bold">@Model.CustomerHistory.ComingSince</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between bg-white p-2 rounded border shadow ">
+                        <div>Visits</div>
+                        <div class="fw-bold">@Model.CustomerHistory.Visits</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="col-12 bg-white p-2 rounded shadow">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-secondary">
+                            <th scope="col">Order Date</th>
+                            <th scope="col">OrderType</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Items</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model.CustomerHistory.CustomerHistoryData.Count() == 0){
+                            <tr>
+                                <th colspan="5">
+                                    No Data Found
+                                </th>
+                            </tr>
+                        }
+                        else{
+                            @foreach(var o in Model.CustomerHistory.CustomerHistoryData){
+                                <tr>
+                                    <td>@o.OrderDate.ToString("dd-MM-yyyy")</td>
+                                    <td>@o.OrderType</td>
+                                    <td>@o.Payment</td>
+                                    <td>@o.Items</td>
+                                    <td>@o.Amount</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

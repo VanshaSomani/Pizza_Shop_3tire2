@@ -1,0 +1,31 @@
+@model Pizza_Shop_Repository.ViewModels.OffCanvasWaitingListViewModel
+<div class="d-flex flex-row justify-content-between align-items-center">
+    <h3 class="text-primary">Waiting List</h3>
+    <button type="button" class="btn-close text-reset me-2 mb-2" data-bs-dismiss="offcanvas"
+        aria-label="Close"></button>
+</div>
+<table class="w-100 table">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">No. of Person</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.WaitingList)
+        {
+            <tr>
+                <td scope="row">
+                    <div class="form-check">
+                        <input class="form-check-input customerradiobtn" type="radio" name="flexRadioDefault" data-customerid="@c.CustomerId" id="flexRadioDefault1">
+                    </div>
+                </td>
+                <td>#@c.CustomerId</td>
+                <td>@c.CustomerName</td>
+                <td>@c.NoOfPerson</td>
+            </tr>
+        }
+    </tbody>
+</table>

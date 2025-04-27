@@ -1,0 +1,47 @@
+@model Pizza_Shop_Repository.ViewModels.MenuItemModalViewModel
+<div class="modal fade" data-bs-backdrop="static" id="ItemModifierGroupModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" name="" value="@Model.ItemId">
+                <h5 class="modal-title" id="exampleModalLabel">@Model.ItemName</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="height: 200px; overflow-y: auto;">
+                    @foreach(var mg in Model.ModifierGroupList){
+                        <div class="mb-1">
+                            <span class="fw-bold text-secondary me-1" id="modifiergroup-name-@mg.ModifierGroupId" data-modifiergroupid="@mg.ModifierGroupId">
+                                @mg.ModifierGroupName
+                            </span>
+                            <span class="text-secondary">(You can choose Minimun-@mg.Min & Maximum-@mg.Max options)</span>
+                        </div>
+                        <div class="d-flex flex-row justify-content-start flex-wrap min-max" data-modifiergroupid="@mg.ModifierGroupId" data-min="@mg.Min" data-max="@mg.Max">
+                            @foreach(var mod in mg.ModifierList){
+                                <div
+                                    class="card position-relative d-flex flex-column justify-content-start mb-3 me-1 shadow bg-white rounded modifier_card" id="modifier_card_@mod.ModifierId" data-modifierid="@mod.ModifierId" data-modifiergroupid="@mg.ModifierGroupId"
+                                    data-modifiername="@mod.ModifierName" data-modifierprice="@mod.Price">
+                                    <div class="ms-2 fs-7" data-modifierid="@mod.ModifierId" >
+                                        @mod.ModifierName
+                                    </div>
+                                    <div class="ms-2 fs-7">
+                                        ₹@mod.Price
+                                    </div>
+                                    <div class="vegan-ribbon"></div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" id="ItemModifierGroupModalModalSubmit"
+                    class="btn btn-primary modal_submit_btn" data-itemid="@Model.ItemId" data-itemname="@Model.ItemName" data-itemprice="@Model.ItemPrice" data-itemtax="@Model.ItemTax">Add</button>
+                <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

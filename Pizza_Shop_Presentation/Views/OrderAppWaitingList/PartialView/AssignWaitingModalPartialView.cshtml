@@ -1,0 +1,56 @@
+@model Pizza_Shop_Repository.ViewModels.AssignWaitingTokenViewModel
+<div class="modal-header">
+    <h5 class="modal-title" id="staticBackdropLabel">Assign Token</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form id="AssignWaitingTokenForm" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-6">
+                <input type="hidden" asp-for="@Model.WaitingListID">
+                <input type="hidden" asp-for="@Model.CustomerId">
+                <input type="hidden" id="AssignWaitingPersonCount" data-waitingcount="@Model.WaitingNoOfPerson" asp-for="@Model.WaitingNoOfPerson">
+                <div class="form-floating">
+                    <select class="form-select" id="WaitingSectionList" aria-label="Floating label select example"
+                    data-waitingid="@Model.WaitingListID" asp-for="@Model.SectionId">
+                        <option value="">Select Section</option>
+                        @foreach (var s in Model.SectionList)
+                        {
+                            <option value="@s.SectionId">@s.SectionName</option>
+                        }
+                    </select>
+                    <label for="floatingSelect">Section*</label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-floating">
+                <div class="dropdown">
+                    <button class="form-select btn-lg text-start" type="button" id="tableDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Tables
+                    </button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="tableDropdown" style="max-height: 200px; overflow-y: auto;">
+                        @foreach (var t in Model.TableList)
+                        {
+                            <li>
+                                <div class="form-check ms-2">
+                                    <input class="form-check-input assigncheckbox" type="checkbox" name="SelectedTableIds" value="@t.TableId" id="table_@t.TableId" data-tableid="@t.TableId" data-tablecapacity="@t.TableCapacity">
+                                    <label class="form-check-label" for="table_@t.TableId">
+                                        @t.TableName
+                                    </label>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="AssignWaitingTokenFormSubmit" class="btn btn-primary modal_submit_btn">Assign</button>
+        <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+</form>

@@ -1,0 +1,212 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel;
+<form method="post" enctype="multipart/form-data" id="EditItemModalForm" >
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+            Edit Menu Item
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row d-flex justify-content-center">
+            <div class="col-7 m-1">
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="hidden" asp-for="@Model.ExistingFile">
+                            <input type="hidden" id="Edit-item-Id" asp-for="@Model.Itemid">
+                            <select type="text" class="form-select" aria-label="Category"
+                                asp-items="@ViewBag.Categories" asp-for="@Model.Categoryid" id="EditItemCategoryId">
+                                <option selected value="">Select Category</option>
+                            </select>
+                            <label for="floatingInput">Category</label>
+                            <span class="text-danger" asp-validation-for="Categoryid"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" asp-for="@Model.Itemname" class="form-control" id="floatingInput"
+                                placeholder="Name"/>
+                            <label for="floatingInput">Name</label>
+                            <span class="text-danger" asp-validation-for="Itemname"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <select type="text" class="form-select" id="floatingSelect" aria-label="Type"
+                                asp-for="@Model.ItemType">
+                                <option selected value="">select type</option>
+                                <option value="Veg">Veg</option>
+                                <option value="Non-Veg">Non-Veg</option>
+                                <option value="Vegan">Vegan</option>
+                            </select>
+                            <label for="floatingInput">Type</label>
+                            <span class="text-danger" asp-validation-for="ItemType"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingNumber" placeholder="Rate"
+                                asp-for="@Model.Rate" />
+                            <label for="floatingInput">Rate</label>
+                            <span class="text-danger" asp-validation-for="Rate"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingNumber" placeholder="Quantity"
+                                asp-for="@Model.Quantity" />
+                            <label for="floatingInput">Quantity</label>
+                            <span class="text-danger" asp-validation-for="Quantity"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <select type="text" class="form-select" id="floatingSelect" aria-label="Unit"
+                                asp-for="@Model.Unit">
+                                <option selected value="">select unit</option>
+                                <option value="g">Gram</option>
+                                <option value="kg">KiloGram</option>
+                                <option value="ml">MilliLiter</option>
+                                <option value="l">Liter</option>
+                            </select>
+                            <label for="floatingInput">Unit</label>
+                            <span class="text-danger" asp-validation-for="Unit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-check form-switch ml-4 mt-3">
+                            <span class="d-flex justify-content-between align-items-center">
+                                <input class="form-check-input" type="checkbox" id="editItemAvailable"
+                                    asp-for="@Model.Availlable" style="transform: scale(1.2);height: 100%; width: 35%;"/>
+                                <label class="form-check-label ml-2" for="editItemAvailable">Available</label>
+                                <span class="text-danger" asp-validation-for="Availlable"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-check form-switch ml-4 mt-3">
+                            <span class="d-flex justify-content-between align-items-center">
+                                <input class="form-check-input" type="checkbox" id="editItemDefaultTax"
+                                    asp-for="@Model.Defaulttax" style="transform: scale(1.2);height: 100%; width: 35%;"/>
+                                <label class="form-check-label ml-2" for="editItemDefaultTax">Default tax</label>
+                                <span class="text-danger" asp-validation-for="Defaulttax"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingNumber" placeholder="Tax Percentage"
+                                asp-for="@Model.Taxpercentage" />
+                            <label for="floatingInput">Tax Percentage</label>
+                            <span class="text-danger" asp-validation-for="Taxpercentage"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingNumber" placeholder="Short Code"
+                                asp-for="@Model.Code" />
+                            <label for="floatingInput">Short Code</label>
+                            <span class="text-danger" asp-validation-for="Code"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                placeholder="Discription" asp-for="@Model.Itemdesc"></textarea>
+                            <span class="text-danger" asp-validation-for="Itemdesc"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="edit-upload-file" class="file-upload w-100">
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    @if(Model.ExistingFile == null){
+                                        <i class="fa-solid fa-cloud-arrow-up fs-3" id="edit-item-file-upload"></i>
+                                    }
+                                    <img src="~/ItemImages/@Model.ExistingFile" alt="" height="40px" id="edit-item-img-preview" style="display: block;">
+                                    <span id="edit-item-drag-drop">Drag and drop the file</span>
+                                    <span id="edit-item-img-name"></span>
+                                </div>
+                            </label>
+                            <input type="file" class="d-none" id="edit-upload-file" asp-for="@Model.Imgfile"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 m-1 add-item-modal-bg">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <select type="text" class="form-select" id="EditItemModifierGroupDropDown" aria-label="Role"
+                                aria-placeholder="Select modifier group" asp-items="ViewBag.ModifierGroup">
+                                <option selected>Select modifier group</option>
+                            </select>
+                            <span class="text-danger" asp-validation-for="Modifiergroupid"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="ExistingModifireGroupSectionEditItem" style="height: 390px; overflow-x: hidden;">
+                    @foreach (var ItemModifier in Model.itemModifierGroupsList)
+                    {
+                        <div class="row px-3" id="EditmodifierGroup-@ItemModifier.ModifierGroupId">
+                            <div class="col-12 d-flex justify-content-between align-items-center">
+                                <div class="h5" id="@ItemModifier.ModifierGroupId">@ItemModifier.ModifierGroup.Mgname</div>
+                                <div class="h5"><i class="fa-solid fa-trash" onClick="DeleteExistingMGFromEditItems(@ItemModifier.ModifierGroupId)"></i></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="">
+                                    <div class="col-12 d-flex justify-content-center align-items-center p-0">
+                                        <div class="col-6 p-1 pe-2 d-flex justify-content-start">
+                                            <input type="hidden" id="edit-modifier-id" asp-for="@ItemModifier.ModifierGroupId">
+                                            <input type="number" class="form-control rounded-pill mx-1 min-modifier"
+                                                placeholder="Min Modifiers" min="0" id="edit-min-mod-@ItemModifier.ModifierGroupId" asp-for="@ItemModifier.Min">
+                                        </div>
+                                        <div class="col-6 p-1 ps-2 d-flex justify-content-end">
+                                            <input type="number" class="form-control rounded-pill mx-1 max-modifier"
+                                                placeholder="Max Modifiers" min="0" id="edit-max-mod-@ItemModifier.ModifierGroupId" asp-for="@ItemModifier.Max">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                                <table class="mx-2 w-100">
+                                    @foreach(var row in ItemModifier.ModifierGroup.ModifierModifierGroupMappings){
+                                        <tr>
+                                            <td>
+                                                <li>@row.Modifier.Modifiername</li>
+                                            </td>
+                                            <td class="text-end">@row.Modifier.Rate</td>
+                                            </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="EditItemModalSubmit" class="btn btn-primary modal_submit_btn">Save</button>
+        <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
+}

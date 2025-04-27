@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="p-2 pl-3 pr-3">
+    <!-- header -->
+    <div class="col-12 p-2 user-list-container d-flex flex-row justify-content-between">
+        <div class="h3 fw-bold text-primary">DashBoard</div>
+    </div>
+    <!-- Form -->
+</div>
+@section Scripts {
+    <script>
+        function sidebarColorChange(){
+            let sidebarAnchor = document.getElementsByClassName("sidebar-anchor");
+            for(let i = 0 ; i < sidebarAnchor.length ; i++){
+                sidebarAnchor[i].classList.remove("active-sidebar");
+                sidebarAnchor[i].querySelector(".sidebar-name").classList.add("text-dark");
+                sidebarAnchor[i].querySelector(".sidebar-name").classList.remove("text-primary");
+            }
+        }
+        sidebarColorChange();
+        document.getElementById("Dashboard-Sidebar").classList.add("active-sidebar");
+        document.getElementById("Dashboard-Sidebar").querySelector(".sidebar-name").classList.remove("text-dark");
+        document.getElementById("Dashboard-Sidebar").querySelector(".sidebar-name").classList.add("text-primary");
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

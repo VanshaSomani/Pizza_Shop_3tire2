@@ -1,0 +1,92 @@
+@model Pizza_Shop_Repository.ViewModels.OrderListViewModel
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "_Layout";
+}
+<div class="p-2 pl-3 pr-3">
+    <!-- header -->
+    <form id="orderForm">
+        <div class="col-12 p-2 user-list-container d-flex justify-content-between order-header">
+            <div class="h3 fw-bold text-primary mr-2">Orders</div>
+            <div class="d-flex justify-content-center align-item-center order-date-filter-container">
+                <div class="d-flex flex-row align-items-center justify-content-center">
+                    <div class="input-countainer mr-2 input-group input-group-lg data-input-holder">
+                        <input type="text" class="form-control" id="OrderSearchBox" placeholder="Search"
+                            name="searchcriteria">
+                        <button class="input-countainer-icon border-0 bg-white"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                    <div class="mr-2 input-group input-group-lg data-input-holder">
+                        <select class="form-select " id="OrderStatusDropDown" aria-label="Default select example">
+                            <option selected value="">All Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Served">Served</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancled</option>
+                            <option value="On Hold">On Hold</option>
+                            <option value="Failed">Failed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex flex-row align-items-center justify-content-center">
+                    <div class="mr-2 input-group input-group-lg data-input-holder">
+                        <select class="form-select" id="OrderTimeDropDown" aria-label="Default select example">
+                            <option selected value="">All Time</option>
+                            <option value="7">Last 7 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="Month">Current Month</option>
+                        </select>
+                    </div>
+                    <div class="data-input-holder">
+                        <a class="btn mr-2 btn-primary btn-lg text-light d-flex flex-row justify-content-center align-items-center"
+                            id="ExportOrder">
+                            <i class="fa-solid fa-file-export mr-1"></i>
+                            <span class="d-flex flex-column justify-content-center fw-bolder">Export</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 p-2 user-list-container d-flex justify-content-end order-date-filter-container">
+            <div class="d-flex flex-row align-items-center justify-content-center date-holder">
+                <div class=" mr-2 data-input-holder">
+                    <div class="form-floating">
+                        <input id="FromDate" class="form-control order_input_height" type="date" />
+                        <label for="FromDate">From Date</label>
+                    </div>
+                </div>
+                <div class=" mr-2 data-input-holder">
+                    <div class="form-floating">
+                        <input id="ToDate" class="form-control order_input_height" type="date" />
+                        <label for="ToDate">To Date</label>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-center">
+                <div class="mr-2 data-input-holder">
+                    <button type="button" id="IntervalSerachBtn"
+                        class="btn btn-primary btn-lg order_input_height data-btn-holder">Search</button>
+                </div>
+                <div class="data-input-holder mr-2">
+                    <button type="reset" id="OrderFormBtn"
+                        class="btn btn-outline-primary btn-lg order_input_height data-btn-holder">Clear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--Order table -->
+    <div class="col-12 p-2 user-list-container">
+        <div class="table-respnsive shadow p-3 mb-5 bg-white rounded table-overflow">
+            @Html.Partial("PartialView/OrderListPartialView", Model)
+        </div>
+    </div>
+</div>
+
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+@section Scripts{
+    <script src="~/js/Order.js"></script>
+}

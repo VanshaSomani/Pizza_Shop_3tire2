@@ -1,0 +1,61 @@
+@model Pizza_Shop_Repository.ViewModels.MenuCustomerDetailViewModel
+<div class="modal fade" data-bs-backdrop="static" id="CustomerDetailModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Customer Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="CustomerDetailModalForm" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="hidden" asp-for="@Model.CustomerId">
+                                <input type="hidden" asp-for="@Model.OrderId">
+                                <input type="text" class="form-control" id="CustomerDetailName" placeholder="Name"
+                                    asp-for="@Model.CustomerName">
+                                <label for="CustomerDetailName">Name* </label>
+                                <span class="text-danger" asp-validation-for="@Model.CustomerName"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="CustomerDetailMobileNo"
+                                    placeholder="Mobile No" asp-for="@Model.PhoneNo">
+                                <label for="CustomerDetailMobileNo">Mobile Number* </label>
+                                <span class="text-danger" asp-validation-for="@Model.PhoneNo"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="CustomerDetailNoOfPerson"
+                                    placeholder="No Of Person" asp-for="@Model.NoOfPerson">
+                                <label for="CustomerDetailNoOfPerson">Number Of Person* </label>
+                                <span class="text-danger" asp-validation-for="@Model.NoOfPerson"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="CustomerDetailEmail" placeholder="Email"
+                                asp-for="@Model.Email" disabled>
+                            <label for="CustomerDetailEmail">Email* </label>
+                            <span class="text-danger" asp-validation-for="@Model.Email"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="CustomerDetailModalFormSubmit"
+                        class="btn btn-primary modal_submit_btn">Save</button>
+                    <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\bin\Debug\net7.0\Pizza_Shop_Services.deps.json
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\bin\Debug\net7.0\Pizza_Shop_Services.dll
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\bin\Debug\net7.0\Pizza_Shop_Services.pdb
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\bin\Debug\net7.0\Pizza_Shop_Repository.dll
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\bin\Debug\net7.0\Pizza_Shop_Repository.pdb
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\Pizza_Shop_Services.csproj.AssemblyReference.cache
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\Pizza_Shop_Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\Pizza_Shop_Services.AssemblyInfoInputs.cache
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\Pizza_Shop_Services.AssemblyInfo.cs
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\Pizza_Shop_Services.csproj.CoreCompileInputs.cache
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\Pizza_Shop_Services.csproj.CopyComplete
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\Pizza_Shop_Services.dll
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\refint\Pizza_Shop_Services.dll
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\Pizza_Shop_Services.pdb
+D:\Vansha_tava_final\TatvaSoft_Project\Pizza_Shop_3tire\Pizza_Shop_Services\obj\Debug\net7.0\ref\Pizza_Shop_Services.dll

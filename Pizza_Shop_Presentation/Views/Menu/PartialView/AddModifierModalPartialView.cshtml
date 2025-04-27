@@ -1,0 +1,80 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Modifier</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form id="AddModifier"  method="post">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-floating">
+                        <select class="form-select" id="ModifierGroupDropDown" aria-label="Floating label select example"
+                            asp-items="ViewBag.ModifierGroup" asp-for="@Model.Modifiergroupid">
+                            <option value="">Select Modifier Group</option>
+                        </select>
+                        <label for="floatingSelect">Modifier Group</label>
+                        <span class="text-danger" asp-validation-for="Modifiergroupid"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Name" asp-for="@Model.Modifiername">
+                        <label for="floatingInput">Name</label>
+                        <span class="text-danger" asp-validation-for="Modifiername"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="Rate" asp-for="@Model.Rate">
+                        <label for="floatingInput">Rate</label>
+                        <span class="text-danger" asp-validation-for="Rate"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput" placeholder="Quantity" asp-for="@Model.Quantity">
+                        <label for="floatingInput">Quantity</label>
+                        <span class="text-danger" asp-validation-for="Quantity"></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" asp-for="@Model.Unit" required>
+                            <option value="">Select Unit</option>
+                            <option value="g">g</option>
+                            <option value="kg">kg</option>
+                            <option value="mg">mg</option>
+                            <option value="pcs">pcs</option>
+                        </select>
+                        <label for="floatingSelect">Unit</label>
+                        <span class="text-danger" asp-validation-for="Unit"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here"
+                            id="floatingTextarea" asp-for="@Model.Modifierdesc"></textarea>
+                        <label for="floatingTextarea">Description</label>
+                        <span class="text-danger" asp-validation-for="Modifierdesc"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" id="AddModifierSubmit" class="btn btn-primary modal_submit_btn">Save</button>
+            <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">Close</button>
+        </div>
+    </form>
+
+
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@section Scripts{
+    <script>
+        
+    </script>
+}

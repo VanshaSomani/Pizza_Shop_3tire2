@@ -1,0 +1,142 @@
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@model Pizza_Shop_Repository.ViewModels.TableSectionViewModel
+@inject IHttpContextAccessor accessor;
+@{
+    ViewData["Title"] = "TableSection";
+    Layout = "_Layout";
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new UserLayoutViewModel();
+}
+<div class="p-2 pl-3 pr-3">
+    <!-- header -->
+    <div class="col-12 p-2 user-list-container d-flex flex-row justify-content-between">
+        <div class="h3 fw-bold text-primary">Table/Section</div>
+    </div>
+    <!-- Items Container -->
+    <div class="col-12 p-2 user-list-container tab-content" id="tab1">
+        <div class="shadow p-0 mb-2 bg-white section_container rounded">
+            <div class="bg-white d-flex justify-content-end p-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Section -->
+                        <div class="col-lg-3 section_container col-md-12 p-2 bg-light">
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <div class="fw-bold text-primary fs-4">Sections</div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "TableAndSection" && p.Addandeditpermission)){
+                                            <a href="" class="btn btn-outline-primary fs-7" data-bs-toggle="modal"
+                                                data-bs-target="#AddSectionModal"><i class="fa-solid fa-plus"></i></a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Section table -->
+                            <div class="col-12 table table-container-scroll">
+                                <table class="table table-light">
+                                    <tbody class="category-table-body">
+                                        @Html.Partial("PartialView/SectionListPartialView", Model)
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Table -->
+                        <div class="col-lg-9 col-md-12 p-2">
+                            <div class="col-12 p-0 pt-1 pb-1 mb-1">
+                                <div class="d-flex flex-row justify-content-start align-items-center">
+                                    <div class="fw-bold text-primary fs-4">Tables</div>
+                                </div>
+                            </div>
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2">
+                                <div class="d-flex flex-row justify-content-end align-items-center">
+                                    <div class="input-countainer mr-2">
+                                        <input type="text" class="form-control" aria-describedby="textHelp"
+                                            placeholder="Search" id="TableSearchBox" />
+                                        <span class="input-countainer-icon"><i
+                                                class="fa-solid fa-magnifying-glass"></i></span>
+                                    </div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "TableAndSection" && p.Isdeletepermission)){
+                                            <a class="btn btn-outline-secondary mr-2" title="Delete Multiple Table" onclick="TableMassDelete()"><i class="fa-solid fa-trash"></i></a>
+                                        }
+                                    </div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "TableAndSection" && p.Addandeditpermission)){
+                                            <a class="btn btn-primary text-light" onclick="AddTable()"><i
+                                                    class="fa-solid fa-plus mr-1"></i>New
+                                                Table</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- table -->
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2 right_section table-overflow">
+                                @Html.Partial("PartialView/TableListPartialView", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Section Modal -->
+<div class="modal fade" id="AddSectionModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        @Html.Partial("PartialView/AddSectionModalPartialView", Model)
+    </div>
+</div>
+<!-- Edit Section Modal -->
+<div class="modal fade" id="EditSectionModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- Delete Section Modal -->
+<div class="modal fade" id="DeleteSectionModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        @Html.Partial("PartialView/DeleteSectionPartialView", Model)
+    </div>
+</div>
+<!-- Add Table Modal -->
+<div class="modal fade" id="AddTableModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- Edit Table Modal -->
+<div class="modal fade" id="EditTableModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- Delete Section Modal -->
+<div class="modal fade" id="DeleteTableModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        @Html.Partial("PartialView/DeleteTableModalPartialView", Model);
+    </div>
+</div>
+
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+<!-- Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+@section Scripts {
+    <script>
+        let sectionid = @Model.TableList.First().Sectionid;
+    </script>
+    <script src="~/js/TableSection.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

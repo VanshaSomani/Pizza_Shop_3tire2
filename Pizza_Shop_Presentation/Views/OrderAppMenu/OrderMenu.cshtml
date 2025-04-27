@@ -1,0 +1,766 @@
+@model Pizza_Shop_Repository.ViewModels.OrderAppMenuViewModel
+@{
+    ViewData["Title"] = "OrdersAppMenu";
+    Layout = "_OrderAppLayout";
+}
+
+<div class="col-12 p-0 user-list-container d-flex justify-content-between order-header"
+    style="height: calc(100vh - 58px);">
+    @* <div class="h1 fw-bold text-primary me-2 align-self-start">Menu</div> *@
+    <div class="d-flex flex-row align-items-start w-100">
+        <div class="d-flex flex-row align-items-start h-100 w-100">
+            <div class="bg-white" style="width: 13vw; height: 100%; overflow-y: auto;" id="sidebarcontainer"
+                data-orderid="@Model.OrderId">
+                @Html.Partial("PartialView/SideBarPartialView", Model)
+            </div>
+            <div class="w-100 d-flex h-100">
+                <div class="d-flex flex-column align-items-center p-4 
+                @(Model.CustomerId != 0 ? "w-50" : Model.OrderId != 0 ? "w-50" : "w-100")">
+                    @* w-50 *@
+                    <div class="d-flex flex-row justify-content-between align-items-center w-100 mb-4">
+                        <div>
+                            <div class="input-countainer mr-2 input-group input-group-lg ">
+                                <input type="text" class="form-control" id="OrderAppItemSearchBox" placeholder="Search"
+                                    name="searchcriteria">
+                                <button class="input-countainer-icon border-0 bg-white"><i
+                                        class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center align-item-center ">
+                            <div class="d-flex flex-row justify-content-center align-item-center me-2">
+                                <i
+                                    class="fa-solid fa-circle text-success me-2 d-flex flex-row justify-content-center align-items-center"></i>
+                                <div>Vegeterian</div>
+                            </div>
+                            <div class="d-flex flex-row justify-content-center align-item-center me-2">
+                                <i
+                                    class="fa-solid fa-circle text-danger me-2 d-flex flex-row justify-content-center align-items-center"></i>
+                                <div> Non Vegeterian</div>
+                            </div>
+                            <div class="d-flex flex-row justify-content-center align-item-center">
+                                <i
+                                    class="fa-solid fa-circle text-warning me-2 d-flex flex-row justify-content-center align-items-center"></i>
+                                <div>Vegan</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex flex-row justify-content-start flex-wrap w-100 mb-4 pt-2 ps-3"
+                        id="ItemContainer" style="overflow-y: auto;">
+                        @Html.Partial("PartialView/OrderAppItemCardPartialView", Model)
+                    </div>
+                </div>
+                @* dnone *@
+                @if (Model.CustomerId != 0 || Model.OrderId != 0)
+                {
+                    @Html.Partial("PartialView/OrderAppMenuBillSectionPartialView", Model)
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ModalContainer">
+
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" id="QRcodeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Menu</h5>
+                <button type="button" class="btn-close qrmodalclose" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body qr-modal-body">
+                <div id="QRcodeContainer" class="d-flex flex-row justify-content-center align-item-center"></div>
+            </div>
+            <div class="modal-footer d-flex flex-row align-items-center justify-content-center">
+                <button type="button" class="btn btn-outline-primary modal_close_btn qrmodalclose"
+                    data-bs-dismiss="modal">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+@section Scripts {
+    <script>
+
+        $(".navbar-badges-container span").removeClass('selected_badge');
+        $("#OrderAppMenuBadge").find('span').addClass('selected_badge');
+
+        let min_max_modifiergroup = [];
+        let selected_modifier = [];
+        let selected_item = [];
+        let globalid = 0;
+        let deletedOrderItemIds = [];
+        let enableTaxList = [];
+
+        $(document).ready(function () {
+            let orderid = @Html.Raw(Json.Serialize(Model.OrderId));
+            if (orderid != 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "/OrderAppMenu/CheckOrderStatus",
+                    data: { OrderId: orderid },
+                    success: function (data) {
+                        if (data.status == true) {
+                            var itemlist = @Html.Raw(Json.Serialize(Model.OrderedItem));
+                            for (let i = 0; i < itemlist.length; i++) {
+                                var modifiersList = [];
+                                for (let j = 0; j < itemlist[i].modifiers.length; j++) {
+                                    modifiersList.push({
+                                        modifierId: itemlist[i].modifiers[j].modifierId,
+                                        modifierName: itemlist[i].modifiers[j].modifierName,
+                                        modifierPrice: itemlist[i].modifiers[j].modifierPrice,
+                                        modifierQuantity: itemlist[i].modifiers[j].modifierQuantity,
+                                        modifierGroupId: itemlist[i].modifiers[j].modifierGroupId
+                                    });
+                                }
+                                selected_item.push({
+                                    itemId: itemlist[i].itemId,
+                                    orderItemId: itemlist[i].orderItemId,
+                                    globalId: itemlist[i].orderItemId,
+                                    itemName: itemlist[i].itemName,
+                                    itemPrice: itemlist[i].itemPrice,
+                                    itemTax: itemlist[i].itemTax,
+                                    itemQuantity: itemlist[i].itemQuantity,
+                                    modifiers: modifiersList
+                                });
+                                globalid = globalid < itemlist[i].orderItemId ? itemlist[i].orderItemId : globalid
+                            }
+                            var taxList = @Html.Raw(Json.Serialize(Model.TaxList));
+        @* console.log(taxList); *@
+                                    for (let i = 0; i < taxList.length; i++) {
+                                enableTaxList.push({
+                                    taxId: taxList[i].taxId,
+                                    taxName: taxList[i].taxName,
+                                    taxType: taxList[i].taxType,
+                                    taxRate: taxList[i].taxRate
+                                });
+                            }
+                            GetSubTotal();
+                        }
+                        else {
+                            window.location.href = "http://localhost:5096/OrderAppMenu/OrderMenu"
+                        }
+                    }
+                });
+            }
+
+        })
+
+        $(document).off("click", "#customerdetailmodalopen").on("click", "#customerdetailmodalopen", function () {
+            let customerid = $(this).data("customerid");
+            let orderid = $(this).data("orderid");
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppMenu/GetCustomerDetailForModal",
+                data: { CustomerId: customerid, OrderId: orderid },
+                success: function (data) {
+                    $("#ModalContainer").empty();
+                    $("#ModalContainer").html(data);
+                    $("#CustomerDetailModal").modal("show");
+                }
+            });
+        })
+
+        $(document).off("click", "#ordercommentmodalopen").on("click", "#ordercommentmodalopen", function () {
+            let orderid = $(this).data("orderid");
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppMenu/GetOrderCommentForModal",
+                data: { OrderId: orderid },
+                success: function (data) {
+                    $("#ModalContainer").empty();
+                    $("#ModalContainer").html(data);
+                    $("#OrderCommentModal").modal("show");
+                }
+            });
+        })
+
+        $(document).off("click", ".qrmodalclose").on("click", ".qrmodalclose", function (event) {
+            event.preventDefault();
+            $("#QRcodeContainer").empty();
+        })
+
+        $(document).off("click", "#qrcodemodalopen").on("click", "#qrcodemodalopen", function () {
+            var qrcode = new QRCode(document.getElementById("QRcodeContainer"),
+                {
+                    text: "http://  jindo.dev.naver.com/collie",
+                    width: 128,
+                    height: 128,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                })
+            $("#QRcodeModal").modal("show");
+        })
+
+        $(document).off("click", "#CustomerDetailModalFormSubmit").on("click", "#CustomerDetailModalFormSubmit", function (event) {
+            event.preventDefault();
+            $("#CustomerDetailModalForm").removeAttr("novalidate");
+            $.validator.unobtrusive.parse($("#CustomerDetailModalForm"));
+            if (!$("#CustomerDetailModalForm").valid()) {
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppMenu/UpdateCustomerDetails",
+                data: $("#CustomerDetailModalForm").serialize(),
+                success: function (data) {
+                    if (data.status == true) {
+                        notyf.success("Customer details saved successfully");
+                        $("#CustomerDetailModal").modal("hide");
+                        $("#ModalContainer").empty();
+                    }
+                    else {
+                        notyf.error("Something went wrong");
+                        $("#CustomerDetailModal").modal("hide");
+                        $("#ModalContainer").empty();
+                    }
+                },
+                error: function (data) {
+                    notyf.error("Something went wrong");
+                    $("#CustomerDetailModal").modal("hide");
+                    $("#ModalContainer").empty();
+                }
+            })
+        })
+
+        $(document).off("click", "#OrderCommentModalSubmit").on("click", "#OrderCommentModalSubmit", function (event) {
+            event.preventDefault();
+            $("#OrderWiseCommentForm").removeAttr("novalidate");
+            $.validator.unobtrusive.parse($("#OrderWiseCommentForm"));
+            if (!$("#OrderWiseCommentForm").valid()) {
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppMenu/AddOrderComment",
+                data: $("#OrderWiseCommentForm").serialize(),
+                success: function (data) {
+                    if (data.status == true) {
+                        notyf.success("Instructions saved successfully");
+                        $("#OrderCommentModal").modal("hide");
+                        $("#ModalContainer").empty();
+                    }
+                    else {
+                        notyf.error("Something went wrong");
+                        $("#OrderCommentModal").modal("hide");
+                        $("#ModalContainer").empty();
+                    }
+                },
+                error: function (data) {
+                    notyf.error("Something went wrong");
+                    $("#OrderCommentModal").modal("hide");
+                    $("#ModalContainer").empty();
+                }
+            });
+        })
+
+        $(document).off("click", ".sidebar_category").on("click", ".sidebar_category", function () {
+            let categoryid = $(this).data("categoryid");
+            let customerid = $(this).data("customerid")
+            let selected = $(this);
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppMenu/GetItemsForViewModel",
+                data: { CategoryID: categoryid, customerId: customerid },
+                success: function (data) {
+                    $("#ItemContainer").empty();
+                    $("#ItemContainer").html(data);
+                    $(".menu_sidebar_hover").removeClass('menu_sidebar_active');
+                    selected.addClass('menu_sidebar_active');
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        })
+
+        $(document).off("input", "#OrderAppItemSearchBox").on("input", "#OrderAppItemSearchBox", function () {
+            let categoryid = $(".menu_sidebar_active").data("categoryid");
+            let customerid = $(".menu_sidebar_active").data("customerid");
+            let selected = $(".menu_sidebar_active");
+            let searchstring = $("#OrderAppItemSearchBox").val().trim();
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppMenu/GetItemsForViewModel",
+                data: { CategoryID: categoryid, SearchData: searchstring, customerId: customerid },
+                success: function (data) {
+                    $("#ItemContainer").empty();
+                    $("#ItemContainer").html(data);
+                    $(".menu_sidebar_hover").removeClass('menu_sidebar_active');
+                    selected.addClass('menu_sidebar_active');
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        })
+
+        function GetItems() {
+            let categoryid = $(".menu_sidebar_active").data("categoryid");
+            let customerid = $(".menu_sidebar_active").data("customerid");
+            let selected = $(".menu_sidebar_active");
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppMenu/GetItemsForViewModel",
+                data: { CategoryID: categoryid, customerId: customerid },
+                success: function (data) {
+                    $("#ItemContainer").empty();
+                    $("#ItemContainer").html(data);
+                    $(".menu_sidebar_hover").removeClass('menu_sidebar_active');
+                    selected.addClass('menu_sidebar_active');
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        $(document).off("click", ".item_card").on("click", ".item_card", function () {
+            let itemid = $(this).data("itemid");
+            let itemprice = $(this).data("itemprice");
+            let itemname = $(this).data("itemname");
+            let itemtax = $(this).data("itemtax");
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppMenu/OpenModifierGroupModal",
+                data: { ItemId: itemid },
+                success: function (data) {
+                    if (data.status != false) {
+                        $("#ModalContainer").empty();
+                        $("#ModalContainer").html(data);
+                        $("#ItemModifierGroupModal").modal("show");
+                        min_max_modifiergroup = [];
+                        selected_modifier = [];
+                        $(".min-max").each(function () {
+                            min_max_modifiergroup.push({
+                                modifierGroupId: $(this).data("modifiergroupid"),
+                                min: $(this).data("min"),
+                                max: $(this).data("max")
+                            });
+                        })
+                    }
+                    else {
+                        let exist_item = selected_item.find(item => item.itemId === itemid);
+                        if (!exist_item) {
+                            selected_item.push({
+                                itemId: itemid,
+                                orderItemId: 0,
+                                globalId: globalid + 1,
+                                itemName: itemname,
+                                itemPrice: itemprice,
+                                itemTax: itemtax,
+                                itemQuantity: 1,
+                                modifiers: []
+                            });
+                            globalid = globalid + 1;
+                            GetSubTotal();
+                        }
+                        else {
+                            exist_item.itemQuantity = exist_item.itemQuantity + 1;
+                            $(`#item-quantity-${exist_item.globalId}`).text(exist_item.itemQuantity);
+                            $(`#item-amount-${exist_item.globalId}`).text(exist_item.itemPrice * exist_item.itemQuantity);
+                            GetSubTotal();
+                            return;
+                        }
+                        let itemaccordian =
+                            `
+                                <div class="accordion-item border border-secondary rounded mb-1" id="accord-${globalid}">
+                                    <div class="accordion-header d-flex flex-row align-item-center pt-1 pb-1">
+                                        <button class="w-0 d-none accordion-button collapsed menuAccord ps-1 pe-3 pt-2 pb-2 accord_btn ms-1"
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-${globalid}" aria-expanded="false"
+                                            aria-controls="flush-collapseOne-${globalid}">
+                                        </button>
+                                        <div class="ms-2 d-flex flex-row justify-content-between align-items-center w-100">
+                                            <div class="fw-bold d-flex justify-content-start align-items-center py-2 pe-2">
+                                                ${itemname}
+                                            </div>
+                                            <div class="d-flex flex-row justify-content-center align-items-center item-accord">
+                                                <div>
+                                                    <span
+                                                        class="border border-secondary rounded d-flex flex-row justify-content-between align-items-center"
+                                                        style="height: 40px;">
+                                                        <span class="fs-4 btn text-secondary d-flex align-items-center justify-content-center"
+                                                            id="minus-quantity-${globalid}" onclick="MinusQuantity(${globalid})">-</span>
+                                                        <span id="item-quantity-${globalid}">1</span>
+                                                        <span class="fs-4 btn text-secondary d-flex align-items-center justify-content-center"
+                                                            id="plus-quantity-${globalid}" onclick="PlusQuantity(${globalid})">+</span>
+                                                    </span>
+                                                </div>
+                                                <div class="fs-5">
+                                                    ₹<span id="item-amount-${globalid}">${itemprice}</span>
+                                                </div>
+                                                <div class="delete-item" data-globalid="${globalid}"><i class="fa-solid fa-trash"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="flush-collapseOne-${globalid}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body p-1">
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+                        $("#ItemAccordianContainer").append(itemaccordian);
+                    }
+                },
+                error: function (data) {
+                    notyf.error("Something went wrong");
+                }
+            });
+        })
+
+        function GetSubTotal() {
+            let taxperitem = 0;
+            let subtotal = 0;
+            let total = 0;
+            if (selected_item.length != 0) {
+                selected_item.forEach(item => {
+                    let itemSubtotal = parseFloat(item.itemPrice || 0);
+                    item.modifiers.forEach(mod => {
+                        itemSubtotal += parseFloat(mod.modifierPrice || 0);
+                    })
+                    let totalitemamount = parseFloat(item.itemPrice || 0) * item.itemQuantity;
+                    taxperitem = taxperitem + (totalitemamount * parseFloat(item.itemTax || 0)) / 100;
+                    subtotal += itemSubtotal * item.itemQuantity;
+                })
+                $("#SubtotalContainer").text(subtotal.toFixed(2));
+                $("#ExclusiveTaxContainer").text(taxperitem.toFixed(2));
+                total = subtotal + taxperitem;
+                enableTaxList.forEach(tax => {
+                    let taxPrice = 0;
+                    if (tax.taxType == "percentage") {
+                        taxPrice = subtotal * parseFloat(tax.taxRate) / 100;
+                    }
+                    else {
+                        taxPrice = parseFloat(tax.taxRate);
+                    }
+                    total += taxPrice;
+
+                    $(`#tax-amount-${tax.taxId}`).text(taxPrice.toFixed(2));
+                })
+                $("#TotalAmountContainer").text(total.toFixed(2));
+            }
+
+            else{
+                $("#SubtotalContainer").text("00.00");
+                $("#ExclusiveTaxContainer").text("00.00"); 
+                $("#TotalAmountContainer").text("00.00");
+                enableTaxList.forEach(tax => {
+                    $(`#tax-amount-${tax.taxId}`).text("00.00");
+                })
+            }
+        }
+
+        $(document).off("click", ".delete-item").on("click", ".delete-item", function () {
+            let uniqueid = $(this).data("globalid");
+            let exist_item = selected_item.find(item => item.globalId == uniqueid);
+            let OrderItemId = 0;
+            if (exist_item.orderItemId != 0) {
+                let orderitemid = exist_item.orderItemId;
+                $.ajax({
+                    type : "POST",
+                    url : "/OrderAppMenu/CheckOrderReadyQuantity",
+                    data : { OrderItemId : orderitemid},
+                    success : function(data){
+                        if(data != 0){
+                            notyf.error(`Cannot delete this item beacuse ${data} items are ready.`);
+                            return;
+                        }
+                        else{
+                            OrderItemId = exist_item.orderItemId;
+                            selected_item = selected_item.filter(item => item.globalId != uniqueid);
+                            $(`#accord-${uniqueid}`).remove();
+                            deletedOrderItemIds.push(OrderItemId);
+                            GetSubTotal();
+                        }
+                    },
+                    error : function(data){
+                        notyf.error("Cannot delete item");
+                        return;
+                    }
+                });
+                return;
+            }
+            else{
+                selected_item = selected_item.filter(item => item.globalId != uniqueid);
+                $(`#accord-${uniqueid}`).remove();
+                GetSubTotal();
+            }
+        })
+
+        function MinusQuantity(uniqueid) {
+            let Quantity = document.getElementById(`item-quantity-${uniqueid}`);
+            let ItemQuantity = parseInt(Quantity.innerText);
+            if (ItemQuantity == 1) {
+                notyf.error("Cannot further decrease the quantity.");
+                return;
+            }
+            let exist_item = selected_item.find(item => item.globalId === uniqueid);
+            let modifiertotalprice = $(Quantity).data("modifiertotalprice");
+            ItemQuantity = ItemQuantity - 1;
+            if (exist_item.orderItemId != 0) {
+                let orderitemid = exist_item.orderItemId;
+                $.ajax({
+                    type : "POST",
+                    url : "/OrderAppMenu/CheckOrderReadyQuantity",
+                    data : { OrderItemId : orderitemid},
+                    success : function(data){
+                        console.log(data);
+                        if(data > ItemQuantity){
+                            notyf.error(`Cannot decrease the item beacuse ${data} items are ready`);
+                            return;
+                        }
+                        else{
+                            exist_item.itemQuantity = ItemQuantity;
+                            $(`#item-amount-${uniqueid}`).text(exist_item.itemPrice * ItemQuantity);
+                            $(`#item-modifier-amount-${uniqueid}`).text(modifiertotalprice * ItemQuantity);
+                            Quantity.innerText = ItemQuantity;
+                        }
+                    },
+                    error : function(data){
+                        notyf.error("Cannot decrease item quantity");
+                        return;
+                    }
+                });
+            }
+            else{
+                exist_item.itemQuantity = ItemQuantity;
+                $(`#item-amount-${uniqueid}`).text(exist_item.itemPrice * ItemQuantity);
+                $(`#item-modifier-amount-${uniqueid}`).text(modifiertotalprice * ItemQuantity);
+                Quantity.innerText = ItemQuantity;
+            }
+            GetSubTotal();
+        }
+
+        function PlusQuantity(uniqueid) {
+            let Quantity = document.getElementById(`item-quantity-${uniqueid}`);
+            let ItemQuantity = parseInt(Quantity.innerText);
+            ItemQuantity = ItemQuantity + 1;
+            let exist_item = selected_item.find(item => item.globalId === uniqueid);
+            let modifiertotalprice = $(Quantity).data("modifiertotalprice");
+            exist_item.itemQuantity = ItemQuantity;
+            $(`#item-amount-${uniqueid}`).text(exist_item.itemPrice * ItemQuantity);
+            $(`#item-modifier-amount-${uniqueid}`).text(modifiertotalprice * ItemQuantity);
+            Quantity.innerText = ItemQuantity;
+            GetSubTotal();
+        }
+
+        $(document).off("click", ".modifier_card").on("click", ".modifier_card", function () {
+            let modifiergroupid = $(this).data("modifiergroupid");
+            let modifierid = $(this).data("modifierid");
+            let modifiername = $(this).data("modifiername");
+            let modifierprice = $(this).data("modifierprice");
+
+            let min_max = min_max_modifiergroup.find(mg => mg.modifierGroupId == modifiergroupid);
+
+            let existing_modifier = selected_modifier.find(m => m.modifierId === modifiergroupid && m.modifierGroupId === modifiergroupid)
+
+            if (existing_modifier) {
+                selected_modifier = selected_modifier.filter(m => m.modifierId !== modifiergroupid && m.modifierGroupId !== modifiergroupid);
+                $(this).removeClass("modifier_card_selected");
+            }
+            else {
+                let groupSelected = selected_modifier.filter(m => m.modifierGroupId === modifiergroupid);
+                if (groupSelected.length >= min_max.max) {
+                    notyf.error("Cannot select more modifiers.");
+                    return;
+                }
+                selected_modifier.push({
+                    modifierId: modifierid,
+                    modifierName: modifiername,
+                    modifierPrice: modifierprice,
+                    modifierQuantity: 1,
+                    modifierGroupId: modifiergroupid
+                });
+                $(this).addClass("modifier_card_selected");
+            }
+        })
+
+        $(document).off("click", "#ItemModifierGroupModalModalSubmit").on("click", "#ItemModifierGroupModalModalSubmit", function () {
+
+            for (let i = 0; i < min_max_modifiergroup.length; i++) {
+                let modifiergroupId = min_max_modifiergroup[i].modifierGroupId;
+                let min = min_max_modifiergroup[i].min;
+                let max = min_max_modifiergroup[i].max;
+
+                let selected_list = selected_modifier.filter(m => m.modifierGroupId === modifiergroupId);
+                if (selected_list.length < min) {
+                    let mgname = $(`#modifiergroup-name-${modifiergroupId}`).text();
+                    notyf.error(`Select atleast ${min} modifier from ${mgname}`);
+                    return;
+                }
+            }
+
+            let itemid = $(this).data("itemid");
+            let itemname = $(this).data("itemname");
+            let itemprice = $(this).data("itemprice");
+            let itemtax = $(this).data("itemtax");
+            let exist_item = selected_item.find(item => item.itemId === itemid
+                && item.modifiers.length === selected_modifier.length
+                && selected_modifier.every(sel => item.modifiers.some(mod =>
+                    mod.modifierId === sel.modifierId
+                    && mod.modifierPrice === sel.modifierPrice
+                    && mod.modifierName === sel.modifierName)));
+
+            if (!exist_item) {
+                selected_item.push({
+                    itemId: itemid,
+                    orderItemId: 0,
+                    globalId: globalid + 1,
+                    itemName: itemname,
+                    itemPrice: itemprice,
+                    itemTax: itemtax,
+                    itemQuantity: 1,
+                    modifiers: selected_modifier
+                });
+                globalid = globalid + 1;
+                let new_item = selected_item.find(item => item.globalId == globalid);
+                let modifier_total_amount = 0;
+                new_item.modifiers.forEach(mod => {
+                    modifier_total_amount += parseInt(mod.modifierPrice || 0);
+                });
+                GetSubTotal();
+        @* console.log("new_item.modifiers - ",new_item.modifiers); *@
+                    let itemaccordian =
+                        `
+                            <div class="accordion-item border border-secondary rounded mb-1" id="accord-${new_item.globalId}">
+                                <div class="accordion-header d-flex flex-row align-item-center pt-1 pb-1">
+                                    <button class="w-0 accordion-button collapsed menuAccord ps-1 pe-3 pt-2 pb-2 accord_btn ms-1
+                                        ${new_item.modifiers.length != 0 ? "" : "d-none"}"
+                                        type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-${new_item.globalId}" aria-expanded="false"
+                                        aria-controls="flush-collapseOne-${new_item.globalId}">
+                                    </button>
+                                    <div class="ms-2 d-flex flex-row justify-content-between align-items-center w-100">
+                                        <div class="fw-bold d-flex justify-content-start align-items-center py-2 pe-2">
+                                            ${new_item.itemName}
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-center align-items-center item-accord">
+                                            <div>
+                                                <span
+                                                    class="border border-secondary rounded d-flex flex-row justify-content-between align-items-center"
+                                                    style="height: 40px;" >
+                                                    <span class="fs-4 btn text-secondary d-flex align-items-center justify-content-center"
+                                                        id="minus-quantity-${new_item.globalId}" onclick="MinusQuantity(${new_item.globalId})">-</span>
+                                                    <span id="item-quantity-${new_item.globalId}" data-globalid="${new_item.globalId}" data-itemid="${new_item.itemId}" data-itemprice="${new_item.itemPrice}" data-modifiertotalprice="${modifier_total_amount}" data-itemname="${new_item.itemName}">
+                                                        ${new_item.itemQuantity}
+                                                    </span>
+                                                    <span class="fs-4 btn text-secondary d-flex align-items-center justify-content-center"
+                                                        id="plus-quantity-${new_item.globalId}" onclick="PlusQuantity(${new_item.globalId})">+</span>
+                                                </span>
+                                            </div>
+                                            <div class="d-flex flex-column justify-content-start align-items-center">
+                                                <div class="fs-5">
+                                                    ₹<span id="item-amount-${new_item.globalId}">${new_item.itemPrice}</span>
+                                                </div>
+                                                <div class="fs-7">
+                                                    ₹<span id="item-modifier-amount-${new_item.globalId}">${modifier_total_amount}</span>
+                                                </div>
+                                            </div>
+                                            <div class="delete-item" data-globalid="${new_item.globalId}"><i class="fa-solid fa-trash"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="flush-collapseOne-${new_item.globalId}" class="accordion-collapse collapse" data-bs-parent="#ItemAccordianContainer">
+                                    <div class="accordion-body p-1">
+                                        <ul>
+                                            ${new_item.modifiers.length > 0 ?
+                            new_item.modifiers.map(mod =>
+                                `
+                                                    <li class="modifier-container-${new_item.itemId}" 
+                                                        data-modifierid="${mod.modifierId}" data-modifierprice="${mod.modifierPrice}">
+                                                        <div class="d-flex flex-row justify-content-between align-item-center">
+                                                            <div class="d-flex flex-row justify-content-start gap-4 align-items-center">
+                                                                <div>${mod.modifierName}</div>
+                                                                <div>${mod.modifierPrice}</div>
+                                                            </div>
+                                                            <div class="accord-body-price">
+                                                                ${mod.modifierPrice * mod.modifierQuantity}
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                `).join('')
+                            : ''
+                        }
+                                        <ul>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    ;
+                $("#ItemAccordianContainer").append(itemaccordian);
+            }
+
+            else {
+                let modifier_total_amount = 0;
+                exist_item.modifiers.forEach(mod => {
+                    modifier_total_amount += parseInt(mod.modifierPrice || 0);
+                });
+                exist_item.itemQuantity = exist_item.itemQuantity + 1;
+                $(`#item-quantity-${exist_item.globalId}`).text(exist_item.itemQuantity);
+                $(`#item-amount-${exist_item.globalId}`).text(exist_item.itemPrice * exist_item.itemQuantity);
+                $(`#item-modifier-amount-${exist_item.globalId}`).text(modifier_total_amount * exist_item.itemQuantity);
+                GetSubTotal();
+            }
+            $("#ItemModifierGroupModal").modal("hide");
+            $("#ModalContainer").empty();
+        })
+
+        $(document).off("click", "#OrderSaveButton").on("click", "#OrderSaveButton", function () {
+            let orderid = $(this).data("orderid");
+            let orderstatus = $(this).data("orderstatus");
+            let formData = new FormData();
+            formData.append("order_id", JSON.stringify(orderid));
+            formData.append("order_status", JSON.stringify(orderstatus));
+            formData.append("selected_item", JSON.stringify(selected_item));
+            formData.append("deleted_item", JSON.stringify(deletedOrderItemIds));
+            formData.append("enabled_tax", JSON.stringify(enableTaxList));
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppMenu/SaveOrderDetails",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) { },
+                error: function (data) { }
+            });
+        })
+
+        $(document).off("click", ".Favroite_item").on("click", ".Favroite_item", function (event) {
+            event.stopPropagation();
+            let categoryid = $(".menu_sidebar_active").data("categoryid");
+            let itemid = $(this).data("itemid");
+            let isfavorite = $(this).find(".fa-heart").hasClass("Favorite-item");
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppMenu/MarkItemFavroite",
+                data: { CategoryID: categoryid, ItemId: itemid, Isfavourite: isfavorite },
+                success: function (data) {
+                    if (data.status == true) {
+                        if (isfavorite == false) {
+                            notyf.success("Item Added To Favroite");
+                        }
+                        else {
+                            notyf.success("Item Removed From Favroite");
+                        }
+                    }
+                    else {
+                        notyf.error("Something Went Wrong");
+                    }
+                    GetItems();
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        })
+
+    </script>
+}

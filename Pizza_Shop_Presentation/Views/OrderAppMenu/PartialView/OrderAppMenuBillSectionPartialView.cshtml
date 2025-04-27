@@ -1,0 +1,214 @@
+@model Pizza_Shop_Repository.ViewModels.OrderAppMenuViewModel
+@{
+    var sectionName = new HashSet<string>();
+    bool first = true;
+    var tableName = new HashSet<string>();
+    var globalid = 1;
+}
+<div class="w-50 pt-4 pb-4 pe-3">
+    <div class="p-4 border rounded bg-white w-100 bill_card">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-wrap align-items-center justify-content-center">
+                    <div class="me-1 p-1 menu-table-chairbg">
+                        <span class="h5"><img src="~/images/icons/ChairTableIcon.png" height="40px" alt="">
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-start">
+                        <div>
+                            @foreach (var s in Model.OrderData.TableSectionDataList)
+                            {
+                                if (!sectionName.Contains(s.SectionName))
+                                {
+                                    if (!first)
+                                    {
+                                        <span> ,</span>
+                                    }
+                                    <span class="fs-8">@s.SectionName</span>
+                                    sectionName.Add(s.SectionName);
+                                    first = false;
+                                }
+                            }
+                        </div>
+                        <div class="fs-8">
+                            <span class="fw-bold">Table:</span>
+                            @foreach (var t in Model.OrderData.TableSectionDataList)
+                            {
+                                if (!tableName.Contains(t.TableName))
+                                {
+                                    if (first)
+                                    {
+                                        <span> ,</span>
+                                    }
+                                    @t.TableName
+                                    tableName.Add(t.TableName);
+                                    first = true;
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-item-center">
+                    <div class="me-2">
+                        <button class="d-flex justify-content-center align-item-center p-1 qr-btn border" id="qrcodemodalopen">
+                            <img src="~/images/icons/qr-code-scan.svg" alt="" class="m-1" height="23px" srcset="">
+                        </button>
+                    </div>
+                    <div class="me-2">
+                        <button class="d-flex justify-content-center align-item-center p-1 qr-btn border" id="customerdetailmodalopen" data-customerid="@Model.CustomerId"
+                        data-orderid="@Model.OrderId">
+                            <img src="~/images/icons/person-lines-fill.svg" alt="" class="m-1" height="23px" srcset="">
+                        </button>
+                    </div>
+                    <div class="">
+                        <button class="d-flex justify-content-center align-item-center p-1 qr-btn border" id="ordercommentmodalopen" data-orderid="@Model.OrderId">
+                            <img src="~/images/icons/chat-left-text.svg" alt="" class="m-1" height="23px" srcset="">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-between align-items-center mt-3">
+                <div class="text-secondary fw-bold">Item</div>
+                <div class="d-flex flex-row justify-content-center align-items-center quantity-amount">
+                    <div class="text-secondary fw-bold">Quantity</div>
+                    <div class="text-secondary fw-bold">Amount</div>
+                </div>
+            </div>
+            <div class="accordion accordion-flush mt-1" id="ItemAccordianContainer" style="max-height: 300px; overflow-y: auto;">
+                @foreach(var item in Model.OrderedItem){
+                    <div class="accordion-item border border-secondary rounded mb-1" id="accord-@item.OrderItemId">
+                        <div class="accordion-header d-flex flex-row align-item-center pt-1 pb-1">
+                            <button class="w-0 accordion-button collapsed menuAccord ps-1 pe-3 pt-2 pb-2 accord_btn ms-1
+                                @(item.Modifiers.Count != 0 ? "" : "d-none")" 
+                                type="button"
+                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-@item.OrderItemId" aria-expanded="false"
+                                aria-controls="flush-collapseOne-@item.OrderItemId">
+                            </button>
+                            <div class="ms-2 d-flex flex-row justify-content-between align-items-center w-100">
+                                <div class="fw-bold d-flex justify-content-start align-items-center py-2 pe-2 existing_item" data-orderitemid="@item.OrderItemId">
+                                        @item.ItemName
+                                </div>
+                                <div class="d-flex flex-row justify-content-center align-items-center item-accord">
+                                    <div>
+                                        <span
+                                            class="border border-secondary rounded d-flex flex-row justify-content-between align-items-center"
+                                            style="height: 40px;" >
+                                            <span class="fs-4 btn text-secondary d-flex align-items-center justify-content-center"
+                                                id="minus-quantity-@item.OrderItemId" onclick="MinusQuantity(@item.OrderItemId)">-</span>
+                                            <span id="item-quantity-@item.OrderItemId" data-globalid="@item.OrderItemId" data-itemid="@item.ItemId" data-itemprice="@item.ItemPrice" data-modifiertotalprice="@item.TotalModifierPrice" data-itemname="@item.ItemName"
+                                            data-readyquantity="@item.ReadyItemsCount">
+                                                @item.ItemQuantity
+                                            </span>
+                                            <span class="fs-4 btn text-secondary d-flex align-items-center justify-content-center"
+                                                id="plus-quantity-@item.OrderItemId" onclick="PlusQuantity(@item.OrderItemId)">+</span>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-start align-items-start">
+                                        <div class="fs-5">
+                                            ₹<span id="item-amount-@item.OrderItemId">@item.TotalPrice</span>
+                                        </div>
+                                        <div class="fs-7" >
+                                            ₹<span id="item-modifier-amount-@item.OrderItemId">@item.TotalModifierPrice</span>
+                                        </div>
+                                    </div>
+                                    <div class="delete-item" data-globalid="@item.OrderItemId" data-readyquantity="@item.ReadyItemsCount"><i class="fa-solid fa-trash"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="flush-collapseOne-@item.OrderItemId" class="accordion-collapse collapse" data-bs-parent="#ItemAccordianContainer">
+                            <div class="accordion-body p-1">
+                                @if(item.Modifiers.Count != 0){
+                                    <ul>
+                                        @foreach(var modifier in item.Modifiers){
+                                            <li class="modifier-container-@item.ItemId" 
+                                            data-modifierid="@modifier.ModifierId" data-modifierprice="@modifier.ModifierPrice">
+                                                <div class="d-flex flex-row justify-content-between align-item-center">
+                                                    <div class="d-flex flex-row justify-content-start gap-4 align-items-center">
+                                                        <div>@modifier.ModifierName</div>
+                                                        <div>@modifier.ModifierPrice</div>
+                                                    </div>
+                                                    <div class="accord-body-price">
+                                                        @modifier.TotalPrice
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    globalid = globalid + 1;
+                }
+            </div>
+            <div class="d-flex flex-column align-item-center justify-content-center mt-2">
+                <div class="d-flex flex-row align-item-center justify-content-between">
+                    <div class="fs-5">Subtotal</div>
+                    <div class="fs-5">₹<span id="SubtotalContainer">0</span></div>
+                </div>
+                @foreach(var tax in Model.TaxList){
+                    <div class="d-flex flex-row align-item-center justify-content-between" data-taxid="@tax.TaxId">
+                        <div class="fs-6">@tax.TaxName 
+                                (@(tax.TaxType == "fixed amount" ? "₹" : "")@tax.TaxRate@(tax.TaxType == "percentage" ? "%" : ""))</div>
+                        <div class="fs-6">
+                            ₹<span id="tax-amount-@tax.TaxId">00.00</span> 
+                        </div>
+                    </div>
+                }
+                <div class="d-flex flex-row align-item-center justify-content-between">
+                        <div class="fs-6">Exclusive Tax</div>
+                        <div class="fs-6">
+                            ₹<span id="ExclusiveTaxContainer">00.00</span>
+                        </div>
+                    </div>
+                <div class="d-flex flex-row align-item-center justify-content-between">
+                    <div class="fs-5">Total</div>
+                    <div class="fs-5">
+                        ₹<span id="TotalAmountContainer">00.00</span>
+                    </div>
+                </div>
+                <div class="d-flex flex-row align-item-center justify-content-between">
+                    <div class="fs-7">Payment Mode</div>
+                    <div class="d-flex flex-row align-items-center justify-content-center gap-2">
+                        <div class="d-flex flex-row align-items-center justify-content-center">
+                            <div class="form-check">
+                                <input class="form-check-input customerradiobtn" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                            </div>
+                            <div class="fs-7">Cash</div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center justify-content-center">
+                            <div class="form-check">
+                                <input class="form-check-input customerradiobtn" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                            </div>
+                            <div class="fs-7">Card</div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center justify-content-center">
+                            <div class="form-check">
+                                <input class="form-check-input customerradiobtn" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                            </div>
+                            <div class="fs-7">Online</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-row align-item-center justify-content-end gap-2 mt-2">
+                    <div class="w-25">
+                        <button class="btn btn-primary modal_submit_btn w-100" id="OrderSaveButton" data-orderid="@Model.OrderId" data-orderstatus="@Model.OrderStatus">Save</button>
+                    </div>
+                    <div class="w-25">
+                        <button class="btn btn-outline-primary modal_close_btn w-100">Complete</button>
+                    </div>
+                    <div class="w-25">
+                        <button class="btn btn-outline-primary modal_close_btn w-100">Generate Invoice</button>
+                    </div>
+                </div>
+                <div class="d-flex flex-row align-item-center justify-content-end gap-2 mt-2">
+                    <div class="w-25">
+                        <button class="btn btn-outline-primary modal_close_btn w-100">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

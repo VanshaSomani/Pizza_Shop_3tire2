@@ -1,0 +1,63 @@
+@model Pizza_Shop_Repository.ViewModels.TaxesAndFeesViewModel
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@inject IHttpContextAccessor accessor;
+@{
+    ViewData["Title"] = "Taxes And Fees";
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new UserLayoutViewModel();
+}
+<div class="p-2 pl-3 pr-3">
+    <!-- header -->
+    @* <h1>@TempData["UserId"]</h1> *@
+    <div class="col-12 p-2 user-list-container d-flex flex-row justify-content-between">
+        <div class="h3 fw-bold text-primary">Taxes/Fees</div>
+        <div class="d-flex flex-row justify-content-center align-item-center">
+            <div class="input-countainer mr-2">
+                <form>
+                    <input type="text" class="form-control" id="TaxAndFeeSearchBox" placeholder="Search">
+                    <button class="input-countainer-icon border-0 bg-white"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>  
+                </form>
+            </div>
+            <div>
+                @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "TaxAndFee" && p.Addandeditpermission)){
+                    <a class="btn btn-primary text-light" onclick="AddTax()"><i
+                            class="fa-solid fa-plus mr-1"></i>New Tax</a>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- table -->
+    <div class="col-12 p-2 user-list-container" >
+        <div class="table-respnsive shadow p-3 mb-5 bg-white rounded table-overflow">
+            @Html.Partial("PartialView/TaxesListPartialView" , Model)
+        </div>
+    </div>
+</div>
+
+<!-- Add Tax Modal -->
+<div class="modal fade" id="AddTaxModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        @Html.Partial("PartialView/AddTaxModalPartialView", Model)
+    </div>
+</div>
+<!-- Edit Tax Modal -->
+<div class="modal fade" id="EditTaxModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- Add Tax Modal -->
+<div class="modal fade" id="DeleteTaxModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        @Html.Partial("PartialView/DeleteTaxModalPartialView", Model)
+    </div>
+</div>
+
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@section Scripts{
+    <script src="~/js/TaxFees.js"></script>
+}

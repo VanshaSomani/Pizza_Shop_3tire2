@@ -1,0 +1,89 @@
+@model Pizza_Shop_Repository.ViewModels.CustomerListViewModel
+@{
+    ViewData["Title"] = "Customer";
+    Layout = "_Layout";
+}
+<div class="p-2 pl-3 pr-3">
+    <div class="col-12 p-2 user-list-container d-flex justify-content-between order-header">
+        <div class="h3 fw-bold text-primary mr-2">Customer</div>
+        <div class="d-flex justify-content-center align-item-center">
+            <div class="d-flex flex-row align-items-center justify-content-center">
+                <div class="input-countainer mr-2 input-group input-group-lg">
+                    <input type="text" class="form-control" id="CustomerSearchBox" placeholder="Search"
+                        name="searchcriteria">
+                    <button class="input-countainer-icon border-0 bg-white"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <div class="mr-2 input-group input-group-lg">
+                    <select class="form-select" id="CustomerTimeDropDown" aria-label="Default select example">
+                        <option selected value="">All Time</option>
+                        <option value="7">Last 7 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="Month">Current Month</option>
+                        <option value="CustomDate" onclick="OpenCustomDateModal()">Custom Date</option>
+                    </select>
+                </div>
+                <div class="">
+                    <a class="btn mr-2 btn-primary btn-lg text-light d-flex flex-row justify-content-center align-items-center"
+                        id="ExportCustomer">
+                        <i class="fa-solid fa-file-export mr-1"></i>
+                        <span class="d-flex flex-column justify-content-center fw-bolder">Export</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 p-2 user-list-container">
+        <div class="table-respnsive shadow p-3 mb-5 bg-white rounded table-overflow">
+            @Html.Partial("PartialView/CustomerListPartialView", Model)
+        </div>
+    </div>
+</div>
+
+<!-- Search by Custom Date modal -->
+<div class="modal fade" id="CustomerCustomDateRange" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form id="CustomerDateRangeForm">
+            <div class="modal-content" style="min-width: 500px !important;">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Date Range</h5>
+                    <button type="button" class="btn-close CustomerDateRangeFormCancle" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body row ">
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating ">
+                            <input type="date" class="form-control" id="StartDateCustomer" placeholder="">
+                            <label for="StartDateCustomer">Start Date</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-floating ">
+                            <input type="date" class="form-control" id="EndDateCustomer" placeholder="" disabled>
+                            <label for="EndDateCustomer">End Date</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex align-items-center justify-content-center">
+                    <button type="submit" id="CustomerDateRangeFormSubmit"
+                        class="btn btn-primary modal_submit_btn">Submit</button>
+                    <input type="reset" class="btn btn-outline-primary modal_close_btn CustomerDateRangeFormCancle"
+                        id="" data-bs-dismiss="modal" value="Cancel">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Customer History modal -->
+<div class="modal fade" id="CustomerHistoryModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 1000px !important;">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@section Scripts{
+    <script src="~/js/Customer.js"></script>
+}

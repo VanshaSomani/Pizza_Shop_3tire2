@@ -1,0 +1,59 @@
+@model Pizza_Shop_Repository.ViewModels.TableSectionViewModel
+
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Table</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form id="AddTableModalForm">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" asp-for="@Model.TableName">
+                        <label for="floatingInput">Table Name</label>
+                        <span class="text-danger" asp-validation-for="@Model.TableName"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" asp-items="@ViewBag.Section" asp-for="@Model.SectionId">
+                            <option selected value="">Select Section</option>
+                        </select>
+                        <label for="floatingSelect">Section</label>
+                        <span class="text-danger" asp-validation-for="@Model.SectionId"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" asp-for="@Model.TableCapacity">
+                        <label for="floatingInput">Capacity</label>
+                        <span class="text-danger" asp-validation-for="@Model.TableCapacity"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" asp-for="@Model.TableStatus" disabled>
+                            <option value="">Select Status</option>
+                            <option selected value="Available">Available</option>
+                            <option value="Selected">Selected</option>
+                            <option value="Assigned">Assigned</option>
+                            <option value="Running">Running</option>
+                        </select>
+                        <label for="floatingSelect">Status</label>
+                        <span class="text-danger" asp-validation-for="@Model.TableStatus"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" id="AddTableModalSubmit" class="btn btn-primary modal_submit_btn">Save</button>
+            <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>

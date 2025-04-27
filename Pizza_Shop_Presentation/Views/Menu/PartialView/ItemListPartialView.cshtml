@@ -1,0 +1,115 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel;
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@inject IHttpContextAccessor accessor;
+@{
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new UserLayoutViewModel();
+}
+<div id="ItemSection" class="right_section_table d-flex flex-column justify-content-between">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="width: 0;">
+                    @* <i class="fa-regular fa-square-minus"></i> *@
+                    <input class="form-check-input border border-dark " type="checkbox" value="" style="margin-top: -1.3em; margin-left: 0.01em;"
+                    id="ItemCheckBoxSelectAll" onclick="SelectAllItemForMassDelete(this)"/>
+                </th>
+                <th scope="col" class="text-start" style="width: 15vw;">Name</th>
+                <th scope="col" class="text-center">Item type</th>
+                <th scope="col">Rate</th>
+                <th scope="col" class="text-center">Quantity</th>
+                <th scope="col">Available</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody id="MenuItemTable">
+            @if(Model.ItemList.Count() == 0){
+                <tr>
+                    <td colspan="7" class="text-center fw-bold">
+                        No items in this category
+                    </td>
+                </tr>
+            }
+            else{
+                @foreach (var item in Model.ItemList)
+                {
+                    <tr id="@item.Itemid">
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input border border-dark ItemCheckBox" onclick="GetAllSelectedItem(this)" type="checkbox" value=""
+                                    id="@item.Itemid" />
+                            </div>
+                        </td>
+                        <td class="text-start">
+                            @if(item.Imgfile != ""){
+                                <img src="../ItemImages/@item.Imgfile" height="40px" alt="" class="mr-2" style="border-radius: 50%; aspect-ratio: 1;"/>
+                            }
+                            else{
+                                <img src="../images/dining-menu.png" height="40px" alt="" class="mr-2" style="border-radius: 50%; aspect-ratio: 1;"/>
+                            }
+                            @item.Itemname
+                        </td>
+                        <td class="text-center">
+                            @if (item.ItemType == "Veg")
+                            {
+                                <img src="../images/icons/veg-icon.svg" height="25px" alt="" />
+                            }
+                            else if (item.ItemType == "Non-Veg")
+                            {
+                                <img src="../images/icons/non-veg-icon.svg" height="25px" alt="" />
+                            }
+                            else
+                            {
+                                <img src="../images/icons/vegan-icon.svg" height="25px" alt="" />
+                            }
+                        </td>
+                        <td>@item.Rate</td>
+                        <td class="text-center">@item.Quantity</td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input switch_large checkbox-align ml-1" type="checkbox" id="@item.Itemid"
+                                    checked="@item.Availlable" onchange="ChangeItemAvailableStatus(this)"/>
+                            </div>
+                        </td>
+                        <td>
+                            @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Addandeditpermission)){
+                                <a id="@item.Itemid" onclick="getEditItemID(this)" class="cursorpointer">
+                                    <i class="fa-solid fa-pencil mr-3"></i>
+                                </a>
+                            }
+                            @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Isdeletepermission)){
+                                <a id="@item.Itemid" onclick="getDeleteItemID(this)" class="cursorpointer">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="bg-white d-flex justify-content-end p-2">
+        <!-- pagination -->
+        <div class="d-flex flex-row justify-content-center align-item-center">
+            <div class="d-flex flex-col justify-content-center align-items-center pr-2">Item per page</div>
+            <div class="pr-2">
+                <select class="form-select" id="ItemPageSizeDropDown" aria-label="Default select example" onchange="PageSizeDropDown()">
+                    <option value="3" selected="@(Model.ItemPaggination.PageSize == 3 ? "selected" : null)">3</option>
+                    <option value="5" selected="@(Model.ItemPaggination.PageSize == 5 ? "selected" : null)">5</option>
+                    <option value="10" selected="@(Model.ItemPaggination.PageSize == 10 ? "selected" : null)">10</option>
+                    <option value="15" selected="@(Model.ItemPaggination.PageSize == 15 ? "selected" : null)">15</option>
+                </select>
+            </div>
+            <div class="d-flex flex-col justify-content-center align-items-center pr-2">
+                Showing @(Model.ItemPaggination.MinRow) - @(Model.ItemPaggination.MaxRow) of @(Model.ItemPaggination.TotalRecord)
+            </div>
+            <a class="btn border rounded mr-2" onclick="ItempagginationArrowControll(@(Model.ItemPaggination.CurrentPage - 1) ,
+            @Model.ItemPaggination.PageSize , @Model.ItemPaggination.TotalPage)" @(Model.ItemPaggination.CurrentPage == 1 ? "disable" : "")><i class="fa-solid
+            fa-chevron-left"></i></a>
+            <a class="btn border rounded" onclick="ItempagginationArrowControll(@(Model.ItemPaggination.CurrentPage + 1) ,
+            @Model.ItemPaggination.PageSize , @Model.ItemPaggination.TotalPage )" @(Model.ItemPaggination.CurrentPage < Model.ItemPaggination.TotalPage ? "" : "disable") ><i
+            class="fa-solid fa-chevron-right"></i></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel;
+<!-- pagination -->
+<div class="d-flex flex-row justify-content-center align-item-center">
+    <div class="d-flex flex-col justify-content-center align-items-center pr-2">Item per page</div>
+    <div class="pr-2">
+        <select class="form-select" id="PageSizeDropDown" aria-label="Default select example">
+            <option value="3" selected="@(ViewBag.PageSize == 3 ? "selected" : null)">3</option>
+            <option value="4" selected="@(ViewBag.PageSize == 4 ? "selected" : null)">4</option>
+            <option value="5" selected="@(ViewBag.PageSize == 5 ? "selected" : null)">5</option>
+            <option value="6" selected="@(ViewBag.PageSize == 6 ? "selected" : null)">6</option>
+        </select>
+    </div>
+    <div class="d-flex flex-col justify-content-center align-items-center pr-2">
+        Showing @(ViewBag.MinRowCount) - @(ViewBag.MaxRowCount) of @(ViewBag.TotalRecords)
+    </div>
+    @* @if(ViewBag.CurrentPage > 1){
+    <a class="btn border rounded mr-2"
+    href="@Url.Action("UserList",new{page = ViewBag.CurrentPage - 1 , pagesize = ViewBag.PageSize})">
+    <i class="fa-solid fa-chevron-left"></i>
+    </a>
+    }
+    else{
+    <a class="btn border rounded mr-2"><i class="fa-solid fa-chevron-left"></i></a>
+    }
+    @if(ViewBag.CurrentPage < ViewBag.TotalPage){
+    <a class="btn border rounded"
+    href="@Url.Action("UserList",new{page = ViewBag.CurrentPage + 1 , pagesize = ViewBag.PageSize})">
+    <i class="fa-solid fa-chevron-right"></i>
+    </a>
+    }
+    else{
+    <a class="btn border rounded"><i class="fa-solid fa-chevron-right"></i></a>
+    } *@
+    <a class="btn border rounded mr-2"
+        onclick="pagginationArrowControll(@(ViewBag.CurrentPage - 1) , @ViewBag.PageSize , @ViewBag.TotalPage)"
+    @(ViewBag.CurrentPage == 1 ? "disable" : "")><i class="fa-solid fa-chevron-left"></i></a>
+    <a class="btn border rounded"
+        onclick="pagginationArrowControll(@(ViewBag.CurrentPage + 1) , @ViewBag.PageSize , @ViewBag.TotalPage )"
+    @(ViewBag.CurrentPage < ViewBag.TotalPage ? "" : "disable")><i class="fa-solid fa-chevron-right"></i></a>
+</div>

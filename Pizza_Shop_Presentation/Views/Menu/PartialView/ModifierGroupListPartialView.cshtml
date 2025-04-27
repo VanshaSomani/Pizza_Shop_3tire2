@@ -1,0 +1,33 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel;
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@inject IHttpContextAccessor accessor;
+@{
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new UserLayoutViewModel();
+}
+<table class="table table-light" id="modifierGroupList">
+<tbody class="category-table-body" id="">
+    @foreach (var obj in Model.ModifiergroupList)
+    {
+        <tr class="category_tr" id="@obj.Modifiergroupid" onclick="getMGId(this)">
+            <td class="" style="width: 14%;">
+                <img src="../images/icons/six-dot-icon.svg" height="20px" alt="" />
+            </td>
+            <td class="d-flex flex-row justify-content-between">
+                <span class="modifier_group_name">@obj.Mgname</span>
+                <span class="category_action_button bg-light">
+                    @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Addandeditpermission)){
+                        <a id="@obj.Modifiergroupid" onclick="getMGEditID(this)" class="cursorpointer"><i
+                                class="fa-solid fa-pencil mr-2 bg-light text-secondary"></i></a>
+                    }
+                    @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Isdeletepermission)){
+                        <a id="@obj.Modifiergroupid" onclick="getMGDeleteID(this)" class="cursorpointer"><i
+                                class="fa-solid fa-trash bg-light text-secondary"></i></a>
+                    }
+                </span>
+            </td>
+        </tr>
+    }
+</tbody>
+</table>

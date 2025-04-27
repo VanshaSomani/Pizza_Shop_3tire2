@@ -1,0 +1,384 @@
+@model Pizza_Shop_Repository.ViewModels.WaitingListViewModel
+@{
+    ViewData["Title"] = "OrdersAppWaitingList";
+    Layout = "_OrderAppLayout";
+}
+<div class="pb-2 pl-4 pr-4 pt-3">
+    <!-- header -->
+    <div class="col-12 pb-0 p-2 user-list-container d-flex flex-row justify-content-between ">
+        <div class="h1 fw-bold text-primary">Waiting List</div>
+        <button type="button" id="AddWaitingTokenBtn" class="btn btn-outline-primary modal_close_btn fs-5 mt-2 mb-2">
+            + Waiting Token
+        </button>
+    </div>
+    <div id="tab-container">
+        @Html.Partial("PartialView/WaitingListTablePartialView" , Model)
+    </div>
+</div>
+
+<!-- Add waiting token Modal -->
+<div class="modal fade" id="AddWaitingTokenModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+<!-- Edit waiting token Modal -->
+<div class="modal fade" id="EditWaitingTokenModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AssignWaitingTokenModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+<!-- Delete waiting token Modal -->
+<div class="modal fade" id="DeleteWaitingTokenModal" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        @Html.Partial("PartialView/DeleteWaitingTokenModalPartialView")
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(".navbar-badges-container span").removeClass('selected_badge');
+        $("#OrderAppWaitingListBadge").find('span').addClass('selected_badge');
+        var selectedSection = -1;
+        let SelectedTableIds = [];
+        let capacity = 0;
+
+        function GetWaitingList(elem) {
+            var sectionid = $(elem).data("sectionid");
+            console.log("SectionId - ", sectionid);
+            selectedSection = sectionid;
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppWaitingList/GetWaitingListForPartialView",
+                data: { SectionId: sectionid, page: 1, PageSize: 5, TotalPage: 0 },
+                success: function (data) {
+                    GetWaitingListBySectionId(sectionid);
+                }
+            });
+        }
+
+        function DeleteModalOpen(elem) {
+            $("#deleteWaitingTokenId").val($(elem).data("waitingid"));
+            $("#DeleteWaitingTokenModal").modal("show");
+        }
+
+        function GetEditWaitingToken(elem) {
+            let waitingTokenId = $(elem).data("waitingid");
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppWaitingList/EditWaitingListGet",
+                data: { WaitingTokenId: waitingTokenId },
+                success: function (data) {
+                    $("#EditWaitingTokenModal .modal-content").html(data);
+                    $("#EditWaitingTokenModal").modal("show");
+                }
+            })
+        }
+
+        function LoadEntireView(sectionId) {
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppWaitingList/OrderWaitingList",
+                data: { SectionId: sectionId },
+                success: function (data) {
+                    $("body").empty();
+                    $("body").html(data);
+                    document.querySelectorAll(".tab-btn").forEach(tab => {
+                        tab.classList.remove("active-menu-option");
+                        tab.classList.remove("text-primary");
+                        tab.classList.add("text-secondary");
+                    });
+                    selectedSection = sectionId;
+                    var elem = document.getElementById(sectionId);
+                    elem.classList.add("active-menu-option");
+                    elem.classList.add("text-primary");
+                    elem.classList.remove("text-secondary");
+                }
+            });
+        }
+
+        function GetWaitingListBySectionId(sectionId) {
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppWaitingList/GetWaitingListForPartialView",
+                data: { SectionId: sectionId, page: 1, PageSize: 5, TotalPage: 0 },
+                success: function (data) {
+                    $("#tab-container").empty();
+                    $("#tab-container").html(data);
+                    document.querySelectorAll(".tab-btn").forEach(tab => {
+                        tab.classList.remove("active-menu-option");
+                        tab.classList.remove("text-primary");
+                        tab.classList.add("text-secondary");
+                    });
+                    selectedSection = sectionId;
+                    var elem = document.getElementById(selectedSection);
+                    elem.classList.add("active-menu-option");
+                    elem.classList.add("text-primary");
+                    elem.classList.remove("text-secondary");
+                }
+            });
+        }
+
+        function AssignTableModalOpen(elem) {
+            let waitingid = $(elem).data("waitingid");
+            let sectionid = $(elem).data("sectionid");
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppWaitingList/GetAssignWaitingToken",
+                data: { SectionId: sectionid, WaitingId: waitingid },
+                success: function (data) {
+                    @* console.log(data); *@
+                        SelectedTableIds =[];
+                    capacity = 0;
+                    $("#AssignWaitingTokenModal .modal-content").html(data);
+                    $("#AssignWaitingTokenModal").modal("show");
+                }
+            });
+        }
+
+        $(document).off("change", "#WaitingSectionList").on("change", "#WaitingSectionList", function () {
+            let waitingid = $(this).data("waitingid");
+            let sectionid = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppWaitingList/GetAssignWaitingToken",
+                data: { SectionId: sectionid, WaitingId: waitingid },
+                success: function (data) {
+                    @* console.log(data); *@
+                        SelectedTableIds =[];
+                    capacity = 0;
+                    $("#AssignWaitingTokenModal .modal-content").empty();
+                    $("#AssignWaitingTokenModal .modal-content").html(data);
+                }
+            });
+        })
+
+        $(document).off("click", ".assigncheckbox").on("click", ".assigncheckbox", function () {
+            let tableid = $(this).val();
+            let tablecapacity = $(this).data("tablecapacity");
+            let count = $("#AssignWaitingPersonCount").data("waitingcount");
+            if (!SelectedTableIds.includes(tableid)) {
+                SelectedTableIds.push(tableid);
+                capacity += tablecapacity;
+            }
+            else {
+                SelectedTableIds.splice(SelectedTableIds.indexOf(tableid), 1);
+                capacity = capacity - tablecapacity;
+            }
+            if (count > capacity) {
+                toastNotifyInformation("Enter one more table to match the capacity", 3000);
+            }
+        })
+
+        $(document).off("click", "#AssignWaitingTokenFormSubmit").on("click", "#AssignWaitingTokenFormSubmit", function (event){
+            event.preventDefault();
+            var form = document.getElementById("AssignWaitingTokenForm");
+            var formData = new FormData(form);
+            formData.append("TableIds", JSON.stringify(SelectedTableIds));
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppWaitingList/AssignTable",
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (data) {
+                    if (data.status == true){
+                        notyf.success("Table Assigned Successfully");
+                        $("#AssignWaitingTokenForm")[0].reset();
+                        $("#AssignWaitingTokenModal").modal("hide");
+                    }
+                    else{
+                        notyf.error("Something went wrong");
+                        $("#AssignWaitingTokenForm")[0].reset();
+                        $("#AssignWaitingTokenModal").modal("hide");
+                    }
+                    GetWaitingListBySectionId(selectedSection);
+                },
+                error : function(data){
+                    notyf.error("Something went wrong");
+                }
+            });
+        })
+
+        function WaitingpagginationArrowControll(Page, pageSize, totalRecord) {
+            console.log("Current Page - ", Page);
+            console.log("Page Size - ", pageSize);
+            console.log("TotalRecord - ", totalRecord);
+            if (Page >= 1 && Page <= totalRecord) {
+                $.ajax({
+                    type: "GET",
+                    url: "/OrderAppWaitingList/GetWaitingListForPartialView",
+                    data: { SectionId: selectedSection, page: Page, PageSize: pageSize, TotalPage: totalRecord },
+                    success: function (data) {
+                        $("#tab-container").empty();
+                        $("#tab-container").html(data);
+                    }
+                });
+            }
+        }
+
+        function WaitingListPageSizeDropDownControl() {
+            var pageSize = $("#WaitingPageSizeDropDown").val();
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppWaitingList/GetWaitingListForPartialView",
+                data: { SectionId: selectedSection, page: 1, PageSize: pageSize },
+                success: function (data) {
+                    $("#tab-container").empty();
+                    $("#tab-container").html(data);
+                }
+            });
+        }
+
+        function DateTimerWaitingList() {
+            $(".WaitingListDateCounter").each(function () {
+                let waitingCreatedDateStr = $(this).data("createdat");
+                let waitingCreatedDate = new Date(waitingCreatedDateStr).getTime();
+                let current = new Date().getTime();
+                let diff = current - waitingCreatedDate;
+
+                let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                $(this).find(".WaitingListDateCounterText").text(`${days} days ${hours} hours ${minutes} min ${seconds} sec`);
+            })
+        }
+        DateTimerWaitingList();
+        setInterval(DateTimerWaitingList, 1000);
+
+        $(document).off("click", "#AddWaitingTokenBtn").on("click", "#AddWaitingTokenBtn", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppTable/GetDataForAddWaitingToken",
+                data: { SectionId: selectedSection },
+                success: function (data) {
+                    $("#AddWaitingTokenModal .modal-content").html(data);
+                    $("#AddWaitingTokenModal").modal("show");
+                }
+            });
+        })
+
+        $(document).off("click", "#EditWaitingTokenFormSubmit").on("click", "#EditWaitingTokenFormSubmit", function (event) {
+            event.preventDefault();
+            $("#EditWaitingTokenForm").removeAttr("novalidate");
+            $.validator.unobtrusive.parse($("#EditWaitingTokenForm"));
+            if (!$("#EditWaitingTokenForm").valid()) {
+                console.log();
+                return;
+            }
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppWaitingList/UpdateWaitingToken",
+                data: $("#EditWaitingTokenForm").serialize(),
+                success: function (data) {
+                    if (data.status == true) {
+                        notyf.success("Waiting Token Edited Successfully");
+                        $("#EditWaitingTokenForm")[0].reset();
+                        $("#EditWaitingTokenModal").modal("hide");
+                    }
+                    else {
+                        notyf.error("Something Went Wrong");
+                        $("#EditWaitingTokenForm")[0].reset();
+                        $("#EditWaitingTokenModal").modal("hide");
+                    }
+                    GetWaitingListBySectionId(selectedSection);
+                },
+                error: function (data) {
+
+                }
+            });
+        })
+
+        $(document).off("click", "#DeleteWaitingTokenModalSubmit").on("click", "#DeleteWaitingTokenModalSubmit", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/OrderAppWaitingList/DeleteWaitingToken",
+                data: { WaitingTokenId: $("#deleteWaitingTokenId").val() },
+                success: function (data) {
+                    if (data.status == true) {
+                        notyf.success("Waiting Token Deleted Successfully");
+                        $("#deleteWaitingTokenId").val("");
+                        $("#DeleteWaitingTokenModal").modal("hide");
+                    }
+                    else {
+                        notyf.error("Something Went Wrong");
+                        $("#deleteWaitingTokenId").val("");
+                        $("#DeleteWaitingTokenModal").modal("hide");
+                    }
+                    GetWaitingListBySectionId(selectedSection);
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        })
+
+        $(document).off("click", '#AddWaitingTokenFormSubmit').on("click", '#AddWaitingTokenFormSubmit', function (event) {
+            event.preventDefault();
+            $("#AddWaitingTokenForm").removeAttr("novalidate");
+            $.validator.unobtrusive.parse($("#AddWaitingTokenForm"));
+            if (!$("#AddWaitingTokenForm").valid()) {
+                console.log();
+                return;
+            }
+            selectedSection = $("#WaitingTokenSection").val();
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppTable/AddCustomerToWaitingList",
+                data: $("#AddWaitingTokenForm").serialize(),
+                success: function (data) {
+                    if (data.status == true) {
+                        notyf.success("Waiting Token Generated Successfully");
+                        $("#AddWaitingTokenForm")[0].reset();
+                        $("#AddWaitingTokenModal").modal("hide");
+                        GetWaitingListBySectionId(selectedSection);
+                    }
+                    else {
+                        notyf.error("Something Went Wrong");
+                        $("#AddWaitingTokenForm")[0].reset();
+                        $("#AddWaitingTokenModal").modal("hide");
+                        GetWaitingListBySectionId(selectedSection)
+                    }
+                }
+            });
+        })
+
+        $(document).off("change", "#WaitingTokenCustomerEmail").on("change", "#WaitingTokenCustomerEmail", function (event) {
+            event.preventDefault();
+            var email = $(this).val().trim();
+            console.log("Email - ", email);
+            $.ajax({
+                type: "GET",
+                url: "/OrderAppTable/GetDataForAddWaitingToken",
+                data: { SectionId: selectedSection, Email: email },
+                success: function (data) {
+                    $("#AddWaitingTokenModal .modal-content").html(data);
+                    @* $("#AddWaitingTokenModal").modal("show"); *@
+                    }
+            });
+        })
+
+    </script>
+}

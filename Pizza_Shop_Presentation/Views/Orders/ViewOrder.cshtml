@@ -1,0 +1,222 @@
+@model Pizza_Shop_Repository.ViewModels.OrderDetailViewModel
+@{
+    ViewData["Title"] = "ViewOrder";
+    Layout = "_Layout";
+    var index = 1;
+}
+<div class="d-flex flex-column align-items-center">
+    <div class="pl-3 pr-3 d-flex flex-row justify-content-between" style="width: 60vw;">
+        <div class="d-flex flex-row justify-content-between" style="width: 60vw;">
+            <div class="h3 fw-bold text-primary mr-2">Order-Details</div>
+        </div>
+        <div>
+            <a class="btn btn-white border border-primary text-primary" asp-action="Order" asp-controller="Orders"><i
+                    class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+        </div>
+    </div>
+    <div class="row p-2 pl-3 pr-3" style="width: 60vw;">
+        <div class="col-12 p-2 pb-3 shadow mb-2 bg-white rounded" style="width: 60vw;">
+            <div class="d-flex flex-row align-items-center justify-content-between mb-2">
+                <div class="d-flex justify-content-center align-items-center">
+                    <span class="fs-4 fw-bold">Order Summary</span>
+                    <span class="ms-2"><h4><span class="badge bg-primary text-white">@Model.OrderStatus</span></h4></span>
+                </div>
+                <div>
+                    <a class="btn btn-primary text-light d-flex flex-row justify-content-center align-items-center"
+                        id="@Model.OrderId" onclick="DownloadOrderDetails(this)">
+                        <i class="fa-solid fa-file-export mr-1"></i>
+                        <span class="d-flex flex-column justify-content-center fw-bolder">Export</span>
+                    </a>
+                </div>
+            </div>
+            <div class="fs-6 fw-bold">
+                Invoice No: @Model.InvoceNo
+            </div>
+            <div class="d-flex flex-row flex-wrap gap-4">
+                <div class="fs-6 fw-bold me-2">
+                    Paid On: <span class="fs-6 fw-normal">@Model.PaidOn</span>
+                </div>
+                <div class="fs-6 fw-bold me-2">
+                    Placed On: <span class="fs-6 fw-normal">@Model.PlaceOn</span>
+                </div>
+                <div class="fs-6 fw-bold me-2">
+                    Modifier on: <span class="fs-6 fw-normal">@Model.ModifiedOn</span>
+                </div>
+                <div class="fs-6 fw-bold me-2">
+                    Order Duration: <span class="fs-6 fw-normal">@Model.OrderDuration</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex flex-wrap align-items-center justify-content-between mb-2 p-0">
+            <div class="col-lg-6 col-xs-12 p-2 pb-3 shadow mb-2 bg-white rounded h-100">
+                <div class="">
+                    <span class="h5"><i class="fa-solid fa-user"></i> Customer Details</span>
+                </div>
+                <div class="">
+                    <div class="ps-2">
+                        <div class="fs-6">Name : @Model.CustomerName</div>
+                        <div>Phone : @Model.CustomerPhoneNo</div>
+                        <div>No. of person : @Model.NoOfPerson</div>
+                        <div>Email : @Model.CustomerEmail</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xs-12 p-2 pb-3 shadow mb-2 bg-white rounded h-100">
+                <div class=" mb-4">
+                    <span class="h5"><img src="~/images/icons/ChairTableIcon.png" height="25px" alt=""> Table
+                        Details</span>
+                </div>
+                <div class="">
+                    <div class="ps-2">
+                        <div class="fs-6">Table : 
+                            @foreach(var ts in Model.TableSectionList){
+                                <span class="me-1">@ts.TableName</span>
+                            }
+                        </div>
+                        <div class="fs-6">Section : 
+                            @foreach(var ts in Model.TableSectionList){
+                                <span class="me-1">@ts.SectionName</span>
+                            }
+                        </div>
+                        @* <div>Section : @Model.SectionName</div> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex flex-wrap align-items-center justify-content-between mb-2 p-0 pb-3"
+            style="width: 60vw;">
+            <div
+                class="p-2 pb-3 shadow mb-2 bg-white rounded d-flex flex-fill flex-column flex-wrap justify-content-end table-overflow">
+                <div class="">
+                    <span class="fs-4 fw-bold">Order Items</span>
+                </div>
+                <div class="">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr No.</th>
+                                <th scope="col">Items</th>
+                                <th scope="col" class="text-left">Quantity</th>
+                                <th scope="col" class="text-right">Price</th>
+                                <th scope="col" class="text-right">TotalAmount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(Model.OrderDetailsList.Count() == 0){
+                                <tr>
+                                    <td colspan="5" class="text-center fw-bold">
+                                        No Data Found
+                                    </td>
+                                </tr>
+                            }
+                            else{
+                                @foreach (var item in Model.OrderDetailsList)
+                                {
+                                    <tr>
+                                        <th scope="row">@index</th>
+                                        <td>
+                                            @item.ItemName
+                                            @foreach (var modifier in item.ItemModifierList)
+                                            {
+                                                <ul class="m-0 p-0" style="list-style-type: none;">
+                                                    <li>@modifier.ModifierName</li>
+                                                </ul>
+                                            }
+                                        </td>
+                                        <td class="text-left">
+                                            @item.ItemQuantity
+                                            @foreach (var modifier in item.ItemModifierList)
+                                            {
+                                                <ul class="m-0 p-0" style="list-style-type: none;">
+                                                    <li>@modifier.Quantity</li>
+                                                </ul>
+                                            }
+                                        </td>
+                                        <td class="text-right">
+                                            ₹ @item.ItemAmount
+                                            @foreach (var modifier in item.ItemModifierList)
+                                            {
+                                                <ul class="m-0 p-0" style="list-style-type: none;">
+                                                    <li>₹ @modifier.ModifierPrice</li>
+                                                </ul>
+                                            }
+                                        </td>
+                                        <td class="text-right">
+                                            ₹ @item.TotalAmount
+                                            @foreach (var modifier in item.ItemModifierList)
+                                            {
+                                                <ul class="m-0 p-0" style="list-style-type: none;">
+                                                    <li>₹ @modifier.ModifierTotalAmount</li>
+                                                </ul>
+                                            }
+                                        </td>
+                                    </tr>
+                                    index = index + 1 ;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end" style="height: fit-content !important;">
+                    <div class=" d-flex flex-column" style="width: 250px;">
+                        <div class="d-flex flex-row justify-content-between">
+                            <div>
+                                Subtotal :
+                            </div>
+                            <div>
+                                ₹ @Model.SubTotal
+                            </div>
+                        </div>
+                        @if(Model.OrderDetailTax != null){
+                            @foreach (var tax in Model.OrderDetailTax)
+                            {
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div>
+                                        @tax.TaxName :
+                                    </div>
+                                    <div>
+                                        ₹ @Math.Round(tax.TaxAmount , 2)
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <div class="d-flex flex-row justify-content-between">
+                            <div>
+                                Exclusive Tax :
+                            </div>
+                            <div>
+                                ₹ @Math.Round(Model.OtherTax , 2)
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div>
+                                Total :
+                            </div>
+                            <div>
+                                ₹ @Math.Round(Model.TotalAmount , 2)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+<script src="~/js/Order.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>          
+<script>
+    function sidebarColorChange() {
+        var sidebarAnchor = document.getElementsByClassName("sidebar-anchor");
+        for (var i = 0; i < sidebarAnchor.length; i++) {
+            sidebarAnchor[i].classList.remove("active-sidebar");
+            sidebarAnchor[i].querySelector(".sidebar-name").classList.add("text-dark");
+            sidebarAnchor[i].querySelector(".sidebar-name").classList.remove("text-primary");  
+        }
+    }
+    sidebarColorChange();
+    document.getElementById("Orders-Sidebar").classList.add("active-sidebar");
+    document.getElementById("Orders-Sidebar").querySelector(".sidebar-name").classList.remove("text-dark");
+    document.getElementById("Orders-Sidebar").querySelector(".sidebar-name").classList.add("text-primary");
+</script>

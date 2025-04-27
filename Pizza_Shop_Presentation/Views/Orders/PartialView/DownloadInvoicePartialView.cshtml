@@ -1,0 +1,175 @@
+@model Pizza_Shop_Repository.ViewModels.OrderDetailViewModel
+@{
+    var index = 1;
+}
+<body class="d-flex justify-content-center" id="InvoicePdf">
+    <div class="" style="padding-left: 10rem !important; padding-right: 10rem !important; padding-top: 4rem;">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="me-2">
+                <img src="~/images/logos/pizzashop_logo.png" height="70px" alt="">
+            </div>
+            <div class="fw-bold m-0 fs-2 d-flex flex-column justify-content-center align-item-center ml-2 form-header">
+                PIZZASHOP
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-6">
+                <div class="fw-bold fs-5 form-header">
+                    Customer Details
+                </div>
+                <div>
+                    Name: @Model.CustomerName
+                </div>
+                <div>
+                    Mob: @Model.CustomerPhoneNo
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="fw-bold fs-5 form-header">
+                    OrderDetails
+                </div>
+                <div>
+                    Invoice No: @Model.InvoceNo
+                </div>
+                <div>
+                    Date: @Model.PaidOn
+                </div>
+                <div>
+                    <div class="fs-6">Section : 
+                        @foreach(var ts in Model.TableSectionList){
+                                <span class="me-1">@ts.SectionName</span>
+                        }
+                    </div>
+                </div>
+                <div>
+                    <div class="fs-6">Table : 
+                        @foreach(var ts in Model.TableSectionList){
+                            <span class="me-1">@ts.TableName</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <table class="table">
+                <thead class="table-primary" style="border: 0px;">
+                    <tr>
+                        <th scope="col" class="invocetableheader">Sr.No.</th>
+                        <th scope="col" class="invocetableheader">Item</th>
+                        <th scope="col" class="invocetableheader text-left">Quantity</th>
+                        <th scope="col" class="invocetableheader text-right">Unit Price</th>
+                        <th scope="col" class="invocetableheader text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(Model.OrderDetailsList.Count() == 0){
+                        <tr>
+                            <td colspan="5" class="text-center fw-bold">
+                                No Data Found
+                            </td>
+                        </tr>
+                    }
+                    else{
+                        @foreach (var item in Model.OrderDetailsList)
+                        {
+                            <tr class="border-primary">
+                                <th scope="row">@index</th>
+                                <td>
+                                    @item.ItemName
+                                    @foreach (var modifier in item.ItemModifierList)
+                                    {
+                                        <ul class="m-0 p-0" style="list-style-type: none;">
+                                            <li>@modifier.ModifierName</li>
+                                        </ul>
+                                    }
+                                </td>
+                                <td class="text-left">
+                                    @item.ItemQuantity
+                                    @foreach (var modifier in item.ItemModifierList)
+                                    {
+                                        <ul class="m-0 p-0" style="list-style-type: none;">
+                                            <li>@modifier.Quantity</li>
+                                        </ul>
+                                    }
+                                </td>
+                                <td class="text-right">
+                                    ₹@item.ItemAmount
+                                    @foreach (var modifier in item.ItemModifierList)
+                                    {
+                                        <ul class="m-0 p-0" style="list-style-type: none;">
+                                            <li>₹ @modifier.ModifierPrice</li>
+                                        </ul>
+                                    }
+                                </td>
+                                <td class="text-right">
+                                    ₹@item.TotalAmount
+                                    @foreach (var modifier in item.ItemModifierList)
+                                    {
+                                        <ul class="m-0 p-0" style="list-style-type: none;">
+                                            <li>₹ @modifier.ModifierTotalAmount</li>
+                                        </ul>
+                                    }
+                                </td>
+                            </tr>
+                            index = index + 1;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row mt-3">
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <div>
+                    Sub Total:
+                </div>
+                <div>
+                    
+                    ₹ @Math.Round(Model.SubTotal , 2)
+                </div>
+            </div>
+            @if(Model.OrderDetailTax != null){
+                @foreach (var tax in Model.OrderDetailTax)
+                {
+                    <div class="d-flex flex-row align-items-center justify-content-between">
+                        <div>
+                            @tax.TaxName
+                        </div>
+                        <div>
+                            ₹ @Math.Round(tax.TaxAmount , 2)
+                        </div>
+                    </div>
+                }
+            }
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <div>
+                    Exclusive Tax:
+                </div>
+                <div>
+                    ₹ @Math.Round(Model.OtherTax , 2)
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="invoiceborder">
+
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <div class="form-header">
+                    Total Amount Due:
+                </div>
+                <div class="form-header">
+                    ₹@Math.Round(Model.TotalAmount,2)
+                </div>
+            </div>
+        </div>
+        <div class="role mt-4">
+            <div class="form-header">Payment Information</div>
+            <div>Payment Method: @Model.PaymentMethod</div>
+        </div>
+        <div class="role">
+            <div class="d-flex justify-content-center align-items-center form-header fw-bold fs-4">
+                Thank You!
+            </div>
+        </div>
+    </div>
+</body>

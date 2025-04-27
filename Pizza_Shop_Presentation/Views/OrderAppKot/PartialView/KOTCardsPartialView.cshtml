@@ -1,0 +1,68 @@
+@using Microsoft.IdentityModel.Tokens
+@model Pizza_Shop_Repository.ViewModels.KOTViewModel
+
+@if(Model.KOTCardData.Count() == 0){
+    <div class="col-12">
+        <span class="d-flex flex-row align-items-center justify-content-center fw-bold fs-5">No Data Found</span>
+    </div>
+}
+@foreach (var cd in Model.KOTCardData)
+{
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3">
+        <div class="card Kot_card_border" id="@cd.OrderId" onclick="GetDataForKOTModal(this)">
+            <div class="card-header ps-2 pe-2">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="text-primary fw-bold fs-5"># @cd.OrderId</div>
+                    <div class="KotDateCounter" data-datecounter="@cd.OrderDate.ToString("yyyy-MM-ddTHH:mm:ss")">
+                        <i class="fa-solid fa-stopwatch"></i>
+                        <span class="KotDateCounterText">....Loading</span>
+                    </div>
+                </div>
+                <div class="fw-bold">
+                    @foreach(var s in cd.TableSectionList){
+                        <span class="me-1">@s.SectionName</span>
+                    }
+                    <i class="fa-solid fa-circle fs-7"></i>
+                    @foreach(var s in cd.TableSectionList){
+                        <span class="me-1">@s.TableName</span>
+                    }
+                </div>
+            </div>
+            <div class="card-body ps-1 pe-1 p-2">
+                <div style="height: 12vh; overflow: auto;">
+                    @if(cd.KOTCardDataList.Count() == 0){
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-dark ">No Data Found</span>
+                        </div>
+                    }
+                    @foreach(var ci in cd.KOTCardDataList){
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>@ci.ItemName</div>
+                                <div>@ci.ItemQuantity</div>
+                            </div>
+                            <div>
+                                <ul class="mb-1">
+                                    @foreach(var cm in ci.KOTItemModifierList){
+                                            <li>@cm.ModifierName</li>
+                                    }
+                                </ul>
+                                @* @if(ci.OrderItemInstruction.IsNullOrEmpty()){ *@
+                                    <span class="text-info">Instruction : </span><span>@ci.OrderItemInstruction</span>
+                                @* } *@
+                            </div>
+                    }
+                </div>
+            </div>
+            <div class="card-footer">
+                <span class="text-info">Order Instruction : </span><span>@cd.OrderInstruction</span>
+            </div>
+        </div>
+    </div>
+
+    
+    
+}
+
+
+
+

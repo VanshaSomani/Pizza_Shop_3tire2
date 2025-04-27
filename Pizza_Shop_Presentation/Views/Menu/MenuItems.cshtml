@@ -1,0 +1,404 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel;
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@inject IHttpContextAccessor accessor;
+@{
+    ViewData["Title"] = "MenuItems";
+    var cid = ViewBag.CategoryId;
+    var mgid = ViewBag.Modifiergroupid;
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new UserLayoutViewModel();
+}
+<div class="p-2 pl-3 pr-3">
+    <!-- header -->
+    <div class="col-12 p-2 user-list-container d-flex flex-row justify-content-between">
+        <div class="h3 fw-bold text-primary">Menu</div>
+    </div>
+    <!-- main -->
+    <div class="col-12 p-2 user-list-container">
+        <div class="shadow p-0 mb-0 bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Tab Container -->
+                        <div class="col-12 tabs">
+                            <div class="d-flex justify-content-start align-items-center g-2">
+                                <div class="p-2 d-flex justify-content-center align-items-center text-primary active-menu-option tab-btn"
+                                    onclick="openTabs(event , 'tab1')">
+                                    <i class="fa-solid fa-bars mr-2 fs-5"></i><span class="fs-5">Items</span>
+                                </div>
+                                <div class="p-2 d-flex justify-content-center align-items-center tab-btn"
+                                    onclick="openTabs(event , 'tab2')">
+                                    <i class="fa-solid fa-table mr-2 fs-5"></i><span class="fs-5">Modifiers</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Items Container -->
+    <div class="col-12 p-2 user-list-container tab-content" id="tab1">
+        <div class="shadow p-0 mb-2 bg-white rounded section_container">
+            <div class="bg-white d-flex justify-content-end p-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- category -->
+                        <div class="col-lg-3 section_container col-md-12 p-2 bg-light">
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <div class="fw-bold text-primary fs-5">
+                                        Category
+                                    </div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Addandeditpermission)){
+                                            <a href="" class="btn btn-outline-primary fs-7" data-bs-toggle="modal"
+                                                data-bs-target="#AddCategoryModal"><i class="fa-solid fa-plus"></i></a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- category table -->
+                            <div class="col-12 table table-container-scroll">
+                                <table class="table table-light">
+                                    <tbody class="category-table-body">
+                                        @Html.Partial("PartialView/CategoryListPartialView", Model)
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- items -->
+                        <div class="col-lg-9 col-md-12 p-2">
+                            <div class="col-12 p-0 pt-1 pb-1 mb-1">
+                                <div class="d-flex flex-row justify-content-start align-items-center">
+                                    <div class="fw-bold text-primary fs-4">Items</div>
+                                </div>
+                            </div>
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2">
+                                <div class="d-flex flex-row justify-content-end align-items-center">
+                                    <div class="input-countainer mr-2">
+                                        <input type="text" class="form-control" id="SearchBox"
+                                            aria-describedby="textHelp" placeholder="Search" />
+                                        <span class="input-countainer-icon"><i
+                                                class="fa-solid fa-magnifying-glass"></i></span>
+                                    </div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Isdeletepermission)){
+                                            <a class="btn btn-outline-secondary mr-2" title="Delete Multiple Item"
+                                                onclick="MassDelete()"><i class="fa-solid fa-trash"></i></a>
+                                        }
+                                    </div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Addandeditpermission)){
+                                            <a class="btn btn-primary text-light" onclick="removeselectedMgId()"><i
+                                                    class="fa-solid fa-plus mr-1"></i>New
+                                                Item</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- table -->
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2 table-overflow">
+                                @Html.Partial("PartialView/ItemListPartialView", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modifier Container -->
+    <div class="col-12 p-2 user-list-container tab-content" id="tab2" style="display: none;">
+        <div class="shadow p-0 mb-2 section_container bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Modifiers -->
+                        <div class="col-lg-3 section_container col-md-12 p-2 bg-light">
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <div class="fw-bold text-primary fs-5">
+                                        Modifier Group
+                                    </div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Addandeditpermission)){
+                                            <button class="btn btn-outline-primary fs-7"
+                                                onclick="ShowAddModiferGroupModal()"><i
+                                                    class="fa-solid fa-plus"></i></button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- modifier group table -->
+                            <div class="col-12 table table-container-scroll right_section">
+                                @Html.Partial("PartialView/ModifierGroupListPartialView", Model)
+                            </div>
+                        </div>
+                        <!-- modifier -->
+                        <div class="col-lg-9 col-md-12 p-2">
+                            <div class="col-12 p-0 pt-1 pb-1 mb-1">
+                                <div class="d-flex flex-row justify-content-start align-items-center">
+                                    <div class="fw-bold text-primary fs-4">Modifiers</div>
+                                </div>
+                            </div>
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2">
+                                <div class="d-flex flex-row justify-content-end align-items-center">
+                                    <div class="input-countainer mr-2">
+                                        <input type="text" class="form-control" id="ModifierSearchBox"
+                                            aria-describedby="textHelp" placeholder="Search" />
+                                        <span class="input-countainer-icon"><i
+                                                class="fa-solid fa-magnifying-glass"></i></span>
+                                    </div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Isdeletepermission)){
+                                            <a class="btn btn-outline-secondary mr-2" title="Delete Multiple Modifier"
+                                                onclick="MassDeleteModifiers()"><i class="fa-solid fa-trash"></i></a>
+                                        }
+                                    </div>
+                                    <div>
+                                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Addandeditpermission)){
+                                            <a class="btn btn-primary text-light" onclick="OpenAddModifierModal()"><i
+                                                    class="fa-solid fa-plus mr-1"></i>New
+                                                Modifier</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- table -->
+                            <div class="col-12 p-0 pt-1 pb-1 mb-2 table-overflow">
+                                @Html.Partial("PartialView/ModifiersListPartialView", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add category Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="AddCategoryModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                <button type="button" class="btn-close AddCategoryModalDismiss" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="AddCategory" asp-controller="Menu" method="post" id="AddCategoryModalForm">
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control mb-2" id="exampleInpuText1" aria-describedby="textHelp"
+                            placeholder="Name" asp-for="@Model.Categoryname" />
+                        <label for="exampleFormControlTextarea1">Category Name</label>
+                        <span asp-validation-for="Categoryname" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            asp-for="@Model.CategoryDesc"></textarea>
+                        <label for="exampleFormControlTextarea1">Description</label>
+                        <span asp-validation-for="CategoryDesc" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary modal_submit_btn">Save</button>
+                    <button type="button" class="btn btn-outline-primary AddCategoryModalDismiss modal_close_btn" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Item Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="DeleteItemModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Delete Item
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+
+                </button>
+            </div>
+            <form asp-action="DeleteItem" asp-controller="Menu" method="post">
+                <div class="modal-body  ps-0 pe-0">
+                    <div class="d-flex justify-content-center align-item-center">
+                        <input type="hidden" id="DeleteItemId" asp-for="@Model.Itemid">
+                        <input type="hidden" id="DeleteItemCategoryId" asp-for="@Model.Categoryid">
+                        <img src="../images/toppng.com-warning-icon-2400x2400.png" height="50px" alt="" />
+                    </div>
+                    <p class="d-flex justify-content-center align-item-center fs-5 mb-1">Are you sure you want to delete this item?</p>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-center align-items-center w-100">
+                        <button type="submit" class="btn btn-primary modal_submit_btn me-2">Yes</button>
+                        <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add New Menu Item Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="AddNewMenuItemModal">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 1140px !important;">
+        <div class="modal-content">
+            @Html.Partial("PartialView/AddItemModalPartialView", Model)
+        </div>
+    </div>
+</div>
+<!-- Edit Item Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="EditMenuItemModal">
+    <div class="modal-dialog modal-dialog-centered modal-xl" style="max-width: 1140px !important;">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- Edit category Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="EditCategoryModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="EditCategory" asp-controller="Menu" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="EditCategoryIdModal" asp-for="@Model.Categoryid">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" aria-describedby="textHelp" placeholder="Name"
+                            asp-for="@Model.Categoryname" id="EditCategoryNameModal" />
+                        <span class="text-danger" asp-validation-for="Categoryname"></span>
+                        <label for="exampleFormControlTextarea1">Category Name</label></br>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" rows="3" asp-for="@Model.CategoryDesc"
+                            id="EditCategoryDescModal"></textarea>
+                        <span class="text-danger" asp-validation-for="CategoryDesc"></span>
+                        <label for="exampleFormControlTextarea1">Description</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary modal_submit_btn">Save</button>
+                    <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete category Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="DeleteCategoryModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="DeleteCategory" asp-controller="Menu" method="post">
+                <div class="modal-body ps-0 pe-0">
+                    <input type="hidden" id="DeleteCategoryIdModal" asp-for="@Model.Categoryid">
+                    <input type="hidden" class="form-control mb-2" aria-describedby="textHelp" placeholder="Name"
+                        asp-for="@Model.Categoryname" id="DeleteCategoryNameModal" />
+                    <textarea class="form-control d-none" rows="3" asp-for="@Model.CategoryDesc"
+                        id="DeleteCategoryDescModal"></textarea>
+                    <div class="d-flex justify-content-center align-item-center"><img
+                            src="../images/toppng.com-warning-icon-2400x2400.png" height="50px" alt=""></div>
+                    <div class="d-flex justify-content-center align-item-center">
+                        <p class="fs-5 mb-1">Are you sure you want to delete this Category?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-center align-items-center w-100">
+                        <button type="submit" class="btn btn-primary modal_submit_btn me-2">Yes</button>
+                        <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Modifer Group Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="AddModiferGroupModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered" style="max-width: 800px !important;">
+        @Html.Partial("PartialView/AddModifierGroupModalPartialView", Model)
+    </div>
+</div>
+<!-- Edit Modifier Group Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="EditModiferGroupModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered" style="max-width: 800px !important;">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- Delete Modifier Group Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="DeleteModiferGroupModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- Add Modifier -->
+<div class="modal fade" data-bs-backdrop="static" id="AddModifierModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 1140px !important;">
+        <div class="modal-content">
+            @Html.Partial("PartialView/AddModifierModalPartialView", Model)
+        </div>
+    </div>
+</div>
+<!-- Edit Modifier -->
+<div class="modal fade" data-bs-backdrop="static" id="EditModifierModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 1140px !important;">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<!-- Delete Modifier -->
+<div class="modal fade" data-bs-backdrop="static" id="DeleteModifierModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        @Html.Partial("PartialView/DeleteModifierPartialView", Model)
+    </div>
+</div>
+<!-- Add Existing Modifier Modal -->
+<div class="modal" data-bs-backdrop="static" id="AddExistingModiferGroupModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@section Scripts {
+    <script>
+        cid = @Model.ItemList.First().Categoryid;
+        mgid = @Model.ModifiersList.First().ModifierModifierGroupMappings.First().ModifierGroupId;
+    </script>
+    <script src="~/js/Menu.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

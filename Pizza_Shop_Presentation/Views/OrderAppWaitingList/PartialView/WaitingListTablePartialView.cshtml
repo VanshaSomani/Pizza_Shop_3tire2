@@ -1,0 +1,130 @@
+@model Pizza_Shop_Repository.ViewModels.WaitingListViewModel
+<!-- Tab -->
+    <div class="col-12 p-2 user-list-container pt-0">
+        <div class="shadow p-0 mb-0 bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-0">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Tab Container -->
+                        <div class="col-12 tabs">
+                            <div class="d-flex justify-content-start align-items-center g-2 flex-wrap">
+                                <div class="p-2 d-flex justify-content-center align-items-center me-1 fs-5 px-3 text-primary active-menu-option tab-btn"
+                                    id="-1" data-sectionid="-1" onclick="GetWaitingList(this)">
+                                    All
+                                    <span class="badge rounded-pill bg-secondary ms-1 fs-7">@Model.TotalWaitingCount</span>
+                                </div>
+                                @foreach(var s in Model.SectionList){
+                                    <div class="p-2 d-flex justify-content-center align-items-center me-1 fs-5 px-3 text-secondary tab-btn"
+                                        id="@s.SectionId" data-sectionid="@s.SectionId" onclick="GetWaitingList(this)">
+                                        @s.SectionName
+                                        <span class="badge rounded-pill bg-secondary ms-1 fs-7">@s.WaitingCount</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- KOT Container -->
+    <div class="col-12 p-2 user-list-container tab-content">
+        <div class="shadow p-0 mb-2 bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-2">
+                <div class="container-fluid">
+                    <div id="WaitingListTableContainer">
+                        <div class="waitinglistTable">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left" style="width: 100px;">#TokenNo</th>
+                                        <th scope="col" class="text-left" style="width: 200px;">CreatedAt</th>
+                                        <th scope="col" class="text-center">Waiting Time</th>
+                                        <th scope="col" class="text-left">Name</th>
+                                        <th scope="col" class="text-left" style="width: 150px;">No. Of Person</th>
+                                        <th scope="col" class="text-left" style="width: 150px;">Phone Number</th>
+                                        <th scope="col" class="text-left" style="width: 200px;">Email</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(Model.WaitingDataList.Count() == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="8">
+                                                <div class="d-flex justify-content-center align-items-center fw-bold fs-4">No Data Found</div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var w in Model.WaitingDataList)
+                                        {
+                                            <tr>
+                                                <td class="text-left">#@w.WaitingListId</td>
+                                                <td class="text-left ">
+                                                        @w.CreatedAt.ToString("MMM dd, yyyy hh:mm tt")
+                                                </td>
+                                                <td class="text-center WaitingListDateCounter" data-createdat="@w.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss")">
+                                                    <span class="WaitingListDateCounterText">
+                                                        ...Loading
+                                                    </span>
+                                                </td>
+                                                <td class="text-left">@w.CustomerName</td>
+                                                <td class="text-left">@w.NoOfPerson</td>
+                                                <td class="text-left">@w.PhoneNo</td>
+                                                <td class="text-left">@w.Email</td>
+                                                <td class="text-center">
+                                                    <a onclick="GetEditWaitingToken(this)" class="cursorpointer" data-waitingid="@w.WaitingListId">
+                                                        <i class="fa-solid fa-pencil mr-3"></i>
+                                                    </a>
+                                                    <a onclick="DeleteModalOpen(this)" class="cursorpointer" data-waitingid="@w.WaitingListId">
+                                                        <i class="fa-solid fa-trash mr-3"></i>
+                                                    </a>
+                                                    <a onclick="AssignTableModalOpen(this)" class="cursorpointer" data-sectionid="@w.SectionId" data-waitingid="@w.WaitingListId">
+                                                        <i class="fa-solid fa-user-check"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="bg-white d-flex justify-content-end p-2">
+                                <!-- pagination -->
+                                <div class="d-flex flex-row flex-wrap justify-content-center align-item-center">
+                                    <div class="d-flex flex-row justify-content-end align-item-center mb-2 user_paggination_width">
+                                        <div class="d-flex flex-col justify-content-center align-items-center pr-2">Item per page</div>
+                                        <div class="pr-2">
+                                            <select class="form-select" id="WaitingPageSizeDropDown" aria-label="Default select example" onchange="WaitingListPageSizeDropDownControl()">
+                                                <option value="3" selected="@(Model.WaitingListPaggination.PageSize == 3 ? "selected" : null)">3</option>
+                                                <option value="5" selected="@(Model.WaitingListPaggination.PageSize == 5 ? "selected" : null)">5</option>
+                                                <option value="10" selected="@(Model.WaitingListPaggination.PageSize == 10 ? "selected" : null)">10</option>
+                                                <option value="15" selected="@(Model.WaitingListPaggination.PageSize == 15 ? "selected" : null)">15</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-end align-item-center mb-2 user_paggination_width">
+                                        <div class="d-flex flex-col justify-content-center align-items-center pr-2">
+                                            Showing @(Model.WaitingListPaggination.MinRow) - @(Model.WaitingListPaggination.MaxRow) of
+                                            @(Model.WaitingListPaggination.TotalRecord)
+                                        </div>
+                                        <a class="btn border rounded mr-2" onclick="WaitingpagginationArrowControll(@(Model.WaitingListPaggination.CurrentPage - 1) , 
+                                        @Model.WaitingListPaggination.PageSize , @Model.WaitingListPaggination.TotalPage)" @(Model.WaitingListPaggination.CurrentPage == 1
+                                            ? "disable" : "")>
+                                            <i class="fa-solid fa-chevron-left"></i>
+                                        </a>
+                                        <a class="btn border rounded" onclick="WaitingpagginationArrowControll(@(Model.WaitingListPaggination.CurrentPage + 1) ,
+                                        @Model.WaitingListPaggination.PageSize , @Model.WaitingListPaggination.TotalPage )" @(Model.WaitingListPaggination.CurrentPage <
+                                            Model.WaitingListPaggination.TotalPage ? "" : "disable")>
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

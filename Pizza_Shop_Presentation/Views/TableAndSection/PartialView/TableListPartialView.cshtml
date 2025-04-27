@@ -1,0 +1,97 @@
+@model Pizza_Shop_Repository.ViewModels.TableSectionViewModel;
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@inject IHttpContextAccessor accessor;
+@{
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new UserLayoutViewModel();
+}
+<div id="TableSection" class="right_section_table d-flex flex-column justify-content-between">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="width: 0;">
+                    @* <i class="fa-regular fa-square-minus"></i> *@
+                    <input class="form-check-input border border-dark " type="checkbox" value="" style="margin-top: -1.3em; margin-left: 0.01em;"
+                    id="TableCheckBoxSelectAll" onclick="SelectAllTableForMassDelete(this)"/>
+                </th>
+                <th scope="col" class="text-start" style="width: 50%;">Name</th>
+                <th scope="col" class="text-center">Capacity</th>
+                <th scope="col" class="text-center">Status</th>
+                <th scope="col" class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody id="TableSectionTable">
+            @if(Model.TableList.Count() == 0){
+                <tr>
+                    <td colspan="5" class="text-center fw-bold">
+                        No table in this section
+                    </td>
+                </tr>
+            }
+            else{
+                @foreach (var table in Model.TableList)
+                {
+                    <tr id="@table.Tableid">
+                        <td class="text-start">
+                            <div class="form-check">
+                                <input class="form-check-input border border-dark TableCheckBox" type="checkbox" value=""
+                                    id="@table.Tableid" onclick="GetAllselectedTable(this)"/>
+                            </div>
+                        </td>
+                        <td class="text-start">
+                            @table.Tablename
+                        </td>
+                        <td class="text-center">
+                            @table.Capacity
+                        </td>
+                        <td class="text-center">
+                            <a class="btn rounded-pill action-btn text-white p-1 @(table.TableStatus == "Available" ? "btn-success" : table.TableStatus == "Selected" ? "btn-primary" : table.TableStatus == "Assigned" ? "btn-info" : "btn-warning")">@table.TableStatus</a>
+                        </td>
+                        <td class="text-center">
+                            @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "TableAndSection" && p.Addandeditpermission)){
+                                <a id="@table.Tableid" onclick="GetEditTableId(this)" class="cursorpointer">
+                                    <i class="fa-solid fa-pencil mr-3"></i>
+                                </a>
+                            }
+                            @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "TableAndSection" && p.Isdeletepermission)){
+                                <a id="@table.Tableid" onclick="GetDeleteTableId(this)" class="cursorpointer">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="bg-white d-flex justify-content-end p-2">
+        <!-- pagination -->
+        <div class="d-flex flex-row justify-content-center align-item-center">
+            <div class="d-flex flex-col justify-content-center align-items-center pr-2">Item per page</div>
+            <div class="pr-2">
+                <select class="form-select" id="TablePageSizeDropDown" aria-label="Default select example" onchange="TablePageSizeDropDownControl()">
+                    <option value="3" selected="@(Model.TablePagination.PageSize == 3 ? "selected" : null)">3</option>
+                    <option value="5" selected="@(Model.TablePagination.PageSize == 5 ? "selected" : null)">5</option>
+                    <option value="10" selected="@(Model.TablePagination.PageSize == 10 ? "selected" : null)">10</option>
+                    <option value="15" selected="@(Model.TablePagination.PageSize == 15 ? "selected" : null)">15</option>
+                </select>
+            </div>
+            <div class="d-flex flex-col justify-content-center align-items-center pr-2">
+                Showing @(Model.TablePagination.MinRow) - @(Model.TablePagination.MaxRow) of @(Model.TablePagination.TotalRecord)
+            </div>
+            <a class="btn border rounded mr-2" onclick="TablepagginationArrowControll(@(Model.TablePagination.CurrentPage - 1) ,
+            @Model.TablePagination.PageSize , @Model.TablePagination.TotalPage)" @(Model.TablePagination.CurrentPage == 1 ? "disable" : "")><i class="fa-solid
+            fa-chevron-left"></i></a>
+            <a class="btn border rounded" onclick="TablepagginationArrowControll(@(Model.TablePagination.CurrentPage + 1) ,
+            @Model.TablePagination.PageSize , @Model.TablePagination.TotalPage )" @(Model.TablePagination.CurrentPage < Model.TablePagination.TotalPage ? "" : "disable") ><i
+            class="fa-solid fa-chevron-right"></i></a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        
+    </script>
+}

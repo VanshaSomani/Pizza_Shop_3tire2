@@ -1,0 +1,64 @@
+@model Pizza_Shop_Repository.ViewModels.KOTModalInfoViewModel
+
+<!-- Show Kot Details Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="KOTDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order Id: #<span id="orderId" data-orderid="@Model.OrderId">@Model.OrderId</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col" class="text-right">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.KotTableData){
+                            <tr>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" data-itemid="@item.ItemId"> @item.ItemName
+                                    <ul class="mb-1">
+                                        @foreach(var mod in item.ModifierName){
+                                                <li>@mod</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td class="text-right">
+                                    <div class=" d-flex justify-content-end">
+                                        <span class="border border-primary rounded d-flex flex-row justify-content-between align-items-center" style="width: 50%;">
+                                            <span class="fs-4 btn text-secondary mb-1 ps-3 pe-3" id="minus-quantity-@item.ItemId" onclick="MinusQuantity(@item.ItemId)">-</span>
+                                            @if(Model.Status == "In Progress"){
+                                                <span id="item-quantity-@item.ItemId">@(item.ItemQuantity - item.ReadyItem)</span>
+                                            }
+                                            else{
+                                                <span id="item-quantity-@item.ItemId">@item.ReadyItem</span>
+                                            }
+                                            <span class="fs-4 btn text-secondary mb-1 ps-3 pe-3" id="plus-quantity-@item.ItemId" onclick="PlusQuantity(@item.ItemId , @item.ItemQuantity)">+</span>
+                                        </span>
+                                    </div>
+                                    @* @item.ItemQuantity *@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                @if(Model.Status == "In Progress"){
+                    <button type="submit" id="KOTDetailsModalSubmit" data-status="@Model.Status" class="btn btn-primary modal_submit_btn">Mark as perepared</button>
+                }
+                else{
+                    <button type="submit" id="KOTDetailsModalSubmit" data-status="@Model.Status" class="btn btn-primary modal_submit_btn">Mark as in progress</button>
+                }
+                <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

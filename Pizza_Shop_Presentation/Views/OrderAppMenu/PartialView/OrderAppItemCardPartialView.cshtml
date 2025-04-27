@@ -1,0 +1,33 @@
+@model Pizza_Shop_Repository.ViewModels.OrderAppMenuViewModel
+@foreach(var item in Model.OrderMenuItemList)
+{
+    <div class="item_card @(Model.CustomerId != 0 ? "col-lg-6" : "col-lg-3")"
+     data-itemid="@item.ItemId" data-itemprice="@item.ItemPrice" data-itemname="@item.ItemName" data-itemtax="@item.ItemTax">
+        @* col-3  col-4*@
+        <div class="card position-relative d-flex flex-row align-items-center mb-3 shadow bg-white rounded menu_card">
+            <div class="me-3 shadow bg-white rounded" style="border-radius: 10px !important;">
+                @if(item.ImgPath != null){
+                    <img src="~/ItemImages/@item.ImgPath" height="70" alt="" style="border-radius: 50%; aspect-ratio: 1;"
+                        class="">
+                }
+                else{
+                    <img src="../images/dining-menu.png" height="70" alt="" style="border-radius: 50%; aspect-ratio: 1;"
+                        class="">
+                }
+            </div>
+            <div class="d-flex flex-column justify-content-between w-100">
+                <div>@item.ItemName</div>
+                <div class="d-flex flex-row justify-content-between align-items-center me-3">
+                    <div>@item.ItemPrice</div>
+                    @if(item.Favorite != false){
+                        <div data-itemid="@item.ItemId" class="Favroite_item"><i class="fa-solid fa-heart Favorite-item"></i></div>
+                    }
+                    else{
+                        <div data-itemid="@item.ItemId" class="Favroite_item"><i class="fa-regular fa-heart text-secondary"></i></div>
+                    }
+                </div>
+            </div>
+            <div class="@(item.ItemType == "Veg" ? "veg-ribbon" : item.ItemType == "Non-Veg" ? "non-veg-ribbon" : "vegan-ribbon")"></div>
+        </div>
+    </div>
+}

@@ -1,0 +1,70 @@
+@model Pizza_Shop_Repository.ViewModels.OffCanvasCustomerDetailViewModel
+<div class="modal-header">
+    <h5 class="modal-title" id="staticBackdropLabel">Waiting Token Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form id="AddWaitingTokenForm" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-floating mb-3">
+                    <input type="hidden" asp-for="@Model.CustomerId">
+                    <input type="email" class="form-control" id="WaitingTokenCustomerEmail" placeholder="Email"
+                        asp-for="@Model.Email">
+                    <label for="WaitingTokenCustomerEmail">Email* </label>
+                    <span class="text-danger" asp-validation-for="@Model.Email"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="WaitingTokenCustomerName" placeholder="Name"
+                        asp-for="@Model.CustomerName">
+                    <label for="WaitingTokenCustomerName">Name* </label>
+                    <span class="text-danger" asp-validation-for="@Model.CustomerName"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="WaitingTokenCustomerMobileNo" placeholder="Mobile No"
+                        asp-for="@Model.Phoneno">
+                    <label for="WaitingTokenCustomerMobileNo">Mobile Number* </label>
+                    <span class="text-danger" asp-validation-for="@Model.Phoneno"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="WaitingTokenNoOfPerson" placeholder="No Of Person"
+                        asp-for="@Model.NoOfPerson">
+                    <label for="WaitingTokenNoOfPerson">Number Of Person* </label>
+                    <span class="text-danger" asp-validation-for="@Model.NoOfPerson"></span>
+                </div>
+            </div>
+            <div class="col-6 w-100">
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="WaitingTokenSection" placeholder="Section"
+                        aria-label="Floating label select example" asp-for="@Model.SectionId">
+                        <option selected value="">Select Section</option>
+                        @foreach (var s in Model.SectionList)
+                        {
+                            <option value="@s.SectionId">@s.SectionName</option>
+                        }
+                    </select>
+                    <label for="WaitingTokenSection">Section*</label>
+                    <span class="text-danger" asp-validation-for="@Model.SectionId"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" id="AddWaitingTokenFormSubmit" class="btn btn-primary modal_submit_btn">Save</button>
+        <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+</form>

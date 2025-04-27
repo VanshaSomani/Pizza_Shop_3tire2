@@ -1,0 +1,163 @@
+@model Pizza_Shop_Repository.ViewModels.TaxesAndFeesViewModel
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@inject IHttpContextAccessor accessor;
+@{
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new
+    UserLayoutViewModel();
+}
+<div id="TaxesListTable">
+    <table class="table m-0" id="TaxesTableContainer">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Name
+                </th>
+                <th scope="col">Type</th>
+                <th scope="col" class="align-center">IsEnable</th>
+                <th scope="col" class="align-center">
+                    Default
+                </th>
+                <th scope="col">Tax Value</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tax in Model.TaxList)
+            {
+                <tr id="@(tax.Taxid)">
+                    <td>@tax.Taxname</td>
+                    <td>@tax.Taxtype</td>
+                    <td class="align-center">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input switch_large checkbox-align ml-1" type="checkbox" id="@tax.Taxid"
+                                checked="@tax.Isenable" onchange="ChangeTaxEnabled(this)" />
+                        </div>
+                    </td>
+                    <td class="align-center">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input switch_large checkbox-align ml-1" type="checkbox" id="@tax.Taxid"
+                                checked="@tax.Defaulttax" onchange="ChangeDefaultTax(this)" />
+                        </div>
+                    </td>
+                    <td>
+                        @(tax.Taxtype == "fixed amount" ? "₹" : "")
+                        @tax.Taxamount
+                        @(tax.Taxtype == "percentage" ? "%" : "")
+                    </td>
+                    <td>
+                        @if (userPermission.UserPageViewList.Any(p => p.PermissionName == "TaxAndFee" &&
+                       p.Addandeditpermission))
+                        {
+                            <a id="@tax.Taxid" onclick="EditTax(this)" class="cursorpointer">
+                                <i class="fa-solid fa-pencil mr-3"></i>
+                            </a>
+                        }
+                        @if (userPermission.UserPageViewList.Any(p => p.PermissionName == "TaxAndFee" &&
+                       p.Isdeletepermission))
+                        {
+                            <a id="@tax.Taxid" onclick="DeleteTax(this)" class="cursorpointer">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="accordion accordion-flush" id="TaxAndFeeAccord" style="display: none;">
+        @foreach (var tax in Model.TaxList)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne-@tax.Taxid" aria-expanded="false"
+                        aria-controls="flush-collapseOne-@tax.Taxid">
+                        @tax.Taxname
+                    </button>
+                </h2>
+                <div id="flush-collapseOne-@tax.Taxid" class="accordion-collapse collapse p-4"
+                    aria-labelledby="flush-headingOne-@tax.Taxid" data-bs-parent="#accordionFlushExample">
+                    <div class="d-flex align-items-center flex-wrap justify-content-between mb-2">
+                        <span><span class="fw-bold text-dark mr-1">Tax Name :-</span> @tax.Taxname</span>
+                        <span><span class="fw-bold text-dark mr-1">Tax Type :-</span> @tax.Taxtype</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="d-flex align-items-center">
+                                <div class="fw-bold text-dark">IsEnable</div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch_large ml-1" type="checkbox" id="@tax.Taxid"
+                                        checked="@tax.Isenable" onchange="ChangeTaxEnabled(this)" />
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <span class="fw-bold text-dark">Default</span>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch_large ml-1" type="checkbox" id="@tax.Taxid"
+                                        checked="@tax.Defaulttax" onchange="ChangeDefaultTax(this)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="d-flex justify-content-end">
+                                <span class="fw-bold text-dark">Tax Name :-</span> @tax.Taxname
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <span class="fw-bold text-dark mr-1">Tax Amount :- </span>
+                                @(tax.Taxtype == "fixed amount" ? "₹" : "")
+                                @tax.Taxamount
+                                @(tax.Taxtype == "percentage" ? "%" : "")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end">
+                        @if (userPermission.UserPageViewList.Any(p => p.PermissionName == "TaxAndFee" && p.Addandeditpermission))
+                        {
+                            <a id="@tax.Taxid" onclick="EditTax(this)" class="cursorpointer">
+                                <i class="fa-solid fa-pencil mr-3"></i>
+                            </a>
+                        }
+                        @if (userPermission.UserPageViewList.Any(p => p.PermissionName == "TaxAndFee" && p.Isdeletepermission))
+                        {
+                            <a id="@tax.Taxid" onclick="DeleteTax(this)" class="cursorpointer">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="bg-white d-flex justify-content-end p-2">
+        <!-- pagination -->
+        <div class="d-flex flex-row flex-wrap justify-content-center align-item-center">
+            <div class="d-flex flex-row justify-content-end align-item-center mb-2 user_paggination_width">
+                <div class="d-flex flex-col justify-content-center align-items-center pr-2">Item per page</div>
+                <div class="pr-2">
+                    <select class="form-select" id="ItemPageSizeDropDown" aria-label="Default select example"
+                        onchange="TaxFeePageSizeDropDown()">
+                        <option value="3" selected="@(Model.TaxPaggination.PageSize == 3 ? "selected" : null)">3</option>
+                        <option value="5" selected="@(Model.TaxPaggination.PageSize == 5 ? "selected" : null)">5</option>
+                        <option value="10" selected="@(Model.TaxPaggination.PageSize == 10 ? "selected" : null)">10</option>
+                        <option value="15" selected="@(Model.TaxPaggination.PageSize == 15 ? "selected" : null)">15</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-end align-item-center mb-2 user_paggination_width">
+                <div class="d-flex flex-col justify-content-center align-items-center pr-2">
+                    Showing @(Model.TaxPaggination.MinRow) - @(Model.TaxPaggination.MaxRow) of
+                    @(Model.TaxPaggination.TotalRecord)
+                </div>
+                <a class="btn border rounded mr-2" onclick="TaxFeepagginationArrowControll(@(Model.TaxPaggination.CurrentPage - 1) , 
+                @Model.TaxPaggination.PageSize , @Model.TaxPaggination.TotalPage)" @(Model.TaxPaggination.CurrentPage == 1
+                    ? "disable" : "")><i class="fa-solid
+                fa-chevron-left"></i></a>
+                <a class="btn border rounded" onclick="TaxFeepagginationArrowControll(@(Model.TaxPaggination.CurrentPage + 1) ,
+                @Model.TaxPaggination.PageSize , @Model.TaxPaggination.TotalPage )" @(Model.TaxPaggination.CurrentPage <
+                    Model.TaxPaggination.TotalPage ? "" : "disable")><i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

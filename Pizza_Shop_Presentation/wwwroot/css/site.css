@@ -1,0 +1,587 @@
+/* html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+} */
+
+.login-container-card1{
+  width: 50vw;
+  height: 100vh;
+}
+html,body{
+  height: 100%;
+}
+.form-header{
+  color: #0781b2;
+}
+
+.login-container-card2{
+  width: 50vw;
+  height: 100vh;
+  background-color: #d8eff8;
+}
+
+.login-pizza-img{
+  width: 50vw;
+  height: 100vh;
+}
+
+.login-form{
+  height: fit-content;
+}
+
+.input-countainer{
+  position: relative;
+}
+
+.input-countainer-icon{
+  position: absolute;
+  right: 14px;
+  top: 6px;
+}
+
+.body-bgclr-grey{
+  background-color: #8080805b;
+}
+
+/* sidebar */
+
+.sidebar {
+  height: 100vh;
+  background-color: white;
+}
+
+.sidebar-list {
+  list-style-type: none;
+}
+
+.sidebar-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+/* .aksh{
+  height: 100px;
+} */
+.sidebar-hover:hover{
+  background-color: #8080805b;
+}
+
+.active-sidebar{
+  background-color: #8080805b;
+}
+
+
+/* navbar */
+.navbar{
+  /* height: 7vh; */
+}
+
+.navbar-list{
+  list-style-type: none;
+}
+
+/* user  list */
+
+.user-list-container{
+  /* width: 80vw; */
+}
+
+.x{
+  height: 9vh;
+}
+
+.invocetableheader{
+  border: 0px !important; 
+  background-color: #0781b2 !important;
+}
+
+.action-btn{
+  width: 60%;
+}
+
+.file-upload{
+  border: 2px solid rgb(216, 215, 215);
+  border-style: dashed;
+  border-radius: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.checkbox-align{
+  margin-left: 1%;
+}
+
+.switch_large{
+  transform: scale(1.5);
+}
+
+.table-overflow{
+  overflow-y: scroll;
+}
+
+.cursorpointer{
+  cursor: pointer;
+}
+
+.left_section{
+  height: 70vh;
+}
+
+.section_container{
+  height: 70vh;
+}
+
+.right_section{
+  height: 59vh;
+}
+
+.right_section_table{
+  height: 55vh;
+}
+
+/* menu */
+
+.active-menu-option{
+  border-bottom: 3px solid #0d6efd;
+}
+
+.table-container-scroll{
+      /* height: 50vh; */
+      height: 63vh;
+      overflow-x: scroll;
+}
+
+.category-bg{
+  background-color: #bebebe5a;
+}
+
+.table-category-bg{
+background-color: #bebebe5a;
+}
+
+.add-item-modal-bg{
+  background-color: #e4d05f65;
+}
+
+.my_profile_header{
+  /* border-top: 2px solid red; */
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  height: 5vh;
+  background-image: url('../images/profile_div_bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.my_profile_body{
+  /* border-bottom: 2px solid red; */
+  border-bottom-left-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+  padding-top: 20%;
+}
+
+.profile-img-holder{
+
+}
+
+.profile-img-div{
+  margin-top: -2.3em;
+}
+
+.form-holder{
+  width: 30vw;
+}
+
+.category_action_button{
+  /* margin-left: 6em; */
+  display: none;
+}
+
+.category_tr:hover .category_action_button{
+  display: inline-block;
+}
+
+.order_input_width{
+  width: 280px;
+}
+
+.order_input_height{
+  height: 50px !important;
+}
+
+.container_2{
+  width: 29vw;
+}
+
+.invoiceborder{
+  border-bottom: 1px solid #0781b2 !important; 
+}
+
+.modal_submit_btn{
+  background-color: #0781b2 !important; 
+  color: white !important;
+}
+
+.modal_close_btn{
+  border: 1px solid #0781b2 !important; 
+  color: #0781b2 !important;
+}
+
+.modal_close_btn:hover{
+  background-color: #0781b2 !important; 
+  color: white !important;
+}
+
+.tableSectionAccord{
+  width: 60px;
+  border: 1.5px solid rgb(0, 119, 255);
+  border-radius: 50% !important;
+  transition: transform 0.3s ease;
+}
+
+.menuAccord{
+  width: 20px;
+  border: 0;
+  transition: transform 0.3s ease;
+}
+
+.menuAccord:not(.collapsed) {
+  background-color: white;
+  box-shadow: none;
+}
+
+/* .tableSectionAccord:not(.collapsed){
+  transform:  rotate(180deg);
+} */
+
+.offcanvas-backdrop{
+  opacity: 0.75 !important;
+}
+
+/* .fade.show {
+  opacity: 0.75 !important;
+} */
+
+.RunningTable{
+  background-color: #d6eaff;
+}
+
+.AssignTable{
+  background-color: #e6fff0;
+  border: 1px solid rgb(172, 255, 172);
+}
+
+.SelectedTable{
+  border: 1px solid rgb(172, 255, 172);
+}
+
+.menu_sidebar_hover:hover{
+  background: #0781b2 !important; 
+  color: white !important;
+  border-top-right-radius: 60px;
+  border-bottom-right-radius: 60px;
+}
+
+.menu_sidebar_active{
+  background: #0781b2 !important; 
+  color: white !important;
+  border-top-right-radius: 60px;
+  border-bottom-right-radius: 60px;
+}
+
+.menu_card{
+  /* width: 12rem; */
+  border-radius: 10px !important;
+}
+
+.modifier_card{
+  border-radius: 10px !important;
+  border: 1px solid rgb(143, 143, 143) !important; 
+  width: 8rem;
+}
+
+.modifier_card_selected{
+  border: 1px solid #0781b2 !important; 
+  background-color: #d6eaff !important;
+}
+
+.bill_card{
+  border-radius: 10px !important;
+}
+
+.menu-table-chairbg{
+  background-color: #a8d2ff;
+  border-radius: 8px !important;
+}
+
+.qr-btn{
+  background-color: white;
+  border: 2px solid #0781b2 !important; 
+  border-radius: 5px;
+}
+
+.Favorite-item{
+  color: #0781b2 !important; 
+}
+
+.fa-heart:hover{
+  color: #0781b2 !important; 
+  font-weight: 900;
+}
+
+.veg-ribbon{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 30px solid green;
+  border-left: 30px solid transparent;
+  border-top-right-radius: 10px !important;
+}
+
+.non-veg-ribbon{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 30px solid red;
+  border-left: 30px solid transparent;
+  border-top-right-radius: 10px !important;
+}
+
+.vegan-ribbon{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 30px solid rgb(255, 196, 0);
+  border-left: 30px solid transparent;
+  border-top-right-radius: 10px !important;
+}
+
+.quantity-amount{
+  gap: 80px;
+  margin-right: 100px;
+}
+
+.menuAccord:focus{
+  border-color: white;
+  box-shadow: none;
+}
+
+.accord-body-price{
+  margin-right: 120px;
+}
+
+.item-accord{
+  margin-right: 45px;
+  gap: 60px;
+}
+
+/* --------------------------------------------------------------- */
+/* responsive */
+
+/* login page */
+
+@media screen and (max-width: 658px) {
+  .login-container-card1{
+      display: none;
+  }
+  .login-container-card2{
+      width: 100vw;
+      background: url("/images/dominos_background.jpg") no-repeat;   
+      background-size: cover;
+      z-index: 1;
+      /* opacity: 0.6; */
+      background-color:rgba(0,0,0,0.6);
+  }
+  .login-form{
+      background-color: #d8eff8;
+      opacity: 0.9;
+      border-radius: 5%;
+  }
+  .login-form{
+      z-index: 1;
+  }
+}
+
+@media screen and (min-width: 991px){
+  .sidebar-toggle-btn{
+      display: none;
+  }
+} 
+
+/* sidebar  none after 992 */
+@media screen and (max-width: 991px){
+  .sidebar-hide{
+      display: none;
+      width: 0vw;
+  }
+  .content-div{
+      width: 100%;
+  }
+  .navbar{
+      justify-content: space-between;
+  }
+} 
+
+@media screen and (max-width: 960px){
+  .order-header{
+    display: flex;
+    flex-direction: column !important;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .order-date-filter-container{
+      display: flex;
+      flex-direction: column !important;
+  }
+  .data-input-holder{
+    width: 100%;
+    margin-bottom: 1em !important;
+  }
+  .data-btn-holder{
+    width: 100%;
+    margin: 0em !important;
+  }
+}
+
+@media screen and (max-width: 415px){
+  .date-holder{
+    flex-wrap: wrap;
+  }
+}
+
+/* Kot */
+
+.selected_badge{
+  color: #fff;
+  background-color: #469fff;
+}
+
+@media screen and (max-width: 750px){
+  .navbar-badges{
+      padding: 0.5em !important;
+  }
+  
+  .navbar-badges-container{
+      margin-right: 0.5em !important;
+  }
+} 
+
+@media screen and (max-width: 650px){
+  .navbar-badges{
+      font-size: 0.8em !important;
+  }
+} 
+
+@media screen and (max-width: 580px){
+  .kot-pizza-logo{
+      height: 40px;
+  }
+
+  .kot-pizza-header{
+      font-size: 1em !important;
+  }
+} 
+
+@media screen and (max-width: 537px){
+  .badge-icon{
+      display: none;
+  }
+} 
+
+@media screen and (max-width: 665px){
+  #TaxAndFeeAccord{
+    display: block !important;
+  }
+  #TaxesTableContainer{
+    display: none;
+  }
+} 
+
+@media screen and (max-width: 470px){
+  .kot-pizza-header{
+      display: none !important;
+  }
+} 
+
+@media screen and (max-width: 541px){
+  .user_paggination_width{
+    width: 100% !important;
+  }
+} 
+
+@media screen and (max-width: 440px){
+  .rolepermission-card{
+    width: 100vw !important;
+  }
+} 
+
+@media screen and (max-width: 830px){
+  #UseListTableContainer{
+    display: none;
+  }
+  #UserListAccordian{
+    display: block !important;
+  }
+} 
+
+@media screen and (max-width: 700px){
+  #CustomerTableContainer{
+    display: none;
+  }
+  #CustomerAccordian{
+    display: block !important;
+  }
+} 
+
+@media screen and (max-width: 780px){
+  #OrderTableContainer{
+    display: none;
+  }
+  #OrderAccord{
+    display: block !important;
+  }
+} 
+
+@media screen and (max-width: 384px){
+  .kot-nav-options{
+      display: block !important;
+      margin-right: 0.5em;
+  }
+  .navbar-badges-container{
+      display: none !important;
+  }
+  .dropdown-width{
+      width: 60vw !important;
+  }
+} 
+
+.Kot_card_border{
+  border: dashed 2px rgb(180, 180, 180) !important;
+}
+
+/* order app Table */
+

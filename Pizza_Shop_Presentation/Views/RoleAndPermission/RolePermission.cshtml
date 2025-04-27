@@ -1,0 +1,128 @@
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@model IList<Pizza_Shop_Repository.ViewModels.RoleAndPermissionViewModel>;
+@inject IHttpContextAccessor accessor;
+@{
+    ViewData["Title"] = "RolePermission";
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new UserLayoutViewModel();
+}
+<div class="p-2 pl-3 pr-3">
+    <!-- header -->
+    <div class="col-12 p-2 user-list-container d-flex flex-row justify-content-between">
+        <div class="h3 fw-bold text-primary">Permissions</div>
+        <div class="d-flex flex-row justify-content-center align-item-center">
+            <div>
+                <a class="btn btn-white border border-primary text-primary" asp-controller="RoleAndPermission"
+                    asp-action="RoleList"><i class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+            </div>
+        </div>
+    </div>
+    <!-- form -->
+    <div class="col-12 p-2 user-list-container">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-2">
+                <div class="container-fluid">
+                    <form asp-action="RolePermission" asp-controller="RoleAndPermission" id="RolePermissionForm" method="post">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" value="@ViewBag.RoleName" disabled>
+                                    <label for="floatingInput">Role</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row table-overflow">
+                            <table class="table" id="permissionTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><i class="fa-regular fa-square-minus"></i></th>
+                                        <th scope="col">Permission</th>
+                                        <th scope="col">Can View</th>
+                                        <th scope="col">Can Add/Edit</th>
+                                        <th scope="col">Can Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for(int i = 0 ; i < Model.Count ; i++){
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input checkbox-align" type="checkbox"
+                                                        id="@Model[i].PermissionName" onclick="IsSelectedCheckBoxClicked(this)" asp-for="@Model[i].IsSelected" >
+                                                </div>
+                                                <input type="hidden" asp-for="@Model[i].RoleId">
+                                                <input type="hidden" asp-for="@Model[i].PermissionId">
+                                                <input type="hidden" asp-for="@Model[i].PermissionName">
+                                                <input type="hidden" asp-for="@Model[i].Rpid">
+                                            </td>
+                                            <td>@Model[i].PermissionName</td>
+
+                                            @if(Model[i].IsSelected){
+                                                <td>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input checkbox-align Permission-checkbox ml-1" type="checkbox"
+                                                            id="CanView-@Model[i].PermissionName"
+                                                            asp-for="@Model[i].Viewpermission" onclick="CanViewChecked(this)"> 
+                                                    </div>
+                                                </td>
+                                                <td>    
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input checkbox-align Permission-checkbox ml-1" type="checkbox"
+                                                            id="CanAddEdit-@Model[i].PermissionName"
+                                                            asp-for="@Model[i].Addandeditpermission">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input checkbox-align Permission-checkbox ml-1" type="checkbox"
+                                                            id="CanDeleted-@Model[i].PermissionName"
+                                                            asp-for="@Model[i].Isdeletepermission">
+                                                    </div>
+                                                </td>
+                                            }
+
+                                            else{
+                                                <td>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input checkbox-align Permission-checkbox ml-1" type="checkbox"
+                                                            id="CanView-@Model[i].PermissionName"
+                                                            asp-for="@Model[i].Viewpermission" onclick="CanViewChecked(this)" disabled> 
+                                                    </div>
+                                                </td>
+                                                <td>    
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input checkbox-align Permission-checkbox ml-1" type="checkbox"
+                                                            id="CanAddEdit-@Model[i].PermissionName"
+                                                            asp-for="@Model[i].Addandeditpermission" disabled>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input checkbox-align Permission-checkbox ml-1" type="checkbox"
+                                                            id="CanDeleted-@Model[i].PermissionName"
+                                                            asp-for="@Model[i].Isdeletepermission" disabled>
+                                                    </div>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            </div>
+                            <div class="d-flex flex-row justify-content-end">
+                                @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "RoleAndPermission" && p.Addandeditpermission)){
+                                    <button type="submit" id="RolePermissionSubmit" class="btn btn-primary rounded text-white mr-3">Save</button>
+                                }
+                                <a class="btn btn-outline-primary rounded" asp-controller="RoleAndPermission" asp-action="RoleList">Cancle</a>
+                            </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+@section Scripts{
+    <script src="~/js/RolePermission.js"></script>
+}

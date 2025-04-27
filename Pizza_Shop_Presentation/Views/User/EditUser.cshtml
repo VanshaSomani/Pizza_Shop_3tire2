@@ -1,0 +1,272 @@
+@model Pizza_Shop_Repository.ViewModels.EditUserViewModel;
+@{
+    ViewData["Title"] = "EditUser";
+}
+<div class="p-2 pl-3 pr-3">
+    <!-- header -->
+    <div class="col-12 p-2 user-list-container d-flex flex-row justify-content-between">
+        <div class="h3 fw-bold text-primary">Edit User</div>
+        <div class="d-flex flex-row justify-content-center align-item-center">
+            <div>
+                <a class="btn btn-white border border-primary text-primary" asp-controller="User" asp-action="UserList"><i
+                        class="fa-solid fa-chevron-left mr-2"></i>Back</a>
+            </div>
+        </div>
+    </div>
+    <!-- form -->
+    <div class="col-12 p-2 user-list-container">
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <div class="bg-white d-flex justify-content-end p-2">
+                <div class="container-fluid">
+                    <form asp-action="EditUser" asp-controller="User" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    @Html.HiddenFor(m => m.Userid)
+                                    @Html.HiddenFor(m => m.Email)
+                                    @Html.HiddenFor(m => m.ExistingProfileImg)
+                                    @Html.HiddenFor(m => m.Updatedby)
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="@Model.Firstname">
+                                    <label for="floatingInput">First Name</label>
+                                    <span class="text-danger" asp-validation-for="Firstname"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="@Model.Lastname">
+                                    <label for="floatingInput">Last Name</label>
+                                    <span class="text-danger" asp-validation-for="Lastname"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="User Name" asp-for="@Model.Username">
+                                    <label for="floatingInput">User Name</label>
+                                    <span class="text-danger" asp-validation-for="Username"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <select type="text" class="form-select" id="floatingSelect" aria-label="Role" asp-items="ViewBag.Roles" asp-for="@Model.Roleid">
+                                        <option value="">select role</option>
+                                        @* <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option> *@
+                                    </select>
+                                    <label for="floatingInput">Role</label>
+                                    <span class="text-danger" asp-validation-for="Roleid"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingInput" placeholder="Email"
+                                        disabled asp-for="@Model.Email">
+                                    <label for="floatingInput">Email</label>
+                                    @* <span class="text-danger" asp-validation-for="Email"></span> *@
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <select type="text" class="form-select" id="floatingSelect" aria-label="Country" asp-for="@Model.Status">
+                                        <option value="true">Active</option>
+                                        <option value="false">InActive</option>
+                                    </select>
+                                    <label for="floatingInput">Status</label>
+                                    <span class="text-danger" asp-validation-for="Status"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="edit-user-upload-file" class="file-upload w-100">
+                                        <div class="d-flex flex-column justify-content-center align-items-center">
+                                            @if(Model.ExistingProfileImg == null){
+                                                <i class="fa-solid fa-cloud-arrow-up fs-3" id="edit-user-file-upload"></i>
+                                            }
+                                            <img src="~/ProfileImages/@Model.ExistingProfileImg" alt="" height="40px" id="edit-user-img-preview" style="display: block;">
+                                            <span id="edit-user-drag-drop">Browse</span>
+                                            <span id="edit-user-img-name"></span>
+                                        </div>
+                                    </label>
+                                    <input type="file" class="d-none" id="edit-user-upload-file" asp-for="@Model.profileimg">
+                                    <span class="text-danger" asp-validation-for="profileimg"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select type="text" class="form-select" id="countryDropDown" aria-label="Country" asp-items="ViewBag.Countries" asp-for="@Model.Countryid">
+                                        <option>select country</option>
+                                    </select>
+                                    <label for="floatingInput">Country</label>
+                                    <span class="text-danger" asp-validation-for="Countryid"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-floating mb-3 ">
+                                    <select type="text" class="form-select" id="stateDropDown" aria-label="State" asp-items="ViewBag.States" asp-for="@Model.Stateid" required> 
+                                        @* <option>select state</option> *@
+                                    </select>
+                                    <label for="floatingInput">State</label>
+                                    <span class="text-danger" asp-validation-for="Stateid"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-floating mb-3 ">
+                                    <select type="text" class="form-select" id="cityDropDown" aria-label="City" asp-items="ViewBag.Cities" asp-for="@Model.Cityid" required>
+                                        @* <option>select city</option> *@
+                                    </select>
+                                    <label for="floatingInput">City</label>
+                                    <span class="text-danger" asp-validation-for="Cityid"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Zipcode" asp-for="@Model.Zipcode">
+                                    <label for="floatingInput">Zipcode</label>
+                                    <span class="text-danger" asp-validation-for="Zipcode"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="@Model.Address">
+                                    <label for="floatingInput">Address</label>
+                                    <span class="text-danger" asp-validation-for="Address"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input type="tel" class="form-control" id="floatingInput" placeholder="Phone" asp-for="@Model.Phoneno">
+                                    <label for="floatingInput">Phone</label>
+                                    <span class="text-danger" asp-validation-for="Phoneno"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <button type="submit" class="btn btn-primary rounded text-white mr-3">Update User</button>
+                            <a asp-action="UserList" asp-controller="User" class="btn btn-outline-primary rounded">Cancle</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+<script>
+    $(document).ready(function(){
+        let predefinedCountryId = @Model.Countryid;
+        let predefinedStateId = @Model.Stateid;
+        let predefinedCityId = @Model.Cityid;
+
+        function sidebarColorChange(){
+            let sidebarAnchor = document.getElementsByClassName("sidebar-anchor");
+            for(let i = 0 ; i < sidebarAnchor.length ; i++){
+                sidebarAnchor[i].classList.remove("active-sidebar");
+            }
+        }
+        sidebarColorChange();
+        document.getElementById("User-Sidebar").classList.add("active-sidebar");
+
+        function loadStates(CountryId){
+            if(CountryId != null){
+                $.ajax({
+                     url : "@Url.Action("GetStates" , "User")",
+                     type : "GET",
+                     data : {Countryid : CountryId},
+                     success : function(data){
+                        let StateDropDown = $("#stateDropDown");
+                        $(StateDropDown).empty().append('<option selected>select state</option>');
+                        $("#cityDropDown").append('<option selected>select city</option>');
+                        $.each(data , function(index , States){
+                            StateDropDown.append('<option value="'+States.stateid + '">' + States.stateName + '</option>');
+                        })
+                     },
+                     error : function(){
+                        alert("Error");
+                     }
+                })
+            }
+        }
+
+        function loadCities(StateId){
+            if(StateId != null){
+                $.ajax({
+                     url : "@Url.Action("GetCities" , "User")",
+                     type : "GET",
+                     data : {Stateid : StateId},
+                     success : function(data){
+                        let CityDropDown = $("#cityDropDown");
+                        $(CityDropDown).empty().append('<option selected>select city</option>');
+                        $.each(data , function(index , Cities){
+                            CityDropDown.append('<option value="'+Cities.cityid + '">' + Cities.cityName + '</option>');
+                        })
+                     },
+                     error : function(){
+                        alert("Error");
+                     }
+                })
+            }
+        }
+
+        $(document).off("change", "#edit-user-upload-file").on("change", "#edit-user-upload-file", function (event) {
+
+            let img_path = $("#edit-user-upload-file").val().split("\\");
+            let img = img_path[img_path.length - 1];
+            console.log("edit-user-upload-file - ", img_path);
+            console.log("edit-user-upload-file - ", img);
+            document.getElementById("edit-user-drag-drop").style.display = 'none';
+            $("#edit-user-img-name").text(img);
+
+            const input = event.target;
+            const preview = document.getElementById("edit-user-img-preview");
+
+            if(input && input.files[0]){
+                console.log("Input - ",input.files[0]);
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                // document.getElementById("edit-user-file-upload").style.display = 'none';
+                reader.readAsDataURL(input.files[0]);
+            }
+            else{
+                preview.src = "#";
+                preview.style.display = 'none';
+                document.getElementById("edit-user-file-upload").style.display = 'none';
+            }
+        })
+
+        @* loadStates(predefinedCountryId); *@
+
+        @* loadCities(predefinedStateId); *@
+
+        $("#countryDropDown").on("change",function(){
+            let selectedCountryId = $("#countryDropDown").val();
+            $("#stateDropDown").empty();
+            $("#cityDropDown").empty();
+            console.log("selectedCountryId - ",selectedCountryId);
+            loadStates(selectedCountryId);
+        }),
+
+        $("#stateDropDown").on("change",function(){
+            let selectedStateId = $("#stateDropDown").val();
+            $("#cityDropDown").empty();
+            console.log("selectedStateId - ",selectedStateId);
+            loadCities(selectedStateId);
+        })
+    
+    })
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,60 @@
+@model Pizza_Shop_Repository.ViewModels.UserLoginViewModel;
+@{
+    ViewData["Title"] = "Login Page";
+    Layout = "_LoginLayout";
+}
+<div class="mb-3 p-2">
+    <h2>Welcome</h2>
+</div>
+<div class="p-2">
+    <form asp-controller="UserLogin" asp-action="Login" method="post">
+        <div class="form-group">
+            <div class="input-countainer mb-3">
+                <input type="email" class="form-control" id="Email1" aria-describedby="emailHelp" asp-for="Email"
+                    placeholder="Enter email">
+                <span class="input-countainer-icon"><img src="./images/icons/customer.svg" alt="" srcset=""></span>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="input-countainer mb-3">
+                <input type="password" class="form-control" id="pass1" aria-describedby="passwordHelp" asp-for="Passwordhashed"
+                    placeholder="Enter password">
+                <span class="input-countainer-icon"><i id="pass-icon1" class="fa-solid fa-eye-slash"
+                        onclick="showPassword('pass1','pass-icon1')"></i></span>
+                <span asp-validation-for="Passwordhashed" class="text-danger"></span>
+            </div>
+            <span class="text-danger">@ViewBag.ErrorMsg</span>
+            <div class="d-flex justify-content-between flex-wrap mb-3">
+                <div>
+                    <input type="checkbox" class="" id="exampleCheck1" asp-for="RemeberMe">
+                    <label class="" for="exampleCheck1">Remember me</label>
+                </div>
+                <div>
+                    <a type="submit" class="border-0 bg-0" id="ForgotPassword">Forgot password?</a>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2 w-100">Login</button>
+        </div>
+    </form>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#ForgotPassword").click(function(){
+            var Email = $("#Email1").val().trim();
+            $.ajax({
+                type : "POST",
+                url : "@Url.Action("StoredEmail" , "UserLogin")",
+                data : {email : Email},
+                success : function(){
+                    window.location.href = "@Url.Action("ForgotPassword" , "UserLogin")";
+                },
+                error : function(){
+                    console.log("Error");
+                }
+            })
+        });
+    });
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

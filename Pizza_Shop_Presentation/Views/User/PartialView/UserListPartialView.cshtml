@@ -1,0 +1,185 @@
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@inject IHttpContextAccessor accessor;
+@model IEnumerable<Pizza_Shop_Repository.ViewModels.UserListViewModel>;
+@{
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new
+    UserLayoutViewModel();
+}
+<div id="userListTable">
+    <table class="table m-0" id="UseListTableContainer">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <span>Name</span>
+                    <i class="fa-solid fa-arrow-up sortIcon pr-1"></i>
+                    <i class="fa-solid fa-arrow-down sortIcon desc"></i>
+                </th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">
+                    <span>Role</span>
+                    <i class="fa-solid fa-arrow-up sortIcon pr-1"></i>
+                    <i class="fa-solid fa-arrow-down sortIcon desc"></i>
+                </th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr id="@(user.Userid)">
+                    <input type="hidden" asp-for="@(user.Userid)" name="">
+                    <td>
+                        @if(user.profileimg != ""){
+                            <img src="~/ProfileImages/@user.profileimg" height="40" alt=""
+                                style="border-radius: 50%; aspect-ratio: 1;">
+                        }
+                        else{
+                            <img src="~/images/Default_pfp.svg.png" height="40" alt=""
+                                style="border-radius: 50%; aspect-ratio: 1;">
+                        }
+                        @user.Firstname @user.Lastname
+                    </td>
+                    <td>@user.Email</td>
+                    <td>@user.Phoneno</td>
+                    <td>@user.Rolename</td>
+                    <td><a href="" class="btn btn-success rounded-pill action-btn p-1 @(user.status ? "btn-success"
+                                : "btn-danger")">@(user.status ? "Active"
+                        : "InActive")</a></td>
+                    <td>
+                        @if (userPermission.UserPageViewList.Any(p => p.PermissionName == "Users" &&
+                       p.Addandeditpermission))
+                        {
+                            <a asp-action="EditUser" asp-controller="User" asp-route-userid="@user.Userid"
+                                class="text-dark mr-2 p-2 "><i class="fa-solid fa-pencil"></i></a>
+                        }
+                        @if (userPermission.UserPageViewList.Any(p => p.PermissionName == "Users" && p.Isdeletepermission))
+                        {
+                            <a data-bs-toggle="modal" class="p-2 deleteBtn" class="deleteuserbtn" data-bs-target="#DeleteModal"
+                                onclick="getID(this)"><i class="fa-solid fa-trash"></i></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="d-none " id="UserListAccordian">
+        <div class="mb-3">
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <select class="form-select me-2" id="AccordSortDropDown" aria-label="Default select example">
+                    <option value="">Select Option</option>
+                    <option value="Name">Name</option>
+                    <option value="Role">Role</option>
+                </select>
+                <div>
+                    <button type="button" class="btn btn-secondary me-2 AccordsortIcon"><i
+                            class="fa-solid fa-arrow-up pr-1"></i></button>
+                </div>
+                <div>
+                    <button type="button" class="btn desc btn-secondary AccordsortIcon"><i
+                            class="fa-solid fa-arrow-down desc"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            @foreach (var user in Model)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne-@(user.Userid)">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne-@(user.Userid)" aria-expanded="false"
+                            aria-controls="flush-collapseOne-@(user.Userid)">
+                            @user.Firstname @user.Lastname
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne-@(user.Userid)" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingOne-@(user.Userid)" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">User Name - @user.Firstname @user.Lastname</div>
+                                <div class="col-md-6 col-sm-12">Email - @user.Email</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">Phone No - @user.Phoneno</div>
+                                <div class="col-md-6 col-sm-12">Role - @user.Rolename</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content- flex-wrap">
+                                    <div style="width: 50%;">
+                                        <a href="" class="btn btn-success rounded-pill action-btn p-1 ps-5 pe-5 @(user.status ? "btn-success"
+                                            : "btn-danger")">@(user.status ? "Active"
+                                        : "InActive")</a>
+                                    </div>
+                                    <div class=" d-flex justify-content-end">
+                                        <div class=" d-flex justify-content-end">
+                                            @if (userPermission.UserPageViewList.Any(p => p.PermissionName == "Users" &&
+                                           p.Addandeditpermission))
+                                            {
+                                                <span>
+                                                    <a asp-action="EditUser" asp-controller="User"
+                                                        asp-route-userid="@user.Userid" class="text-dark mr-2 p-2 "><i
+                                                            class="fa-solid fa-pencil"></i></a>
+                                                </span>
+                                            }
+                                            @if (userPermission.UserPageViewList.Any(p => p.PermissionName == "Users" &&
+                                           p.Isdeletepermission))
+                                            {
+                                                <span>
+                                                    <a data-bs-toggle="modal" class="p-2 deleteBtn" class="deleteuserbtn"
+                                                        onclick="GetDeteletIdAccord(this)" data-bs-target="#DeleteModal"
+                                                        id="@user.Userid">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </a>
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="bg-white d-flex justify-content-end p-2">
+        <!-- pagination -->
+        <div class="d-flex flex-row flex-wrap justify-content-center align-item-center">
+            <div class="d-flex flex-row justify-content-end align-item-center mb-2 user_paggination_width">
+                <div class="d-flex flex-col justify-content-center align-items-center pr-2">Item per page</div>
+                <div class="pr-2">
+                    <select class="form-select" id="PageSizeDropDown" aria-label="Default select example"
+                        onchange="UserPageSizeDropDown()">
+                        <option value="3" selected="@(ViewBag.PageSize == 3 ? "selected" : null)">3</option>
+                        <option value="5" selected="@(ViewBag.PageSize == 5 ? "selected" : null)">5</option>
+                        <option value="10" selected="@(ViewBag.PageSize == 10 ? "selected" : null)">10</option>
+                        <option value="15" selected="@(ViewBag.PageSize == 15 ? "selected" : null)">15</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex flex-col justify-content-end align-items-center user_paggination_width">
+                <div class="d-flex flex-col justify-content-center align-items-center pr-2">
+                    Showing @(ViewBag.MinRowCount) - @(ViewBag.MaxRowCount) of @(ViewBag.TotalRecords)
+                </div>
+                <div>
+                    <a class="btn border rounded mr-2" 
+                    onclick="pagginationArrowControll(@(ViewBag.CurrentPage - 1) ,@ViewBag.PageSize , @ViewBag.TotalPage)" 
+                    @(ViewBag.CurrentPage == 1 ? "disable" : "")>
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+                    <a class="btn border rounded" 
+                    onclick="pagginationArrowControll(@(ViewBag.CurrentPage + 1) ,@ViewBag.PageSize , @ViewBag.TotalPage )" 
+                    @(ViewBag.CurrentPage < ViewBag.TotalPage ? "" : "disable")>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                
+            </div>
+        </div>
+    </div>
+</div>

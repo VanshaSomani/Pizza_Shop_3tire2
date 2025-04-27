@@ -1,0 +1,27 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Delete Modifier Group</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<form asp-action="DeleteMG" asp-controller="Menu" method="post" id="DeleteModifierGroup">
+    <div class="modal-body  ps-0 pe-0">
+        <div class="d-flex justify-content-center align-item-center"><img
+                    src="../images/toppng.com-warning-icon-2400x2400.png" height="50px" alt=""></div><br>
+            <div class="d-flex justify-content-center align-item-center">
+                <p class="fs-5 mb-1">Are you sure you want to delete this Modifier Group?</p>
+            </div>
+        <input type="hidden" id="DeleteCategoryIdModal" asp-for="@Model.Modifiergroupid">
+        <input type="hidden" class="form-control mb-2" aria-describedby="textHelp" placeholder="Name"
+            asp-for="@Model.ModifierGroupName" id="DeleteCategoryNameModal" />
+        <textarea class="form-control d-none" rows="3" asp-for="@Model.ModifierGroupDesc"
+            id="DeleteCategoryDescModal"></textarea>
+    </div>
+    <div class="modal-footer">
+        <div class="d-flex justify-content-center align-items-center w-100">
+            <button type="submit" id="DeleteModifierGroupSubmit" class="btn btn-primary modal_submit_btn me-2">Yes</button>
+            <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                No
+            </button>
+        </div>
+    </div>
+</form>

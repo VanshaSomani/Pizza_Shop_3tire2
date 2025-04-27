@@ -1,0 +1,83 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel
+@using Newtonsoft.Json
+@using Pizza_Shop_Repository.ViewModels
+@inject IHttpContextAccessor accessor;
+@{
+    var json = accessor.HttpContext.Session.GetString("Layout_Page_Permission");
+    var userPermission = !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<UserLayoutViewModel>(json) : new UserLayoutViewModel();
+}
+<div id="ModifierSection" class="right_section_table d-flex flex-column justify-content-between">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="width: 0;">
+                    @* <i class="fa-regular fa-square-minus"></i> *@
+                    <input class="form-check-input border border-dark " type="checkbox" value="" style="margin-top: -1.3em; margin-left: 0.01em;"
+                    id="ModifierCheckBoxSelectAll" onclick="SelectAllModifierForMassDelete(this)"/>
+                </th>
+                <th scope="col">Name</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Rate</th>
+                <th scope="col" class="text-center">Quantity</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.ModifiersList.Count() == 0){
+                <tr>
+                    <td colspan="6" class="text-center fw-bold">
+                        No Modifiers in this modifier group
+                    </td>
+                </tr>
+            }
+            @foreach (var modifier in Model.ModifiersList)
+            {
+                <tr id="@modifier.Modifierid">
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-align border border-dark ModifierCheckbox" type="checkbox" value=""
+                                id="@modifier.Modifierid" onclick="GetAllSelectedModifier(this)"/>
+                        </div>
+                    </td>
+                    <td>
+                        @modifier.Modifiername
+                    </td>
+                    <td>@modifier.Unit</td>
+                    <td>@modifier.Rate</td>
+                    <td class="text-center">@modifier.Quantity</td>
+                    <td>
+                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Addandeditpermission)){
+                            <i class="fa-solid fa-pencil mr-3 cursorpointer" id="@modifier.Modifierid" onclick="getModifierEditID(this)"></i>
+                        }
+                        @if(userPermission.UserPageViewList.Any(p => p.PermissionName == "Menu" && p.Isdeletepermission)){
+                            <i class="fa-solid fa-trash cursorpointer" id="@modifier.Modifierid" onclick="getModifierDeleteID(this)"></i>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="bg-white d-flex justify-content-end p-2">
+        <!-- pagination -->
+        <div class="d-flex flex-row justify-content-center align-item-center">
+            <div class="d-flex flex-col justify-content-center align-items-center pr-2">Item per page</div>
+            <div class="pr-2">
+                <select class="form-select" id="ModifierPageSizeDropDown" aria-label="Default select example" onchange="ModifierPageSizeDropDown()">
+                    <option value="3" selected="@(Model.ModifierPaggination.PageSize == 3 ? "selected" : null)">3</option>
+                    <option value="5" selected="@(Model.ModifierPaggination.PageSize == 5 ? "selected" : null)">5</option>
+                    <option value="10" selected="@(Model.ModifierPaggination.PageSize == 10 ? "selected" : null)">10</option>
+                    <option value="15" selected="@(Model.ModifierPaggination.PageSize == 15 ? "selected" : null)">15</option>
+                </select>
+            </div>
+            <div class="d-flex flex-col justify-content-center align-items-center pr-2">
+                Showing @(Model.ModifierPaggination.MinRow) - @(Model.ModifierPaggination.MaxRow) of @(Model.ModifierPaggination.TotalRecord)
+            </div>
+            <a class="btn border rounded mr-2" onclick="ModifierpagginationArrowControll(@(Model.ModifierPaggination.CurrentPage - 1) ,
+            @Model.ModifierPaggination.PageSize , @Model.ModifierPaggination.TotalPage)" @(Model.ModifierPaggination.CurrentPage == 1 ? "disable" : "")><i class="fa-solid
+            fa-chevron-left"></i></a>
+            <a class="btn border rounded" onclick="ModifierpagginationArrowControll(@(Model.ModifierPaggination.CurrentPage + 1) ,
+            @Model.ModifierPaggination.PageSize , @Model.ModifierPaggination.TotalPage )" @(Model.ModifierPaggination.CurrentPage < Model.ModifierPaggination.TotalPage ? "" : "disable") ><i
+            class="fa-solid fa-chevron-right"></i></a>
+        </div>
+    </div>
+</div>

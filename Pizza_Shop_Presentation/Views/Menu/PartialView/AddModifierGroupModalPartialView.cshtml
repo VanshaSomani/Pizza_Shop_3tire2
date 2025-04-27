@@ -1,0 +1,38 @@
+@model Pizza_Shop_Repository.ViewModels.ItemCategoryViewModel;
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Modifier Group</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form id="AddModfierGroupForm"  method="post">
+        <div class="modal-body">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control mb-2" id="AddMgName" aria-describedby="textHelp"
+                    placeholder="Name" asp-for="@Model.ModifierGroupName" />
+                <label for="AddMgName">Modifier Group Name</label>
+                <span asp-validation-for="ModifierGroupName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                    <textarea class="form-control" id="AddMgDesc" rows="3" asp-for="@Model.ModifierGroupDesc"></textarea>
+                    <label for="AddMgDesc">Description</label>
+                    <span asp-validation-for="ModifierGroupDesc" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-2">
+                <a class="text-primary" onclick="GetAddExistingModifers('add')">+ Add Existing Modifer</a>
+            </div>
+            @* @foreach (var modifier in Model.ModifiersList)
+            {
+                <span class="badge badge-pill badge-light border p-1 ps-2 pe-2 fs-6 mb-2" id="@modifier.Modifierid">@modifier.Modifiername &nbsp; <a onclick=""><i class="fa-solid fa-xmark"></i></a></span>
+            } *@
+            <span id="existingModiferLableforAddMG">
+            </span>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" id="AddModifierGroupModalSubmit" class="btn btn-primary modal_submit_btn">Save</button>
+            <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>

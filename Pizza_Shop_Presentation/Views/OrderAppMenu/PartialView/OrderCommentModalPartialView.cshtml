@@ -1,0 +1,31 @@
+@model Pizza_Shop_Repository.ViewModels.OrderCommentViewModel
+<div class="modal fade" data-bs-backdrop="static" id="OrderCommentModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="OrderWiseCommentForm" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-floating">
+                            <input type="hidden" asp-for="@Model.OrderId">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                rows="3" style="height: 100px" asp-for="@Model.OrderInstruction"></textarea>
+                            <label for="floatingTextarea2">Comments</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="OrderCommentModalSubmit"
+                        class="btn btn-primary modal_submit_btn">Save</button>
+                    <button type="button" class="btn btn-outline-primary modal_close_btn" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
